@@ -9,7 +9,6 @@
     <form id="form-registro" class="form-registro" method="post" action="Registro.aspx">
 
       <div class="datos-container">
-
       <div class="datos-izquierda">
       <div class="input-container">
       <label for="input-nombre">Nombre</label>

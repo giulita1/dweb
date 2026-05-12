@@ -270,9 +270,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="BE\" />
-    <Folder Include="BLL\" />
-    <Folder Include="DAL\" />
     <Folder Include="ScriptsJS\" />
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +282,16 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BE\BE.csproj">
+      <Project>{e5c9266b-f702-4f51-9809-1cd21175140b}</Project>
+      <Name>BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{bb105189-7cb2-437f-a4d9-683585262de3}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
