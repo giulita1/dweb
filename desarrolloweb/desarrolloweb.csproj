@@ -124,6 +124,7 @@
     <Content Include="img\hotel1.jpg" />
     <Content Include="img\principal.jpg" />
     <Content Include="img\restaurante.jpg" />
+    <Content Include="ScriptsJS\registro.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -270,7 +271,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ScriptsJS\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

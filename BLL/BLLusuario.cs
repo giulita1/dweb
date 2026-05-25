@@ -13,9 +13,9 @@ namespace desarrolloweb.BLL
     {
 
         DALusuario Dal = new DALusuario();
-        public void VerificarExistencia(Usuario usuario) { 
+        public bool VerificarExistencia(Usuario usuario) { 
             
-            Dal.VerificarExistencia(usuario);
+            return Dal.VerificarExistencia(usuario);
         
         }
 

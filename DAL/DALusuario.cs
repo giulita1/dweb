@@ -12,7 +12,7 @@ namespace desarrolloweb.DAL
     {
         public bool VerificarExistencia(Usuario usuario)
         {
-            string query = "SELECT COUNT(*) FROM USUARIOS WHERE email = @email OR [user] = @user";
+            string query = "SELECT COUNT(*) FROM USUARIOS WHERE email = @email OR usuario = @user";
             SqlCommand cmd = new SqlCommand(query, con);
 
             cmd.Parameters.AddWithValue("@email", usuario.Email);
@@ -37,7 +37,7 @@ namespace desarrolloweb.DAL
 
         public void RegistrarUsuario(Usuario usuario)
         {
-            string query = "INSERT INTO USUARIOS (nombre, apellido, [user], email, contrasena) " +
+            string query = "INSERT INTO USUARIOS (nombre, apellido, usuario, email, contrasena) " +
                            "VALUES (@nombre, @apellido, @user, @email, @contrasena)";
 
             SqlCommand cmd = new SqlCommand(query, con);

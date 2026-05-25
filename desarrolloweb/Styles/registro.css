@@ -95,6 +95,18 @@ select {
     box-shadow: 0 5px 12px rgba(63, 57, 54, 0.1);
 }
 
+.error-msj{
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: block;
+}
+
+.error-input {
+    border-color: #e74c3c;
+}
+
+
 @media (max-width: 600px){
 
     .form-registro{
