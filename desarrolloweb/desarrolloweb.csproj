@@ -101,6 +101,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Contact.aspx" />
+    <Content Include="Content\bitacora.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -124,6 +125,7 @@
     <Content Include="img\hotel1.jpg" />
     <Content Include="img\principal.jpg" />
     <Content Include="img\restaurante.jpg" />
+    <Content Include="ScriptsJS\Bitacora.js" />
     <Content Include="ScriptsJS\registro.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -190,6 +192,7 @@
     <Content Include="Styles\login.css" />
     <Content Include="Styles\registro.css" />
     <Content Include="Styles\site.css" />
+    <Content Include="UI\Bitacora.aspx" />
     <Content Include="UI\Inicio.aspx" />
     <Content Include="UI\Login.aspx" />
     <Content Include="UI\Registro.aspx" />
@@ -239,6 +242,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Bitacora.aspx.cs">
+      <DependentUpon>Bitacora.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\Bitacora.aspx.designer.cs">
+      <DependentUpon>Bitacora.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI\Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
