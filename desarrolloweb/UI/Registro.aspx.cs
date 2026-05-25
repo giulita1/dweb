@@ -90,9 +90,9 @@ namespace desarrolloweb.UI
                     bllusuario.RegistrarUsuario(usuario);
                     Response.Redirect("Inicio.aspx");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MostrarError(lblNombre, "Error al registrarse. Intentá de nuevo.");
+                    MostrarError(lblErrorGeneral, "Error al registrarse."+ ex.Message);
                 }
             }
         }

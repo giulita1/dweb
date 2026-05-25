@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DALconexion
     {
-        protected SqlConnection con = new SqlConnection("Data Source=DESKTOP-9K5QG8P;Initial Catalog=desarrolloweb;Integrated Security=True");
+        protected SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=hotel_;Integrated Security=True");
 
         public void Conectar()
         {

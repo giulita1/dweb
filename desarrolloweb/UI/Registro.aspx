@@ -48,9 +48,12 @@
       </div>
       </div>
 
+        <div class="container-texto">
       <span><a href="login.html">Ya tenes cuenta? Inicia sesión</a></span>
 
       <asp:Label ID="lblErrorGeneral" runat="server" CssClass="error-msj" Visible="false" />
+
+        </div>
       <input type="submit" class="btn-registrarse" value="REGISTRARSE">
         </div>
 </asp:Content>
