@@ -11,20 +11,16 @@ namespace desarrolloweb.BLL
     public class BLLbitacora
     {
         private desarrolloweb.DAL.DALbitacora dalBitacora = new desarrolloweb.DAL.DALbitacora();
-
-        public int InsertarBitacora(string usuario, string descripcion, string modulo, string criticida)
+        public int InsertarBitacora(int idUsuario, string actividad, string modulo, string criticidad)
         {
-
             BE.Bitacora bitacora = new BE.Bitacora
             {
-                Usu = usuario,
-                FechaCambio = DateTime.Now,
-                Descripcion = descripcion,
-                Modulo = modulo,
-                Criticidad = criticida
+                Id_Usuario = idUsuario,
+                Actividad = actividad,
+                Criticidad = criticidad
             };
-            return dalBitacora.insertarbitacora(bitacora);
 
+            return dalBitacora.insertarbitacora(bitacora);
         }
 
         public DataTable ListarBitacora()
@@ -35,13 +31,12 @@ namespace desarrolloweb.BLL
 
                 if (dt == null || dt.Rows.Count == 0)
                 {
-
                 }
                 return dt;
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al procesar la lista de usuarios: " + ex.Message);
+                throw new Exception("Error al procesar la lista de bitácora: " + ex.Message);
             }
         }
 

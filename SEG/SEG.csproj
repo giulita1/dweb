@@ -4,14 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BB105189-7CB2-437F-A4D9-683585262DE3}</ProjectGuid>
+    <ProjectGuid>{D3BCC255-AFC6-4281-8256-A55FC23FE0A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BLL</RootNamespace>
-    <AssemblyName>BLL</AssemblyName>
+    <RootNamespace>SEG</RootNamespace>
+    <AssemblyName>SEG</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,22 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLLbitacora.cs" />
-    <Compile Include="BLLusuario.cs" />
+    <Compile Include="encriptar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="singleton\sesion.cs" />
+    <Compile Include="singleton\SingletonSession.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">
       <Project>{e5c9266b-f702-4f51-9809-1cd21175140b}</Project>
       <Name>BE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{8d92958c-43eb-417d-a58f-78ec09be7e3a}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SEG\SEG.csproj">
-      <Project>{d3bcc255-afc6-4281-8256-a55fc23fe0a2}</Project>
-      <Name>SEG</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

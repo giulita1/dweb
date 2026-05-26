@@ -10,30 +10,33 @@ namespace desarrolloweb.DAL
 {
     public class DALbitacora : DALconexion
     {
-
         public int insertarbitacora(BE.Bitacora BT)
         {
-            int FA = 0;
-
-            SqlParameter[] sqlParameter = new SqlParameter[5];
-            sqlParameter[0] = new SqlParameter("@Usu", BT.Usu);
-            sqlParameter[1] = new SqlParameter("@FechaCambio", BT.FechaCambio);
-            sqlParameter[2] = new SqlParameter("@Descripcion", BT.Descripcion);
-            sqlParameter[3] = new SqlParameter("@Modulo", BT.Modulo);
-            sqlParameter[4] = new SqlParameter("@Criticidad", BT.Criticidad);
-            FA = EscribirText("CargarBitacora", sqlParameter);
-            return FA;
+            string query = @"INSERT INTO Bitacora (Id_Usuario, Actividad, Criticidad, Fecha, Hora, DVH) 
+                             VALUES (@Id_Usuario, @Actividad, @Criticidad, @Fecha, @Hora, @DVH)";
+            SqlParameter[] sqlParameter = new SqlParameter[6];
+            sqlParameter[0] = new SqlParameter("@Id_Usuario", BT.Id_Usuario);
+            sqlParameter[1] = new SqlParameter("@Actividad", BT.Actividad);
+            sqlParameter[2] = new SqlParameter("@Criticidad", BT.Criticidad);
+            sqlParameter[3] = new SqlParameter("@Fecha", DateTime.Now.ToString("dd/MM/yyyy"));
+            sqlParameter[4] = new SqlParameter("@Hora", DateTime.Now.ToString("HH:mm:ss"));
+            sqlParameter[5] = new SqlParameter("@DVH", (object)BT.DVH ?? DBNull.Value);
+            return EscribirText(query, sqlParameter);
         }
         public DataTable ListarBitacora()
         {
             try
             {
-                string query = " SELECT b.IdBitacora, b.idusuario, CONVERT(varchar(10), b.FechaCambio, 120) AS Fecha, CONVERT(varchar(8), b.FechaCambio, 108) AS Hora, b.Descripcion, b.Modulo, b.Criticidad, u.Nombre, u.Apellido FROM Bitacora b  INNER JOIN Usuarios u ON b.idusuario = u.Id_Usuario WHERE b.FechaCambio >= GETDATE() - 3";
+                string query = @"SELECT b.Id_Bitacora, b.Id_Usuario, b.Fecha, b.Hora, b.Actividad, b.Criticidad, u.Nombre, u.Apellido 
+                                 FROM Bitacora b  
+                                 INNER JOIN Usuarios u ON b.Id_Usuario = u.Id_Usuario 
+                                 WHERE CONVERT(date, b.Fecha, 103) >= CAST(GETDATE() - 3 AS DATE)";
+
                 return LeerText(query);
             }
             catch (SqlException ex)
             {
-                throw new Exception("Error técnico en la base de datos al intentar listar usuarios. Detalle: " + ex.Message);
+                throw new Exception("Error técnico en la base de datos al intentar listar la bitácora. Detalle: " + ex.Message);
             }
         }
 
@@ -42,14 +45,12 @@ namespace desarrolloweb.DAL
             try
             {
                 DateTime fechaDesde = desde.Date;
-                DateTime fechaHasta = hasta.Date.AddDays(1).AddTicks(-1);
-                string query = @"SELECT b.IdBitacora, b.idusuario, CONVERT(varchar(10), b.FechaCambio, 120) AS Fecha,
-                                              CONVERT(varchar(8), b.FechaCambio, 108) AS Hora, 
-                                              b.Descripcion, b.Modulo, b.Criticidad, 
-                                              u.Nombre, u.Apellido 
-                                       FROM Bitacora b 
-                                       INNER JOIN Usuarios u ON b.idusuario = u.Id_Usuario 
-                                       WHERE b.FechaCambio BETWEEN @Desde AND @Hasta";
+                DateTime fechaHasta = hasta.Date;
+                string query = @"SELECT b.Id_Bitacora, b.Id_Usuario, b.Fecha, b.Hora, b.Actividad, b.Criticidad, u.Nombre, u.Apellido 
+                                 FROM Bitacora b 
+                                 INNER JOIN Usuarios u ON b.Id_Usuario = u.Id_Usuario 
+                                 WHERE CONVERT(date, b.Fecha, 103) >= @Desde 
+                                 AND CONVERT(date, b.Fecha, 103) <= @Hasta";
 
                 List<SqlParameter> parametros = new List<SqlParameter>
                 {
@@ -59,35 +60,26 @@ namespace desarrolloweb.DAL
 
                 if (login != "Todos" && !string.IsNullOrEmpty(login))
                 {
-                    query += " AND b.Usu = @Login";
+                    query += " AND u.usuario = @Login";
                     parametros.Add(new SqlParameter("@Login", login));
                 }
-
-                if (modulo != "Todos" && !string.IsNullOrEmpty(modulo))
-                {
-                    query += " AND b.Modulo = @Modulo";
-                    parametros.Add(new SqlParameter("@Modulo", modulo));
-                }
-
                 if (evento != "Todos" && !string.IsNullOrEmpty(evento))
                 {
-                    query += " AND b.Descripcion = @Evento";
+                    query += " AND b.Actividad = @Evento";
                     parametros.Add(new SqlParameter("@Evento", evento));
                 }
-
                 if (criticidad != "Todos" && !string.IsNullOrEmpty(criticidad))
                 {
                     query += " AND b.Criticidad = @Criticidad";
                     parametros.Add(new SqlParameter("@Criticidad", criticidad));
                 }
+
                 return LeerText(query, parametros.ToArray());
             }
             catch (SqlException ex)
             {
                 throw new Exception("Error técnico en la base de datos al filtrar la bitácora. Detalle: " + ex.Message);
             }
-        }
-
-
+       }
     }
 }

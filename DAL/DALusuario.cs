@@ -1,10 +1,11 @@
-﻿using System;
+﻿using DAL;
+using desarrolloweb.BE;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using DAL;
-using desarrolloweb.BE;
 
 namespace desarrolloweb.DAL
 {
@@ -62,5 +63,89 @@ namespace desarrolloweb.DAL
                 Desconectar();
             }
         }
+
+        public BE.Usuario ValidarAcceso(string usuario, string contrasena)
+        {
+            try
+            {
+                string query = "SELECT * FROM Usuarios WHERE usuario = @u AND contrasena = @p";
+                SqlParameter[] p = {
+            new SqlParameter("@u", usuario),
+            new SqlParameter("@p", contrasena)
+        };
+
+                DataTable dt = LeerText(query, p);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    DataRow dr = dt.Rows[0];
+                    return new BE.Usuario
+                    {
+                        Cod_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
+                        Nombre = dr["nombre"].ToString(),
+                        Apellido = dr["apellido"].ToString(),
+                        Email = dr["email"].ToString(),
+                        User = dr["usuario"].ToString(),
+                        Contrasena = dr["contrasena"].ToString(),
+                        Bloqueado = Convert.ToBoolean(dr["bloqueado"]),
+                        Intentos = Convert.ToInt16(dr["intentos"])
+                    };
+                }
+                return null;
+            }
+            catch (Exception ex) { throw new Exception("Error en DAL: " + ex.Message); }
+        }
+        public void BloquearUsuario_62_RS(string usuario)
+        {
+            string sql = "UPDATE Usuarios SET bloqueado = @est WHERE usuario = @u";
+            SqlParameter[] p = {
+        new SqlParameter("@est", true),
+        new SqlParameter("@u", usuario)
+        };
+            EscribirText(sql, p);
+        }
+
+        public int SumarIntentosFallidos(string usuario)
+        {
+            try
+            {
+                string query = @"UPDATE Usuarios 
+                         SET intentos = intentos + 1 
+                         OUTPUT INSERTED.intentos 
+                         WHERE usuario = @u";
+
+                SqlParameter[] p = {
+            new SqlParameter("@u", usuario)
+        };
+                DataTable dt = LeerText(query, p);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    return Convert.ToInt16(dt.Rows[0]["intentos"]);
+                }
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en DAL al sumar intentos: " + ex.Message);
+            }
+        }
+        public void ResetearIntentos(string usuario)
+        {
+            try
+            {
+                string sql = "UPDATE Usuarios SET intentos = 0 WHERE usuario = @u";
+
+                SqlParameter[] p = {
+            new SqlParameter("@u", usuario)
+        };
+                EscribirText(sql, p);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en DAL al resetear los intentos: " + ex.Message);
+            }
+        }
+
     }
 }
