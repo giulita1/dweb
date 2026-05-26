@@ -9,9 +9,10 @@
     <title>Document</title>
     <link rel="stylesheet" href="<%= ResolveUrl("~/Styles/site.css") %>" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 <body>
+    <form runat="server">
     <header>
 
         <div class="logo-container">
@@ -20,9 +21,8 @@
 
         <nav>
             <ul>
-
-                 <li class="nav-items">
-                    <a href="Home.aspx">Inicio</a>
+                <li class="nav-items">
+                    <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
                 </li>
 
                 <%
@@ -30,25 +30,29 @@
                     bool logueado = Session["usuario"] != null;
                 %>
 
-                <% if (!logueado && !pagina.Contains("Login.aspx")) { %>
+                <% if (!logueado && !pagina.Contains("login.aspx")) { %>
                     <li class="nav-items">
-                       <a href="<%= ResolveUrl("~/UI/Login.aspx") %>">Iniciar sesión</a>
+                        <a href="<%= ResolveUrl("~/UI/Login.aspx") %>">Iniciar sesión</a>
                     </li>
                 <% } %>
 
-                <% if (!logueado && !pagina.Contains("Registro.aspx")) { %>
+                <% if (!logueado && !pagina.Contains("registro.aspx")) { %>
                     <li class="nav-items">
                         <a href="<%= ResolveUrl("~/UI/Registro.aspx") %>">Registrarse</a>
                     </li>
                 <% } %>
 
                 <% if (logueado) { %>
-                      <li>
-                   <a href="<%= ResolveUrl("~/UI/Perfil.aspx") %>"><span class="material-symbols-outlined">account_circle</span></a>
-                </li>
+                    <li class="nav-items">
+                        <asp:LinkButton ID="btnCerrarSesion" runat="server" 
+                            OnClick="btnCerrarSesion_Click">Cerrar sesión</asp:LinkButton>
+                    </li>
+                    <li class="nav-items">
+                        <button type="button" id="btn-carrito">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </li>
                 <% } %>
-
-               
             </ul>
             <button type="button" id="btn-menu"><span class="material-symbols-outlined">menu</span>
                 </button>
@@ -57,14 +61,14 @@
     </header>
     
     <main>
-    <form runat="server">
+   
         <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-    </form>
+  
     </main>
 
     <footer>
         <p>© 2026 Hotel</p>
-    </footer>
+    </footer>  </form>
     </body>
     </html>
 

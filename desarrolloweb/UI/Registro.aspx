@@ -6,52 +6,53 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">    
     <div class="form-registro">
+    <h1>Crear Cuenta</h1>
       <div class="datos-container">
       <div class="datos-izquierda">
       <div class="input-container">
       <label for="input-nombre">Nombre</label>
-          <input type="text" id="input-nombre" name="nombre">
-          <asp:Label ID="lblNombre" CssClass="error-msj" runat="server" Visible="false"></asp:Label>
+          <input type="text" id="input-nombre" name="nombre" value="<%= Request.Form["nombre"] ?? "" %>">
+          <asp:Label ID="lblNombre" CssClass="error-msj" runat="server" ></asp:Label>
       </div>
 
       <div class="input-container">
       <label for="input-apellido">Apellido</label>
-          <input type="text" id="input-apellido" name="apellido">
-          <asp:Label ID="lblApellido" CssClass="error-msj" runat="server" Visible="false"></asp:Label>
+          <input type="text" id="input-apellido" name="apellido" value="<%= Request.Form["apellido"] ?? "" %>">
+          <asp:Label ID="lblApellido" CssClass="error-msj" runat="server"></asp:Label>
       </div>
 
       <div class="input-container">
       <label for="input-email">Email</label>
-          <input type="email" id="input-email" name="email">
-          <asp:Label ID="lblEmail" CssClass="error-msj" runat="server" Visible="false"></asp:Label>
+          <input type="email" id="input-email" name="email" value="<%= Request.Form["email"] ?? "" %>">
+          <asp:Label ID="lblEmail" CssClass="error-msj" runat="server" ></asp:Label>
       </div>
       </div>
 
       <div class="datos-derecha">
       <div class="input-container">
       <label for="input-usuario">Nombre de usuario</label>
-          <input type="text" id="input-usuario" name="usuario">
-          <asp:Label ID="lblUsuario" CssClass="error-msj" runat="server" Visible="false"></asp:Label>
+          <input type="text" id="input-usuario" name="usuario" value="<%= Request.Form["usuario"] ?? "" %>">
+          <asp:Label ID="lblUsuario" CssClass="error-msj" runat="server"></asp:Label>
       </div>
 
       <div class="input-container">
       <label for="input-contrasena">Contraseña</label>
           <input type="password" id="input-contrasena" name="contrasena">
-          <asp:Label ID="lblContra" CssClass="error-msj" runat="server" Visible="false"></asp:Label>
+          <asp:Label ID="lblContra" CssClass="error-msj" runat="server" ></asp:Label>
       </div>
 
       <div class="input-container">
       <label for="input-confirmar-contra">Confirmar contraseña</label>
           <input type="password" id="input-confirmar-contra" name="confirmarContrasena">
-         <asp:Label ID="lblConfirmar" CssClass="error-msj" runat="server" Visible="false"></asp:Label>
+         <asp:Label ID="lblConfirmar" CssClass="error-msj" runat="server" ></asp:Label>
       </div>
       </div>
       </div>
 
         <div class="container-texto">
-      <span><a href="login.html">Ya tenes cuenta? Inicia sesión</a></span>
+      <span><a href="<%= ResolveUrl("~/UI/Login.aspx") %>">¿Ya tenés cuenta? Iniciá sesión</a></span>
 
-      <asp:Label ID="lblErrorGeneral" runat="server" CssClass="error-msj" Visible="false" />
+      <asp:Label ID="lblErrorGeneral" runat="server" CssClass="error-msj" />
 
         </div>
       <input type="submit" class="btn-registrarse" value="REGISTRARSE">

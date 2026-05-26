@@ -88,6 +88,8 @@ namespace desarrolloweb.UI
                     }
 
                     bllusuario.RegistrarUsuario(usuario);
+                    Session["usuario"] = usuario;
+
                     Response.Redirect("Inicio.aspx");
                 }
                 catch (Exception ex)
@@ -99,7 +101,7 @@ namespace desarrolloweb.UI
         private void MostrarError(Label lbl, string mensaje)
         {
             lbl.Text = mensaje;
-            lbl.Visible = true;
+           
         }
 
         private bool ValidarEmail(string email)

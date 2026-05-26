@@ -9,7 +9,7 @@
      <img src="<%= ResolveUrl("~/img/principal.jpg") %>"
      alt="Hotel"
      class="imagen-principal">
-    <form action="Reservar.aspx" method="post" class="form-reservar">
+    <div class="form-reservar">
 
         <div class="input-container">
         <label for="fecha-llegada">Fecha de llegada</label>
@@ -21,7 +21,7 @@
     </div>
 
     <button type="submit" class="btn-reservar">RESERVAR</button>
-    </form>
+    </div>
         
 </section>
    <section class="elhotel">
@@ -80,8 +80,6 @@
     </div>
 
 </section>
-
-
 
 <section class="restaurante">
 

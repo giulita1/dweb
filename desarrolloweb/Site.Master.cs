@@ -13,5 +13,12 @@ namespace desarrolloweb
         {
 
         }
+
+        protected void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("~/UI/Inicio.aspx");
+        }
     }
 }
