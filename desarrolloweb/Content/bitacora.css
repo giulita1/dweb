@@ -1,0 +1,173 @@
+﻿﻿.bitacora-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: #f0f4f8;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.bitacora-title {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e1e5eb;
+    padding-bottom: 10px;
+}
+
+.filter-panel {
+    background-color: #ffffff;
+    border: 1px solid #e1e5eb;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+    .form-group label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 6px;
+    }
+
+.form-control {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    color: #495057;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+    .form-control:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+
+.action-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #e9ecef;
+    padding-top: 15px;
+}
+
+.btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border: none;
+}
+
+.btn-filter {
+    background-color: #007bff;
+    color: white;
+}
+
+    .btn-filter:hover {
+        background-color: #0056b3;
+    }
+
+.btn-print {
+    background-color: #28a745;
+    color: white;
+}
+
+    .btn-print:hover {
+        background-color: #218838;
+    }
+
+.btn-clear {
+    background-color: #6c757d;
+    color: white;
+}
+
+    .btn-clear:hover {
+        background-color: #5a6268;
+    }
+
+.table-container {
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid #e1e5eb;
+}
+
+.grid-view {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
+}
+
+    .grid-view th {
+        background-color: #2c3e50;
+        color: #ffffff;
+        padding: 12px 15px;
+        font-weight: 600;
+    }
+
+    .grid-view td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #f1f3f5;
+        color: #495057;
+    }
+
+    .grid-view tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .grid-view tr:last-child td[colspan] {
+        text-align: center;
+        padding: 30px;
+        color: #6c757d;
+        font-style: italic;
+        background-color: #fafbfc;
+    }
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .table-container, .table-container * {
+        visibility: visible;
+    }
+
+    .table-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+    }
+
+    .grid-view th {
+        background-color: #000 !important;
+        color: #fff !important;
+    }
+}

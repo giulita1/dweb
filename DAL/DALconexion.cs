@@ -42,5 +42,64 @@ namespace DAL
                 throw new Exception(ex.Message);
             }
         }
+        public int EscribirText(string query, SqlParameter[] parametros)
+        {
+            Conectar();
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.CommandType = CommandType.Text;
+            if (parametros != null) cmd.Parameters.AddRange(parametros);
+
+            transaccion = con.BeginTransaction();
+            cmd.Transaction = transaccion;
+            try
+            {
+                int filasafectadas = cmd.ExecuteNonQuery();
+                transaccion.Commit();
+                return filasafectadas;
+            }
+            catch (Exception ex)
+            {
+                transaccion.Rollback();
+                throw new Exception("Error al ejecutar la consulta: " + ex.Message);
+            }
+            finally
+            {
+                Desconectar();
+            }
+        }
+
+        public DataTable LeerText(string consulta, SqlParameter[] parametros = null)
+        {
+            DataTable tabla = new DataTable();
+            Conectar();
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(consulta, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    if (parametros != null)
+                    {
+                        cmd.Parameters.AddRange(parametros);
+                    }
+
+                    using (SqlDataAdapter adaptador = new SqlDataAdapter(cmd))
+                    {
+                        adaptador.Fill(tabla);
+                    }
+                }
+                return tabla;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error en la lectura de datos (SQL): " + ex.Message);
+            }
+            finally
+            {
+                Desconectar();
+            }
+        }
+
     }
 }
