@@ -18,6 +18,7 @@ namespace desarrolloweb.UI
         {
             if (!IsPostBack)
             {
+                lblMensaje.Text = "";
                 CargarDesplegablesDinamicos();
                 CargarGrillaInicial();
 
@@ -34,7 +35,7 @@ namespace desarrolloweb.UI
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                lblMensaje.Text = "Error al cargar la bitácora: " + ex.Message;
             }
         }
 
@@ -45,6 +46,7 @@ namespace desarrolloweb.UI
             }
             catch (Exception ex)
             {
+                lblMensaje.Text = "Error al cargar filtros: " + ex.Message;
             }
         }
 
@@ -52,11 +54,14 @@ namespace desarrolloweb.UI
         {
             try
             {
+                lblMensaje.Text = "";
 
                 string usuarioSel = string.IsNullOrEmpty(ddlUsuario.SelectedValue) ? "Todos" : ddlUsuario.SelectedValue;
-                string moduloSel = string.IsNullOrEmpty(ddlModulo.SelectedValue) ? "Todos" : ddlModulo.SelectedValue;
+                string moduloSel = "Todos";
+
                 string eventoSel = string.IsNullOrEmpty(ddlEvento.SelectedValue) ? "Todos" : ddlEvento.SelectedValue;
                 string criticidadSel = string.IsNullOrEmpty(ddlCriticidad.SelectedValue) ? "Todos" : ddlCriticidad.SelectedValue;
+
                 DateTime fechaDesde;
                 DateTime fechaHasta;
 
@@ -76,8 +81,10 @@ namespace desarrolloweb.UI
             }
             catch (Exception ex)
             {
+                lblMensaje.Text = "Error al filtrar: " + ex.Message;
             }
-        }
+        
+         }
 
     }
 }

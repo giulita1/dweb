@@ -301,6 +301,10 @@
       <Project>{bb105189-7cb2-437f-a4d9-683585262de3}</Project>
       <Name>BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SEG\SEG.csproj">
+      <Project>{d3bcc255-afc6-4281-8256-a55fc23fe0a2}</Project>
+      <Name>SEG</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,10 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="desarrolloweb.UI.Login" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-
-    <link rel="stylesheet"
-          href="<%= ResolveUrl("~/Styles/login.css") %>" />
-
+    <link rel="stylesheet" href="<%= ResolveUrl("~/Styles/login.css") %>" />
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
@@ -29,4 +26,6 @@
       </div>
 
   </div>
+
+
 </asp:Content>

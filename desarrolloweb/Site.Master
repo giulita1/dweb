@@ -50,6 +50,10 @@
                             OnClick="btnCerrarSesion_Click">Cerrar sesión</asp:LinkButton>
                     </li>
                     <li class="nav-items">
+    <asp:LinkButton ID="btnBitacora" runat="server" 
+        OnClick="btnBitacora_Click">Bitácora</asp:LinkButton>
+</li>
+                    <li class="nav-items">
                         <button type="button" id="btn-carrito">
                             <span class="material-symbols-outlined">shopping_cart</span>
                         </button>

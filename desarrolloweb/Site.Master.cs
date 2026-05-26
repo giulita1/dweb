@@ -18,7 +18,20 @@ namespace desarrolloweb
         {
             Session.Clear();
             Session.Abandon();
-            Response.Redirect("~/UI/Inicio.aspx");
+
+            // Limpiar también la cookie de sesión
+            if (Request.Cookies["ASP.NET_SessionId"] != null)
+            {
+                Response.Cookies["ASP.NET_SessionId"].Value = string.Empty;
+                Response.Cookies["ASP.NET_SessionId"].Expires = DateTime.Now.AddYears(-1);
+            }
+
+            Response.Redirect("~/UI/Inicio.aspx", false);
+        }
+
+        protected void btnBitacora_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(ResolveUrl("~/UI/Bitacora.aspx"), false);
         }
     }
 }

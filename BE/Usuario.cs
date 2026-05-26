@@ -1,11 +1,12 @@
-﻿using System;
+﻿using desarrolloweb.BE;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace desarrolloweb.BE
 {
-    public class Usuario
+    public class Usuario : IUsuario
     {
 
         public int Cod_Usuario { get; set; }
@@ -16,6 +17,8 @@ namespace desarrolloweb.BE
         public string Contrasena { get; set; }
         public bool Bloqueado { get; set; }
         public int Intentos { get; set; }
+
+
 
     }
 }
