@@ -11,7 +11,7 @@ namespace DAL
     public class DALconexion
     {
         protected SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=hotel_;Integrated Security=True");
-
+        private SqlTransaction transaccion;
         public void Conectar()
         {
             try

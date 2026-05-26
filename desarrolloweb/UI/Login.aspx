@@ -9,7 +9,7 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-  <form id="form-login" class="form-login" method="post" action="Login.aspx">
+  <div id="form-login" class="form-login" >
 
       <div class="datos-container">
 
@@ -23,10 +23,10 @@
           <input type="password" id="input-contrasena" name="contrasena">
       </div>
 
-      <span><a href="Registro.html">No estás registrado? Registrate acá</a></span>
+    <span><a href="<%= ResolveUrl("~/UI/Registro.aspx") %>" class="pregunta">¿No estás registrado? Registrate acá</a></span>
+    <input type="submit" class="btn-login" value="INICIAR SESIÓN">
 
       </div>
-      <input type="submit" class="btn-login" value="INICIAR SESIÓN">
 
-  </form>
+  </div>
 </asp:Content>

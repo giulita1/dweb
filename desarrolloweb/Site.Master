@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<%= ResolveUrl("~/Styles/site.css") %>" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script defer src="<%= ResolveUrl("~/ScriptsJS/site.js") %>"></script>
 </head>
 <body>
     <form runat="server">
@@ -18,8 +19,9 @@
         <div class="logo-container">
             <p>HOTEL</p>
         </div> 
-
-        <nav>
+        <button type="button" id="btn-menu"><span class="material-symbols-outlined">menu</span>
+    </button>
+        <nav id="nav-menu">
             <ul>
                 <li class="nav-items">
                     <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
@@ -54,8 +56,7 @@
                     </li>
                 <% } %>
             </ul>
-            <button type="button" id="btn-menu"><span class="material-symbols-outlined">menu</span>
-                </button>
+            
                 
         </nav>
     </header>

@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <section class="hero">
 
-     <img src="<%= ResolveUrl("~/img/principal.jpg") %>"
+     <img src="<%= ResolveUrl("~/img/principal.png") %>"
      alt="Hotel"
      class="imagen-principal">
     <div class="form-reservar">
@@ -41,21 +41,21 @@
             cada estadía.
         </p>
 
-        <div class="features-hotel">
+        <div class="cards-hotel">
 
-            <div class="feature-card">
+            <div class="card-hotel">
                 <span class="material-symbols-outlined">bed</span>
                 <h3>Suites Premium</h3>
                 <p>Habitaciones amplias con vista panorámica.</p>
             </div>
 
-            <div class="feature-card">
+            <div class="card-hotel">
                 <span class="material-symbols-outlined">spa</span>
                 <h3>Spa & Relax</h3>
                 <p>Espacios diseñados para descanso total.</p>
             </div>
 
-            <div class="feature-card">
+            <div class="card-hotel">
                 <span class="material-symbols-outlined">pool</span>
                 <h3>Piscina Climatizada</h3>
                 <p>Disponible durante todo el año.</p>
@@ -67,13 +67,13 @@
 
     <div class="imagenes-hotel">
 
-        <div class="img-container grande">
-            <img src="<%= ResolveUrl("~/img/hotel1.jpg") %>"
+        <div class="img-container">
+            <img src="<%= ResolveUrl("~/img/hotel1.png") %>"
                  class="img-hotel">
         </div>
 
         <div class="img-container">
-            <img src="<%= ResolveUrl("~/img/hotel2.webp") %>"
+            <img src="<%= ResolveUrl("~/img/hotel2.png") %>"
                  class="img-hotel">
         </div>
 
@@ -85,7 +85,7 @@
 
     <div class="img-rest-container">
 
-        <img src="<%= ResolveUrl("~/img/restaurante.jpg") %>"
+        <img src="<%= ResolveUrl("~/img/restaurante.png") %>"
              alt="El restaurante"
              class="img-restaurante">
 
