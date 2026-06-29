@@ -17,8 +17,11 @@ namespace desarrolloweb.BE
         public string Contrasena { get; set; }
         public bool Bloqueado { get; set; }
         public int Intentos { get; set; }
+        public int DVH { get; set; }
 
-
-
+        public string GenerarCadenaDVH()
+        {
+            return $"{Cod_Usuario}{Nombre}{Email}{Apellido}{User}{Contrasena}{Bloqueado}{Intentos}";
+        }
     }
 }

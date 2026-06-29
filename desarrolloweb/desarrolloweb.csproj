@@ -165,10 +165,12 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="Styles\backup-restore.css" />
     <Content Include="Styles\inicio.css" />
     <Content Include="Styles\login.css" />
     <Content Include="Styles\registro.css" />
     <Content Include="Styles\site.css" />
+    <Content Include="UI\BackupRestore.aspx" />
     <Content Include="UI\Bitacora.aspx" />
     <Content Include="UI\Inicio.aspx" />
     <Content Include="UI\Login.aspx" />
@@ -218,6 +220,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BackupRestore.aspx.cs">
+      <DependentUpon>BackupRestore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\BackupRestore.aspx.designer.cs">
+      <DependentUpon>BackupRestore.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI\Bitacora.aspx.cs">
       <DependentUpon>Bitacora.aspx</DependentUpon>

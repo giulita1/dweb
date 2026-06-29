@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLLBackupRestore.cs" />
     <Compile Include="BLLbitacora.cs" />
+    <Compile Include="BLLDVV.cs" />
     <Compile Include="BLLusuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

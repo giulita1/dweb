@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DALBackupRestore.cs" />
     <Compile Include="DALbitacora.cs" />
     <Compile Include="DALconexion.cs" />
     <Compile Include="DALusuario.cs" />
+    <Compile Include="DVV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

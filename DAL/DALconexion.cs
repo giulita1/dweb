@@ -10,9 +10,9 @@ namespace DAL
 {
     public class DALconexion
     {
-        protected SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=hotel_;Integrated Security=True");
+        //protected SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=hotel_;Integrated Security=True");
 
-       // protected SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=hotel_;Integrated Security=True;TrustServerCertificate=True");
+        protected SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=hotel_;Integrated Security=True;TrustServerCertificate=True");
 
 
         private SqlTransaction transaccion;
@@ -71,7 +71,6 @@ namespace DAL
                 Desconectar();
             }
         }
-
         public DataTable LeerText(string consulta, SqlParameter[] parametros = null)
         {
             DataTable tabla = new DataTable();
@@ -98,6 +97,31 @@ namespace DAL
             catch (SqlException ex)
             {
                 throw new Exception("Error en la lectura de datos (SQL): " + ex.Message);
+            }
+            finally
+            {
+                Desconectar();
+            }
+        }
+        public int EscribirYDevolverId_62_RS(string query, SqlParameter[] parametros)
+        {
+            Conectar();
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.CommandType = CommandType.Text;
+            if (parametros != null) cmd.Parameters.AddRange(parametros);
+
+            transaccion = con.BeginTransaction();
+            cmd.Transaction = transaccion;
+            try
+            {
+                int idGenerado = Convert.ToInt32(cmd.ExecuteScalar());
+                transaccion.Commit();
+                return idGenerado;
+            }
+            catch (Exception ex)
+            {
+                transaccion.Rollback();
+                throw new Exception("Error al ejecutar y recuperar ID: " + ex.Message);
             }
             finally
             {
