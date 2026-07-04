@@ -8,7 +8,7 @@ namespace desarrolloweb.BE
 {
     public interface IUsuario
     {
-        int Cod_Usuario { get; set; }
+        int Id_Usuario { get; set; }
         string User { get; set; }
         string Contrasena { get; set; }
     }

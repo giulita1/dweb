@@ -18,7 +18,7 @@ namespace DAL
             try
             {
 
-                string sql = $"SELECT Dvh FROM [{nombreTabla}] WHERE Dvh IS NOT NULL";
+                string sql = $"SELECT DVH FROM [{nombreTabla}] WHERE DVH IS NOT NULL";
 
                 DataTable dt = accesos.LeerText(sql);
 
@@ -40,13 +40,18 @@ namespace DAL
             {
                 string sql = "UPDATE DVV SET ValorDvv = @dvv WHERE NombreTabla = @tabla";
                 SqlParameter[] p = {
-                    new SqlParameter("@dvv", nuevoDvv),
-                    new SqlParameter("@tabla", nombreTabla)
-                };
+            new SqlParameter("@dvv", nuevoDvv),
+            new SqlParameter("@tabla", nombreTabla)
+        };
+
                 if (accesos.EscribirText(sql, p) == 0)
                 {
                     string sqlInsert = "INSERT INTO DVV (NombreTabla, ValorDvv) VALUES (@tabla, @dvv)";
-                    accesos.EscribirText(sqlInsert, p);
+                    SqlParameter[] pInsert = {
+                new SqlParameter("@dvv", nuevoDvv),
+                new SqlParameter("@tabla", nombreTabla)
+            };
+                    accesos.EscribirText(sqlInsert, pInsert);
                 }
             }
             catch (Exception ex)

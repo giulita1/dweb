@@ -44,6 +44,8 @@
     <Compile Include="DALBackupRestore.cs" />
     <Compile Include="DALbitacora.cs" />
     <Compile Include="DALconexion.cs" />
+    <Compile Include="DALHabitacion.cs" />
+    <Compile Include="DALreserva.cs" />
     <Compile Include="DALusuario.cs" />
     <Compile Include="DVV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

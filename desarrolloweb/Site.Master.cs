@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using BE;
 namespace desarrolloweb
 {
     public partial class SiteMaster : MasterPage
@@ -19,7 +19,6 @@ namespace desarrolloweb
             Session.Clear();
             Session.Abandon();
 
-            // Limpiar también la cookie de sesión
             if (Request.Cookies["ASP.NET_SessionId"] != null)
             {
                 Response.Cookies["ASP.NET_SessionId"].Value = string.Empty;

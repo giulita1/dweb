@@ -1,8 +1,7 @@
-﻿
-:root {
+﻿:root {
     --clarito: #f3f2f1;
     --clarito_blur: #f3f2f19b;
-    --primarycolor: rgba(63, 57, 54); /*#3F3936*/
+    --primarycolor: rgba(63, 57, 54);
     --fondooscuro: #B9B4B1;
     --fondooscuro2: #7a7673;
     --verdecito: #E3E8E0;
@@ -50,11 +49,10 @@ body {
     font-display: swap;
 }
 
-
 header {
     backdrop-filter: blur(10px);
     width: 100%;
-    font-family: 'Merriweather';
+    font-family: 'Libre Baskerville';
     display: flex;
     position: fixed;
     justify-content: space-between;
@@ -68,6 +66,10 @@ header {
     height: 80px;
 }
 
+main {
+    min-height: calc(100vh - 80px);
+    padding-top: 80px;
+}
 
 input,
 button,
@@ -82,6 +84,7 @@ nav ul {
     display: flex;
     gap: 20px;
     list-style: none;
+    align-items: center;
 }
 
 a {
@@ -110,10 +113,405 @@ a {
 #btn-carrito {
     background: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
+/* ── Dropdown nav ── */
+.nav-dropdown {
+    position: relative;
+}
 
-@media (max-width:768px) {
+.btn-dropdown {
+    background: none;
+    border: none !important;
+    border-radius: 0 !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Libre Baskerville';
+    font-size: inherit;
+    color: var(--primarycolor);
+    opacity: 0.8;
+    transition: opacity 0.3s;
+    padding: 0;
+}
+
+    .btn-dropdown:hover {
+        opacity: 1;
+    }
+
+    .btn-dropdown .material-symbols-outlined {
+        font-size: 18px;
+        transition: transform 0.2s;
+    }
+
+.nav-dropdown:hover .btn-dropdown .material-symbols-outlined {
+    transform: rotate(180deg);
+}
+
+.btn-perfil {
+    opacity: 0.8;
+}
+
+    .btn-perfil .material-symbols-outlined {
+        font-size: 26px;
+        transition: none !important;
+    }
+
+    .btn-perfil:hover {
+        opacity: 1;
+    }
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 0;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    padding: 8px;
+    min-width: 220px;
+    z-index: 999;
+    list-style: none;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dropdown-derecha {
+    left: auto;
+    right: 0;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+    display: flex;
+}
+
+.dropdown-menu li a,
+.dropdown-menu li .dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    color: var(--primarycolor);
+    opacity: 0.8;
+    transition: background 0.2s, opacity 0.2s;
+    text-decoration: none;
+    width: 100%;
+    background: none;
+    border: none !important;
+    cursor: pointer;
+    font-family: 'Montserrat';
+}
+
+    .dropdown-menu li a:hover,
+    .dropdown-menu li .dropdown-link:hover {
+        background: var(--clarito);
+        opacity: 1;
+    }
+
+.dropdown-menu .material-symbols-outlined {
+    font-size: 18px;
+    color: var(--dorado);
+}
+
+/* ── Footer ── */
+.footer {
+    background-color: var(--primarycolor);
+    color: white;
+    margin-top: 80px;
+}
+
+.footer-contenido {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 50px 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.footer-seccion {
+    flex: 1;
+    min-width: 250px;
+}
+
+    .footer-seccion h3 {
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+    }
+
+    .footer-seccion p {
+        margin-bottom: 8px;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,.2);
+    font-size: 0.9rem;
+}
+
+/* ── Overlay carrito ── */
+#overlay-carrito {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 1100;
+    backdrop-filter: blur(2px);
+}
+
+    #overlay-carrito.active {
+        display: block;
+    }
+
+/* ── Panel carrito ── */
+#carrito {
+    position: fixed;
+    top: 0;
+    right: -480px;
+    width: 440px;
+    height: 100vh;
+    background: white;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -8px 0 40px rgba(0,0,0,0.12);
+}
+
+    #carrito.active {
+        right: 0;
+    }
+
+.carrito-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 32px;
+    border-bottom: 1px solid #f0ede9;
+}
+
+    .carrito-header h2 {
+        font-family: 'Libre Baskerville';
+        font-weight: normal;
+        font-size: 1.4rem;
+        color: var(--primarycolor);
+    }
+
+#btn-cerrar-carrito {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primarycolor);
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    display: flex;
+}
+
+    #btn-cerrar-carrito:hover {
+        opacity: 1;
+    }
+
+.carrito-contenido {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px;
+}
+
+.carrito-vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    height: 100%;
+    opacity: 0.35;
+    color: var(--primarycolor);
+    text-align: center;
+}
+
+    .carrito-vacio .material-symbols-outlined {
+        font-size: 56px;
+    }
+
+.item-habitacion {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.item-img-wrapper {
+    width: 100px;
+    height: 80px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+    .item-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item-tipo {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dorado);
+}
+
+.item-info h3 {
+    font-family: 'Libre Baskerville';
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--primarycolor);
+}
+
+.item-fechas,
+.item-noches {
+    font-size: 0.82rem;
+    color: #7a7673;
+    line-height: 1.5;
+}
+
+.carrito-extra {
+    border-top: 1px solid #f0ede9;
+    padding-top: 24px;
+}
+
+.extra-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 16px 20px;
+    border-radius: 14px;
+    border: 1.5px solid #f0ede9;
+    transition: border-color 0.2s;
+}
+
+    .extra-item:has(input:checked) {
+        border-color: var(--dorado);
+        background: #fdf9f4;
+    }
+
+.extra-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+    .extra-info .material-symbols-outlined {
+        color: var(--dorado);
+        font-size: 22px;
+    }
+
+.extra-info-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.extra-titulo {
+    font-size: 0.9rem;
+    color: var(--primarycolor);
+}
+
+.extra-info small {
+    font-size: 0.75rem;
+    color: #7a7673;
+}
+
+.extra-derecha {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#precio-desayuno {
+    font-size: 0.85rem;
+    color: #7a7673;
+}
+
+.extra-derecha input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--dorado);
+    cursor: pointer;
+    appearance: auto;
+    border-radius: 4px;
+}
+
+.carrito-footer {
+    padding: 24px 32px;
+    border-top: 1px solid #f0ede9;
+}
+
+.total-desglose {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.total-fila {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: #7a7673;
+}
+
+.total-final {
+    font-family: 'Libre Baskerville';
+    font-size: 1.1rem;
+    color: var(--primarycolor);
+    padding-top: 12px;
+    border-top: 1px solid #f0ede9;
+    margin-top: 4px;
+}
+
+.btn-confirmar {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--primarycolor);
+    color: white;
+    border: none;
+    border-radius: 14px !important;
+    font-family: 'Montserrat';
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    .btn-confirmar:hover {
+        background-color: #2a2220;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    #carrito {
+        width: 100%;
+        right: -100%;
+    }
 
     #btn-menu {
         display: block;
@@ -130,6 +528,7 @@ a {
         width: 100%;
         background-color: white;
         padding: 30px 0;
+        z-index: 999;
     }
 
         nav.active {
@@ -137,9 +536,20 @@ a {
         }
 
         nav ul {
-            display: flex;
             flex-direction: column;
             align-items: center;
             gap: 25px;
         }
+
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0 0 0 20px;
+        background: transparent;
+    }
+
+    .btn-dropdown .material-symbols-outlined {
+        display: none;
+    }
 }

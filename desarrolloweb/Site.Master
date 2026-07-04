@@ -1,5 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="desarrolloweb.SiteMaster" %>
-
+<%@ Import Namespace="BE" %>
 
     <!DOCTYPE html>
 <html lang="en">
@@ -21,48 +21,93 @@
         </div> 
         <button type="button" id="btn-menu"><span class="material-symbols-outlined">menu</span>
     </button>
-        <nav id="nav-menu">
-            <ul>
-                <li class="nav-items">
-                    <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
-                </li>
-
+       
                 <%
-                    string pagina = Request.Url.AbsolutePath.ToLower();
-                    bool logueado = Session["usuario"] != null;
-                %>
+    string pagina = Request.Url.AbsolutePath.ToLower();
+    bool logueado = Session["usuario"] != null;
+    int rol = 0;
+    if (logueado)
+        rol = ((desarrolloweb.BE.Usuario)Session["usuario"]).IdRol;
+    bool esAdmin  = rol == 1;
+    bool esCliente = rol == 2;
+%>
 
-                <% if (!logueado && !pagina.Contains("login.aspx")) { %>
-                    <li class="nav-items">
-                        <a href="<%= ResolveUrl("~/UI/Login.aspx") %>">Iniciar sesión</a>
-                    </li>
-                <% } %>
+<nav id="nav-menu">
+    <ul>
+        <li class="nav-items">
+            <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
+        </li>
 
-                <% if (!logueado && !pagina.Contains("registro.aspx")) { %>
-                    <li class="nav-items">
-                        <a href="<%= ResolveUrl("~/UI/Registro.aspx") %>">Registrarse</a>
-                    </li>
-                <% } %>
+        <%-- Links para no logueados --%>
+        <% if (!logueado && !pagina.Contains("login.aspx")) { %>
+            <li class="nav-items">
+                <a href="<%= ResolveUrl("~/UI/Login.aspx") %>">Iniciar sesión</a>
+            </li>
+        <% } %>
 
-                <% if (logueado) { %>
-                    <li class="nav-items">
-                        <asp:LinkButton ID="btnCerrarSesion" runat="server" 
-                            OnClick="btnCerrarSesion_Click">Cerrar sesión</asp:LinkButton>
+        <% if (!logueado && !pagina.Contains("registro.aspx")) { %>
+            <li class="nav-items">
+                <a href="<%= ResolveUrl("~/UI/Registro.aspx") %>">Registrarse</a>
+            </li>
+        <% } %>
+
+        <%-- Menú Administración (solo rol 1) --%>
+        <% if (esAdmin) { %>
+            <li class="nav-items nav-dropdown">
+                <button type="button" class="btn-dropdown">
+                    Administración
+                    <span class="material-symbols-outlined">expand_more</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>">
+                        <span class="material-symbols-outlined">history</span>Bitácora
+                    </a></li>
+                    <li><a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>">
+                        <span class="material-symbols-outlined">verified</span>Dígito Verificador
+                    </a></li>
+                    <li><a href="<%= ResolveUrl("~/UI/PanelHabitaciones.aspx") %>">
+                        <span class="material-symbols-outlined">bed</span>Panel de Habitaciones
+                    </a></li>
+                    <li><a href="<%= ResolveUrl("~/UI/PanelUsuarios.aspx") %>">
+                        <span class="material-symbols-outlined">group</span>Panel de Usuarios
+                    </a></li>
+                </ul>
+            </li>
+        <% } %>
+
+        <%-- Perfil (solo logueados) --%>
+        <% if (logueado) { %>
+            <li class="nav-items nav-dropdown">
+                <button type="button" class="btn-dropdown btn-perfil">
+                    <span class="material-symbols-outlined">account_circle</span>
+                </button>
+                <ul class="dropdown-menu dropdown-derecha">
+                    <% if (esCliente) { %>
+                        <li><a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>">
+                            <span class="material-symbols-outlined">luggage</span>Mis Reservas
+                        </a></li>
+                    <% } %>
+                    <li>
+                        <asp:LinkButton ID="btnCerrarSesion" runat="server"
+                            OnClick="btnCerrarSesion_Click"
+                            CssClass="dropdown-link">
+                            <span class="material-symbols-outlined">logout</span>Cerrar sesión
+                        </asp:LinkButton>
                     </li>
-                    <li class="nav-items">
-    <asp:LinkButton ID="btnBitacora" runat="server" 
-        OnClick="btnBitacora_Click">Bitácora</asp:LinkButton>
-</li>
-                    <li class="nav-items">
-                        <button type="button" id="btn-carrito">
-                            <span class="material-symbols-outlined">shopping_cart</span>
-                        </button>
-                    </li>
-                <% } %>
-            </ul>
-            
-                
-        </nav>
+                </ul>
+            </li>
+
+            <%-- Carrito solo para clientes --%>
+            <% if (esCliente) { %>
+                <li class="nav-items">
+                    <button type="button" id="btn-carrito">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                    </button>
+                </li>
+            <% } %>
+        <% } %>
+    </ul>
+</nav>
     </header>
     
     <main>
@@ -71,9 +116,105 @@
   
     </main>
 
-    <footer>
-        <p>© 2026 Hotel</p>
-    </footer>  </form>
+   <footer class="footer">
+
+    <div class="footer-contenido">
+
+        <div class="footer-seccion">
+            <h3>Contacto</h3>
+            <p>hotelpatagonia2026@gmail.com</p>
+            <p>+54 11 1234-5678</p>
+        </div>
+
+        <div class="footer-seccion">
+            <h3>Ubicación</h3>
+            <p>Av. Patagonia 1250</p>
+            <p>Bariloche, Río Negro</p>
+            <p>Argentina</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Hotel Patagonia. Todos los derechos reservados.
+    </div>
+
+</footer>
+        <% if (logueado) { %>
+<div id="overlay-carrito"></div>
+<div id="carrito">
+
+    <div class="carrito-header">
+        <h2>Tu carrito</h2>
+        <button type="button" id="btn-cerrar-carrito">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+
+    <div class="carrito-contenido" id="carrito-contenido">
+
+        <div class="carrito-vacio" id="carrito-vacio">
+            <span class="material-symbols-outlined">hotel</span>
+            <p>Todavía no seleccionaste ninguna habitación.</p>
+        </div>
+
+        <div id="carrito-item" style="display:none">
+
+            <div class="item-habitacion">
+                <div class="item-img-wrapper">
+                    <img id="carrito-img" src="" alt="Habitación">
+                </div>
+                <div class="item-info">
+                    <span class="item-tipo" id="carrito-tipo"></span>
+                    <h3 id="carrito-nombre"></h3>
+                    <p class="item-fechas" id="carrito-fechas"></p>
+                    <p class="item-noches" id="carrito-noches"></p>
+                </div>
+            </div>
+
+            <div class="carrito-extra">
+               <label class="extra-item">
+                <span class="extra-info">
+                    <span class="material-symbols-outlined">free_breakfast</span>
+                    <span class="extra-info-texto">
+                        <span class="extra-titulo">Desayuno incluido</span>
+                        <small>Por persona, por noche</small>
+                    </span>
+                </span>
+                <span class="extra-derecha">
+                    <span id="precio-desayuno">+ $5.000</span>
+                    <input type="checkbox" id="chk-desayuno">
+                </span>
+            </label>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="carrito-footer" id="carrito-footer" style="display:none">
+        <div class="total-desglose">
+            <div class="total-fila">
+                <span id="lbl-precio-hab"></span>
+                <span id="val-precio-hab"></span>
+            </div>
+            <div class="total-fila" id="fila-desayuno" style="display:none">
+                <span id="lbl-desayuno"></span>
+                <span id="val-desayuno"></span>
+            </div>
+            <div class="total-fila total-final">
+                <span>Total</span>
+                <span id="val-total"></span>
+            </div>
+        </div>
+        <button type="button" class="btn-confirmar" id="btn-confirmar">
+            Confirmar reserva
+        </button>
+    </div>
+
+</div>
+<% } %>
+    </form>
     </body>
     </html>
 

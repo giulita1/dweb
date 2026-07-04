@@ -25,31 +25,51 @@ namespace desarrolloweb.BLL
                 {
                     throw new Exception("Ya existe una sesión activa. Debe cerrar la sesión actual para iniciar una nueva.");
                 }
+
                 string passHasheada = SEG.encriptar.EncriptarContraseña(Contrasena);
                 BE.Usuario usuario = Dal.ValidarAcceso(Usuario, passHasheada);
-                int usulogin = usuario.Cod_Usuario;
+
                 if (usuario == null)
                 {
+                    bool existeUsuario = Dal.ExisteUsuario(Usuario);
+
+                    if (!existeUsuario)
+                    {
+                        throw new Exception("Credenciales incorrectas.");
+                    }
+
                     int intentosResultantes = Dal.SumarIntentosFallidos(Usuario);
+
                     if (intentosResultantes >= 3)
                     {
                         BloquearUsuarioPorNombre(Usuario);
-
                         bllBitacora.InsertarBitacora(0, $"Bloqueo preventivo de cuenta: {Usuario}", "Seguridad", "Alta");
                         throw new Exception("Has superado los 3 intentos. El usuario ha sido bloqueado por seguridad.");
                     }
-                    throw new Exception($"Credenciales incorrectas. Intento {usuario.Intentos} de 3.");
+
+                    throw new Exception($"Credenciales incorrectas. Intento {intentosResultantes} de 3.");
                 }
-                if (usuario.Bloqueado) throw new Exception("Cuenta bloqueada.");
+
+
+                if (usuario.Bloqueado)
+                {
+                    throw new Exception("Cuenta bloqueada.");
+                }
+
+                int usulogin = usuario.Id_Usuario;
 
                 SingletonSession.Instancia.IniciarSesion(usuario);
                 Dal.ResetearIntentos(Usuario);
-                int idUsuarioActual = SingletonSession.Instancia.Usuario.Cod_Usuario;
+
+                int idUsuarioActual = SingletonSession.Instancia.Usuario.Id_Usuario;
                 bllBitacora.InsertarBitacora(idUsuarioActual, "Inicio de sesión exitoso", "Seguridad", "1");
 
                 return "¡Bienvenido/a!";
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public void logout()
         {

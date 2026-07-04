@@ -9,7 +9,7 @@ namespace desarrolloweb.BE
     public class Usuario : IUsuario
     {
 
-        public int Cod_Usuario { get; set; }
+        public int Id_Usuario { get; set; }
         public string Nombre { get; set; }
         public string Email { get; set; }
         public string Apellido { get; set; }
@@ -19,9 +19,11 @@ namespace desarrolloweb.BE
         public int Intentos { get; set; }
         public int DVH { get; set; }
 
+        public int IdRol { get; set; }
+
         public string GenerarCadenaDVH()
         {
-            return $"{Cod_Usuario}{Nombre}{Email}{Apellido}{User}{Contrasena}{Bloqueado}{Intentos}";
+            return $"{Id_Usuario}{Nombre}{Email}{Apellido}{User}{Contrasena}{Bloqueado}{Intentos}";
         }
     }
 }

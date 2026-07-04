@@ -14,7 +14,7 @@ namespace BLL
         private DAL.DALBackupRestore dalBackupRestore = new DAL.DALBackupRestore();
         private BLLbitacora bllBitacora = new BLLbitacora();
         private readonly string carpetaPuente = @"C:\Users\Public\Documents";
-        int usu = SingletonSession.Instancia.Usuario != null ? SingletonSession.Instancia.Usuario.Cod_Usuario : 0;
+        int usu = SingletonSession.Instancia.Usuario != null ? SingletonSession.Instancia.Usuario.Id_Usuario : 0;
 
         public void BackupDatabase(string carpetaDestinoProyecto)
         {

@@ -1,0 +1,282 @@
+﻿/* ── Hero ── */
+.hero-misreservas {
+    background-color: var(--primarycolor);
+    padding: 80px 8% 60px;
+    display: flex;
+    align-items: flex-end;
+    min-height: 240px;
+}
+
+.hero-texto h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: normal;
+    color: white;
+    letter-spacing: -1px;
+    margin: 12px 0 10px;
+}
+
+.hero-texto p {
+    color: rgba(255,255,255,0.65);
+    font-size: 16px;
+}
+
+/* ── Contenedor ── */
+.contenedor-misreservas {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 5% 80px;
+}
+
+/* ── Sin reservas ── */
+.sin-reservas {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--primarycolor);
+    opacity: 0.5;
+}
+
+.sin-reservas .material-symbols-outlined {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 20px;
+    color: var(--dorado);
+}
+
+.sin-reservas h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.6rem;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.sin-reservas p {
+    margin-bottom: 28px;
+}
+
+.btn-ir-reservar {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--primarycolor);
+    color: white;
+    border-radius: 999px;
+    font-family: 'Montserrat';
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    transition: 0.3s;
+    opacity: 1;
+}
+
+.btn-ir-reservar:hover {
+    background: #2a2220;
+    transform: translateY(-2px);
+}
+
+/* ── Grid ── */
+.reservas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+    gap: 28px;
+}
+
+/* ── Card reserva ── */
+.card-reserva {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    display: flex;
+    transition: box-shadow 0.3s;
+}
+
+.card-reserva:hover {
+    box-shadow: 0 12px 36px rgba(0,0,0,0.11);
+}
+
+.card-reserva.cancelada {
+    opacity: 0.6;
+}
+
+/* ── Imagen ── */
+.card-reserva-img {
+    position: relative;
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.card-reserva-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.badge-estado {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: 'Montserrat';
+}
+
+.badge-estado.confirmada {
+    background: rgba(255,255,255,0.92);
+    color: #2a7a4a;
+}
+
+.badge-estado.cancelada {
+    background: rgba(255,255,255,0.92);
+    color: #b91c1c;
+}
+
+.badge-estado.pendiente {
+    background: rgba(255,255,255,0.92);
+    color: #92400e;
+}
+
+/* ── Contenido ── */
+.card-reserva-contenido {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+.reserva-tipo {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dorado);
+}
+
+.card-reserva-contenido h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: var(--primarycolor);
+}
+
+/* ── Fechas ── */
+.reserva-fechas {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.fecha-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fecha-item .material-symbols-outlined {
+    font-size: 18px;
+    color: var(--dorado);
+}
+
+.fecha-item small {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #7a7673;
+}
+
+.fecha-item p {
+    font-size: 0.88rem;
+    color: var(--primarycolor);
+}
+
+.fecha-sep {
+    width: 1px;
+    height: 32px;
+    background: #f0ede9;
+}
+
+/* ── Detalles ── */
+.reserva-detalles {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.reserva-detalles span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: #7a7673;
+}
+
+.reserva-detalles .material-symbols-outlined {
+    font-size: 16px;
+    color: var(--dorado);
+}
+
+/* ── Footer card ── */
+.reserva-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid #f0ede9;
+}
+
+.reserva-total small {
+    display: block;
+    font-size: 0.72rem;
+    color: #7a7673;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.reserva-total span {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.2rem;
+    color: var(--primarycolor);
+}
+
+.btn-cancelar {
+    padding: 9px 20px;
+    border: 1.5px solid #e0dbd8 !important;
+    border-radius: 999px;
+    background: transparent !important;
+    color: #b91c1c !important;
+    font-family: 'Montserrat';
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-cancelar:hover {
+    background: #fef2f2 !important;
+    border-color: #b91c1c !important;
+}
+
+.lbl-cancelada {
+    font-size: 0.8rem;
+    color: #b91c1c;
+    opacity: 0.7;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .reservas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-reserva {
+        flex-direction: column;
+    }
+
+    .card-reserva-img {
+        width: 100%;
+        height: 200px;
+    }
+}

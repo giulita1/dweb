@@ -80,6 +80,20 @@ namespace desarrolloweb.DAL
                 return builder.ToString();
             }
         }
+
+        public bool ExisteUsuario(string nombreUsuario)
+        {
+            string query = "SELECT COUNT(1) FROM Usuarios WHERE usuario = @u";
+
+            Conectar();
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@u", nombreUsuario);
+            int resultado = (int)cmd.ExecuteScalar();
+            Desconectar();
+            return resultado > 0;
+        }
+
+
         public BE.Usuario ValidarAcceso(string usuario, string contrasena)
         {
 
@@ -89,7 +103,7 @@ namespace desarrolloweb.DAL
                 SqlParameter[] p = {
             new SqlParameter("@u", usuario),
             new SqlParameter("@p", contrasena)
-        };
+                };
 
                 DataTable dt = LeerText(query, p);
 
@@ -98,7 +112,7 @@ namespace desarrolloweb.DAL
                     DataRow dr = dt.Rows[0];
                     return new BE.Usuario
                     {
-                        Cod_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
+                        Id_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
                         Nombre = dr["nombre"].ToString(),
                         Apellido = dr["apellido"].ToString(),
                         Email = dr["email"].ToString(),

@@ -7,38 +7,29 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace desarrolloweb
+namespace desarrolloweb.UI
 {
 
 
-    public partial class SiteMaster
+    public partial class MisReservas
     {
 
         /// <summary>
-        /// Control HeadContent.
+        /// Control pnlSinReservas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
+        protected global::System.Web.UI.WebControls.Panel pnlSinReservas;
 
         /// <summary>
-        /// Control btnCerrarSesion.
+        /// Control rptReservas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnCerrarSesion;
-
-        /// <summary>
-        /// Control MainContent.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Repeater rptReservas;
     }
 }

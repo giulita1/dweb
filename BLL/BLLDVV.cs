@@ -14,7 +14,7 @@ namespace BLL
     public class BLLDVV
     {
         private DAL.DVV DalDvv = new DAL.DVV();
-        int usu = SingletonSession.Instancia.Usuario != null ? SingletonSession.Instancia.Usuario.Cod_Usuario : 0;
+        int usu = SingletonSession.Instancia.Usuario != null ? SingletonSession.Instancia.Usuario.Id_Usuario : 0;
 
         public void RecalcularDVV(string nombreTabla_62_RS)
         {
@@ -62,14 +62,14 @@ namespace BLL
                         int dvhEnVivo = digitoVerificador.CalcularDVH(BIT);
                         if (dvhEnVivo != BIT.DVH)
                         {
-                            listaErrores.Add(new BE.Infraccion { Tabla = "BitacoraS", IdRegistro = BIT.Id_Bitacora.ToString(), TipoError = "Horizontal (Fila Alterada)" });
+                            listaErrores.Add(new BE.Infraccion { Tabla = "Bitacora", IdRegistro = BIT.Id_Bitacora.ToString(), TipoError = "Horizontal (Fila Alterada)" });
                         }
                         sumaDvhCalculadaBitacora += dvhEnVivo;
                     }
                     int dvvGuardadoBitacora = DalDvv.ObtenerDvvGuardado("Bitacora");
                     if (sumaDvhCalculadaBitacora != dvvGuardadoBitacora)
                     {
-                        listaErrores.Add(new BE.Infraccion { Tabla = "Bitacora_62_RS", IdRegistro = "COLUMNA", TipoError = "Vertical (Suma total no coincide)" });
+                        listaErrores.Add(new BE.Infraccion { Tabla = "Bitacora", IdRegistro = "COLUMNA", TipoError = "Vertical (Suma total no coincide)" });
                     }
                 }
                 catch (Exception ex) { System.Diagnostics.Debug.WriteLine("Error validando Bitácora: " + ex.Message); }

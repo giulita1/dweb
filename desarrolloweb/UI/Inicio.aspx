@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
       <link rel="stylesheet"
         href="<%= ResolveUrl("~/Styles/inicio.css") %>" />
+    <script defer src="<%= ResolveUrl("~/ScriptsJS/inicio.js") %>"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <section class="hero">
@@ -9,6 +10,12 @@
      <img src="<%= ResolveUrl("~/img/principal.png") %>"
      alt="Hotel"
      class="imagen-principal">
+
+    <div class="hero-titulo">
+        <span class="subtitulo-section">BARILOCHE, PATAGONIA</span>
+        <h1>Hotel Patagonia</h1>
+    </div>
+
     <div class="form-reservar">
 
         <div class="input-container">
@@ -20,7 +27,17 @@
         <input type="date" id="fecha-salida" class="input-date" name="fecha-salida" required>
     </div>
 
-    <button type="submit" class="btn-reservar">RESERVAR</button>
+    <div class="input-container">
+    <label>Cantidad de huéspedes</label>
+    <div class="input-huespedes-wrapper">
+        <button type="button" class="btn-cantidad" id="btn-menos">−</button>
+        <input type="number" id="cant-huespedes" class="display-huespedes"
+               value="1" min="1" max="4" readonly>
+        <button type="button" class="btn-cantidad" id="btn-mas">+</button>
+    </div>
+</div>
+
+    <button type="button" class="btn-reservar">RESERVAR</button>
     </div>
         
 </section>

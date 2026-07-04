@@ -44,6 +44,8 @@
     <Compile Include="BLLBackupRestore.cs" />
     <Compile Include="BLLbitacora.cs" />
     <Compile Include="BLLDVV.cs" />
+    <Compile Include="BLLHabitacion.cs" />
+    <Compile Include="BLLReserva.cs" />
     <Compile Include="BLLusuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

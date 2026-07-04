@@ -14,13 +14,13 @@ namespace desarrolloweb.DAL
         {
             try
             {
-                string query = @"INSERT INTO Bitacora (Id_Usuario, Actividad, modulo, Criticidad, Fecha, Hora) 
+                string query = @"INSERT INTO Bitacora (Id_Usuario, Actividad, Modulo, Criticidad, Fecha, Hora) 
                              VALUES (@Id_Usuario, @Actividad, @modulo, @Criticidad, @Fecha, @Hora);
                             SELECT SCOPE_IDENTITY();";
                 SqlParameter[] sqlParameter = new SqlParameter[6];
                 sqlParameter[0] = new SqlParameter("@Id_Usuario", BT.Id_Usuario);
                 sqlParameter[1] = new SqlParameter("@Actividad", BT.Actividad);
-                sqlParameter[2] = new SqlParameter("@modulo", BT.modulo);
+                sqlParameter[2] = new SqlParameter("@Modulo", BT.modulo);
                 sqlParameter[3] = new SqlParameter("@Criticidad", BT.Criticidad);
                 sqlParameter[4] = new SqlParameter("@Fecha",BT.Fecha);
                 sqlParameter[5] = new SqlParameter("@Hora",BT.Hora);
