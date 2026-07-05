@@ -115,6 +115,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="GestionUsuarios.aspx" />
     <Content Include="Global.asax" />
     <Content Include="img\habitaciones\estandardoble.png" />
     <Content Include="img\habitaciones\estandarpremium.png" />
@@ -171,6 +172,7 @@
     <Content Include="Site.Master" />
     <Content Include="Styles\backup-restore.css" />
     <Content Include="Styles\confirmarReserva.css" />
+    <Content Include="Styles\gestionUsuarios.css" />
     <Content Include="Styles\inicio.css" />
     <Content Include="Styles\login.css" />
     <Content Include="Styles\misReservas.css" />
@@ -212,6 +214,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionUsuarios.aspx.cs">
+      <DependentUpon>GestionUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionUsuarios.aspx.designer.cs">
+      <DependentUpon>GestionUsuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

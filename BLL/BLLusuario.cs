@@ -17,6 +17,19 @@ namespace desarrolloweb.BLL
         DALusuario Dal = new DALusuario();
         BLLbitacora bllBitacora = new BLLbitacora();
 
+        public List<BE.Usuario> ObtenerTodos(string busqueda = "", bool soloBloqueados = false)
+        {
+            return Dal.ObtenerTodos(busqueda, soloBloqueados);
+        }
+
+        public void DesbloquearUsuario(int idUsuario)
+        {
+            if (idUsuario <= 0)
+                throw new ArgumentException("Usuario inválido.");
+
+            Dal.DesbloquearUsuario(idUsuario);
+            bllBitacora.InsertarBitacora(idUsuario, $"Usuario desbloqueado: {idUsuario}", "Seguridad", "Media");
+        }
         public string Login(string Usuario, string Contrasena)
         {
             try

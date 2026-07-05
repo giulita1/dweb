@@ -18,9 +18,7 @@ namespace desarrolloweb.BE
         public bool Bloqueado { get; set; }
         public int Intentos { get; set; }
         public int DVH { get; set; }
-
         public int IdRol { get; set; }
-
         public string GenerarCadenaDVH()
         {
             return $"{Id_Usuario}{Nombre}{Email}{Apellido}{User}{Contrasena}{Bloqueado}{Intentos}";

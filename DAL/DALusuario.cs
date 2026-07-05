@@ -13,6 +13,56 @@ namespace desarrolloweb.DAL
 {
     public class DALusuario : DALconexion
     {
+        public List<BE.Usuario> ObtenerTodos(string busqueda = "", bool soloBlockeados = false)
+        {
+            List<BE.Usuario> lista = new List<BE.Usuario>();
+
+            string query = @"
+                SELECT Id_Usuario, nombre, apellido, email, usuario, 
+                       bloqueado, intentos, IdRol
+                FROM Usuarios
+                WHERE (@Busqueda = '' OR 
+                       nombre LIKE '%' + @Busqueda + '%' OR 
+                       apellido LIKE '%' + @Busqueda + '%' OR 
+                       email LIKE '%' + @Busqueda + '%' OR
+                       usuario LIKE '%' + @Busqueda + '%')
+                  AND (@SoloBloqueados = 0 OR bloqueado = 1)
+                ORDER BY apellido, nombre";
+
+            SqlParameter[] p = {
+        new SqlParameter("@Busqueda",       busqueda ?? ""),
+        new SqlParameter("@SoloBloqueados", soloBlockeados ? 1 : 0)
+    };
+
+            DataTable dt = LeerText(query, p);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                lista.Add(new BE.Usuario
+                {
+                    Id_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
+                    Nombre = dr["nombre"].ToString(),
+                    Apellido = dr["apellido"].ToString(),
+                    Email = dr["email"].ToString(),
+                    User = dr["usuario"].ToString(),
+                    Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
+                    Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
+                    IdRol = Convert.ToInt32(dr["IdRol"])
+                });
+            }
+
+            return lista;
+        }
+
+        public void DesbloquearUsuario(int idUsuario)
+        {
+            string query = @"UPDATE Usuarios 
+                     SET bloqueado = 0, intentos = 0 
+                     WHERE Id_Usuario = @Id";
+
+            SqlParameter[] p = { new SqlParameter("@Id", idUsuario) };
+            EscribirText(query, p);
+        }
         public bool VerificarExistencia(Usuario usuario)
         {
             string query = "SELECT COUNT(*) FROM USUARIOS WHERE email = @email OR usuario = @user";
@@ -119,7 +169,8 @@ namespace desarrolloweb.DAL
                         User = dr["usuario"].ToString(),
                         Contrasena = dr["contrasena"].ToString(),
                         Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
-                        Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0
+                        Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
+                        IdRol = Convert.ToInt32(dr["IdRol"])
                     };
                 }
                 return null;

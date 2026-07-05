@@ -25,8 +25,10 @@ namespace desarrolloweb.UI
                 }
                 try
                 {
-                    string mensaje = bllusuario.Login(usuarioIngresado, contrasenaIngresada);
-                    Session["usuario"] = usuario;
+                    bllusuario.Login(usuarioIngresado, contrasenaIngresada);
+         
+                    Session["usuario"] = SEG.singleton.SingletonSession.Instancia.Usuario;
+
                     Response.Redirect("~/UI/Inicio.aspx", false);
                 }
                 catch (Exception ex)

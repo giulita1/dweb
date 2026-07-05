@@ -1,0 +1,313 @@
+﻿/* ── Hero ── */
+.hero-gestion {
+    background-color: var(--primarycolor);
+    padding: 80px 8% 60px;
+    display: flex;
+    align-items: flex-end;
+    min-height: 240px;
+}
+
+.hero-gestion .hero-texto h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: normal;
+    color: white;
+    letter-spacing: -1px;
+    margin: 12px 0 10px;
+}
+
+.hero-gestion .hero-texto p {
+    color: rgba(255,255,255,0.65);
+    font-size: 15px;
+}
+
+/* ── Contenedor ── */
+.contenedor-gestion {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 5% 80px;
+}
+
+/* ── Filtros ── */
+.filtros-gestion {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: white;
+    padding: 24px 28px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    margin-bottom: 28px;
+}
+
+.filtro-busqueda {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 260px;
+    background: var(--clarito);
+    border-radius: 10px;
+    padding: 0 14px;
+    border: 1.5px solid #e0dbd8;
+    transition: border-color 0.2s;
+}
+
+.filtro-busqueda:focus-within {
+    border-color: var(--dorado);
+}
+
+.filtro-busqueda .material-symbols-outlined {
+    color: #b0a9a5;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.input-busqueda {
+    border: none !important;
+    background: transparent;
+    padding: 12px 0;
+    font-family: 'Montserrat';
+    font-size: 0.9rem;
+    color: var(--primarycolor);
+    outline: none;
+    width: 100%;
+    border-radius: 0 !important;
+}
+
+.filtro-checks {
+    display: flex;
+    gap: 16px;
+}
+
+.check-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: var(--primarycolor);
+    white-space: nowrap;
+}
+
+.check-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--dorado);
+    cursor: pointer;
+    appearance: auto;
+}
+
+.btn-buscar-gestion {
+    padding: 12px 28px;
+    background: var(--primarycolor);
+    color: white;
+    border: none;
+    border-radius: 10px !important;
+    font-family: 'Montserrat';
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.btn-buscar-gestion:hover {
+    background: #2a2220;
+    transform: translateY(-1px);
+}
+
+/* ── Contador ── */
+.contador-resultados {
+    display: block;
+    font-size: 0.85rem;
+    color: #7a7673;
+    margin-bottom: 16px;
+}
+
+/* ── Tabla ── */
+.tabla-wrapper {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-usuarios thead tr {
+    background: var(--clarito);
+    border-bottom: 1px solid #e0dbd8;
+}
+
+.tabla-usuarios th {
+    padding: 14px 20px;
+    text-align: left;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--primarycolor);
+    opacity: 0.6;
+    font-weight: normal;
+}
+
+.tabla-usuarios td {
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    color: var(--primarycolor);
+    border-bottom: 1px solid #f5f3f1;
+    vertical-align: middle;
+}
+
+.tabla-usuarios tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla-usuarios tbody tr:hover {
+    background: #fdfcfb;
+}
+
+.fila-bloqueada {
+    background: #fff8f8 !important;
+}
+
+/* ── Avatar usuario ── */
+.usuario-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.usuario-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--dorado);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.usuario-nombre {
+    font-size: 0.9rem;
+    color: var(--primarycolor);
+}
+
+.usuario-user {
+    font-size: 0.78rem;
+    color: #7a7673;
+}
+
+/* ── Badges ── */
+.badge-rol {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.badge-rol.admin {
+    background: #f0f4ff;
+    color: #3b5bdb;
+}
+
+.badge-rol.cliente {
+    background: var(--clarito);
+    color: #7a7673;
+}
+
+.badge-estado {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+}
+
+.badge-estado.activo {
+    background: #f0fdf4;
+    color: #2a7a4a;
+}
+
+.badge-estado.bloqueado {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.td-intentos {
+    color: #7a7673;
+}
+
+/* ── Botón desbloquear ── */
+.btn-desbloquear {
+    padding: 7px 16px;
+    border: 1.5px solid #e0dbd8 !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: #2a7a4a !important;
+    font-family: 'Montserrat';
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-desbloquear:hover {
+    background: #f0fdf4 !important;
+    border-color: #2a7a4a !important;
+}
+
+.sin-accion {
+    color: #c0bab7;
+    font-size: 0.9rem;
+}
+
+/* ── Sin resultados ── */
+.sin-resultados {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--primarycolor);
+    opacity: 0.5;
+}
+
+.sin-resultados .material-symbols-outlined {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 20px;
+    color: var(--dorado);
+    opacity: 1;
+}
+
+.sin-resultados h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.4rem;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+
+    .tabla-wrapper {
+        overflow-x: auto;
+    }
+
+    .tabla-usuarios {
+        min-width: 650px;
+    }
+
+    .filtros-gestion {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-buscar-gestion {
+        width: 100%;
+    }
+}

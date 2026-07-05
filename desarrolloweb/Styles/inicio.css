@@ -372,21 +372,29 @@
         align-self: center;
     }
 }
-
 @media (max-width: 768px) {
+
+    /* ── Hero ── */
+    .hero-titulo {
+        top: 32%;
+    }
+
+    .hero-titulo h1 {
+        font-size: clamp(36px, 10vw, 52px);
+    }
 
     .form-reservar {
         flex-direction: column;
-        width: calc(100% - 40px);
+        width: calc(100% - 32px);
         left: 50%;
-        bottom: 30px;
-        gap: 18px;
+        bottom: 20px;
+        gap: 16px;
         padding: 20px;
     }
 
     .input-container {
         width: 100%;
-        align-items: center;
+        align-items: stretch;
     }
 
     .input-container label {
@@ -394,13 +402,20 @@
         text-align: center;
     }
 
-    .input-date,
-    .btn-reservar, .display-huespedes {
+    .input-date {
         width: 100%;
     }
 
-    .elhotel,
-    .restaurante {
+    .input-huespedes-wrapper {
+        width: 100%;
+    }
+
+    .btn-reservar {
+        width: 100%;
+    }
+
+    /* ── El Hotel ── */
+    .elhotel {
         flex-direction: column;
         padding: 80px 20px;
         gap: 50px;
@@ -415,22 +430,33 @@
         height: 320px;
     }
 
+    .cards-hotel {
+        flex-direction: column;
+    }
+
+    .descripcion-hotel h1 {
+        font-size: 42px;
+    }
+
+    /* ── Restaurante ── */
+    .restaurante {
+        flex-direction: column;
+        padding: 80px 20px;
+        gap: 50px;
+        text-align: center;
+    }
+
     .img-restaurante {
         width: 100%;
         max-width: 100%;
         height: 300px;
     }
 
-    .cards-hotel {
-        flex-direction: column;
+    .restaurante-descripcion h2 {
+        font-size: 42px;
     }
 
     .btn-ver {
         align-self: center;
-    }
-
-    .descripcion-hotel h1,
-    .restaurante-descripcion h2 {
-        font-size: 42px;
     }
 }

@@ -100,3 +100,23 @@ document.getElementById("btn-confirmar")?.addEventListener("click", () => {
 });
 
 cargarCarrito();
+
+// ── Perfil ───────────────────────────────────────────────
+const btnPerfil = document.getElementById("btn-perfil");
+const panelPerfil = document.getElementById("panel-perfil");
+const overlayPerfil = document.getElementById("overlay-perfil");
+const btnCerrarPerfil = document.getElementById("btn-cerrar-perfil");
+
+function abrirPerfil() {
+    panelPerfil?.classList.add("active");
+    overlayPerfil?.classList.add("active");
+}
+
+function cerrarPerfil() {
+    panelPerfil?.classList.remove("active");
+    overlayPerfil?.classList.remove("active");
+}
+
+btnPerfil?.addEventListener("click", abrirPerfil);
+btnCerrarPerfil?.addEventListener("click", cerrarPerfil);
+overlayPerfil?.addEventListener("click", cerrarPerfil);

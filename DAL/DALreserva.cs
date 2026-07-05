@@ -23,7 +23,7 @@ namespace DAL
                            r.IncluyeDesayuno, r.Total, r.FechaReserva,
                            h.Nombre, h.Tipo, h.ImagenUrl
                     FROM Reservas r
-                    INNER JOIN Habitaciones h ON r.Id_Habitacion = h.Id_Habitacion
+                    INNER JOIN Habitacion h ON r.Id_Habitacion = h.Id_Habitacion
                     WHERE r.Id_Usuario = @IdUsuario
                     ORDER BY r.FechaReserva DESC";
 

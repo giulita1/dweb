@@ -32,13 +32,12 @@
     bool esCliente = rol == 2;
 %>
 
-<nav id="nav-menu">
+        <nav id="nav-menu">
     <ul>
         <li class="nav-items">
             <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
         </li>
 
-        <%-- Links para no logueados --%>
         <% if (!logueado && !pagina.Contains("login.aspx")) { %>
             <li class="nav-items">
                 <a href="<%= ResolveUrl("~/UI/Login.aspx") %>">Iniciar sesión</a>
@@ -51,7 +50,6 @@
             </li>
         <% } %>
 
-        <%-- Menú Administración (solo rol 1) --%>
         <% if (esAdmin) { %>
             <li class="nav-items nav-dropdown">
                 <button type="button" class="btn-dropdown">
@@ -75,29 +73,13 @@
             </li>
         <% } %>
 
-        <%-- Perfil (solo logueados) --%>
         <% if (logueado) { %>
-            <li class="nav-items nav-dropdown">
-                <button type="button" class="btn-dropdown btn-perfil">
+            <li class="nav-items">
+                <button type="button" id="btn-perfil">
                     <span class="material-symbols-outlined">account_circle</span>
                 </button>
-                <ul class="dropdown-menu dropdown-derecha">
-                    <% if (esCliente) { %>
-                        <li><a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>">
-                            <span class="material-symbols-outlined">luggage</span>Mis Reservas
-                        </a></li>
-                    <% } %>
-                    <li>
-                        <asp:LinkButton ID="btnCerrarSesion" runat="server"
-                            OnClick="btnCerrarSesion_Click"
-                            CssClass="dropdown-link">
-                            <span class="material-symbols-outlined">logout</span>Cerrar sesión
-                        </asp:LinkButton>
-                    </li>
-                </ul>
             </li>
 
-            <%-- Carrito solo para clientes --%>
             <% if (esCliente) { %>
                 <li class="nav-items">
                     <button type="button" id="btn-carrito">
@@ -106,6 +88,7 @@
                 </li>
             <% } %>
         <% } %>
+
     </ul>
 </nav>
     </header>
@@ -210,6 +193,77 @@
         <button type="button" class="btn-confirmar" id="btn-confirmar">
             Confirmar reserva
         </button>
+    </div>
+
+</div>
+<% } %>
+
+        <% if (logueado) { %>
+<div id="overlay-perfil"></div>
+<div id="panel-perfil">
+
+    <div class="perfil-header">
+        <div class="perfil-avatar">
+            <span class="material-symbols-outlined">account_circle</span>
+        </div>
+        <div class="perfil-info">
+            <h2><%= ((desarrolloweb.BE.Usuario)Session["usuario"]).Nombre %> <%= ((desarrolloweb.BE.Usuario)Session["usuario"]).Apellido %></h2>
+            <p><%= ((desarrolloweb.BE.Usuario)Session["usuario"]).Email %></p>
+        </div>
+        <button type="button" id="btn-cerrar-perfil">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+
+    <div class="perfil-contenido">
+
+        <% if (((desarrolloweb.BE.Usuario)Session["usuario"]).IdRol == 2) { %>
+        <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="perfil-item">
+            <span class="material-symbols-outlined">luggage</span>
+            <div>
+                <p>Mis Reservas</p>
+                <small>Revisá y gestioná tus reservas</small>
+            </div>
+            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+        </a>
+        <% } %>
+
+        <% if (((desarrolloweb.BE.Usuario)Session["usuario"]).IdRol == 1) { %>
+        <a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
+            <span class="material-symbols-outlined">history</span>
+            <div>
+                <p>Bitácora</p>
+                <small>Registro de actividad</small>
+            </div>
+            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+        </a>
+        <a href="<%= ResolveUrl("~/UI/PanelHabitaciones.aspx") %>" class="perfil-item">
+            <span class="material-symbols-outlined">bed</span>
+            <div>
+                <p>Panel de Habitaciones</p>
+                <small>Administrá las habitaciones</small>
+            </div>
+            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+        </a>
+        <a href="<%= ResolveUrl("~/UI/PanelUsuarios.aspx") %>" class="perfil-item">
+            <span class="material-symbols-outlined">group</span>
+            <div>
+                <p>Panel de Usuarios</p>
+                <small>Administrá los usuarios</small>
+            </div>
+            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+        </a>
+        <% } %>
+
+    </div>
+
+    <div class="perfil-footer">
+        <asp:LinkButton ID="btnCerrarSesion2" runat="server"
+            OnClick="btnCerrarSesion_Click"
+            CssClass="btn-cerrar-sesion">
+            <span class="material-symbols-outlined">logout</span>
+            Cerrar sesión
+        </asp:LinkButton>
     </div>
 
 </div>
