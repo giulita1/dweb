@@ -130,6 +130,7 @@
     <Content Include="img\restaurante.png" />
     <Content Include="ScriptsJS\Bitacora.js" />
     <Content Include="ScriptsJS\inicio.js" />
+    <Content Include="ScriptsJS\login.js" />
     <Content Include="ScriptsJS\registro.js" />
     <Content Include="fonts\LibreBaskerville-Regular.woff" />
     <Content Include="fonts\Montserrat-ExtraLight.woff2" />

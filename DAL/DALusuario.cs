@@ -228,6 +228,44 @@ namespace desarrolloweb.DAL
                 throw new Exception("Error en DAL al resetear los intentos: " + ex.Message);
             }
         }
+        public bool ExisteEmail(string email)
+        {
+            string query = "SELECT COUNT(1) FROM Usuarios WHERE email = @email";
 
+            try
+            {
+                Conectar();
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@email", email);
+                int resultado = (int)cmd.ExecuteScalar();
+                return resultado > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en DAL al verificar email: " + ex.Message);
+            }
+            finally
+            {
+                Desconectar();
+            }
+        }
+
+        public void ActualizarContrasenaPorEmail(string email, string nuevaContrasenaHasheada)
+        {
+            string sql = "UPDATE Usuarios SET contrasena = @pass WHERE email = @email";
+            SqlParameter[] p = {
+        new SqlParameter("@pass", nuevaContrasenaHasheada),
+        new SqlParameter("@email", email)
+    };
+
+            try
+            {
+                EscribirText(sql, p);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en DAL al actualizar contraseña: " + ex.Message);
+            }
+        }
     }
 }

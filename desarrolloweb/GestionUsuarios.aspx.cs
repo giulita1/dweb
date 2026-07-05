@@ -26,22 +26,22 @@ namespace desarrolloweb
 
         private void CargarUsuarios()
         {
-            string busqueda = txtBusqueda.Value.Trim();
-            bool soloBloqueados = chkSoloBloqueados.Checked;
+            //string busqueda = txtBusqueda.Value.Trim();
+            //bool soloBloqueados = chkSoloBloqueados.Checked;
 
-            BLLusuario bll = new BLLusuario();
-            List<Usuario> usuarios = bll.ObtenerTodos(busqueda, soloBloqueados);
+            //BLLusuario bll = new BLLusuario();
+            //List<Usuario> usuarios = bll.ObtenerTodos(busqueda, soloBloqueados);
 
-            int total = usuarios.Count;
-            lblContador.Text = total == 0
-                ? "Sin resultados"
-                : $"{total} usuario{(total > 1 ? "s" : "")} encontrado{(total > 1 ? "s" : "")}";
+            //int total = usuarios.Count;
+            //lblContador.Text = total == 0
+            //    ? "Sin resultados"
+            //    : $"{total} usuario{(total > 1 ? "s" : "")} encontrado{(total > 1 ? "s" : "")}";
 
-            pnlTabla.Visible = total > 0;
-            pnlSinResultados.Visible = total == 0;
+            //pnlTabla.Visible = total > 0;
+            //pnlSinResultados.Visible = total == 0;
 
-            rptUsuarios.DataSource = usuarios;
-            rptUsuarios.DataBind();
+            //rptUsuarios.DataSource = usuarios;
+            //rptUsuarios.DataBind();
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
