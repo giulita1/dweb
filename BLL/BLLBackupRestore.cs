@@ -34,15 +34,13 @@ namespace BLL
                     throw new Exception($"SQL Server no pudo generar el archivo en la ruta puente ({rutaPuenteCompleta}). Es probable que el servicio NT SERVICE\\MSSQL$SQLEXPRESS no tenga permisos en esa carpeta.");
                 }
                 File.Move(rutaPuenteCompleta, rutaDestinoCompleta);
-                bllBitacora.InsertarBitacora(0, "Respaldo de base de datos realizado exitosamente.", "Seguridad", "Alta");
+                bllBitacora.InsertarBitacora(0, "Respaldo de base de datos realizado exitosamente.", "Seguridad", "1");
             }
             catch (Exception ex)
             {
                 if (File.Exists(rutaPuenteCompleta))
-                {
                     File.Delete(rutaPuenteCompleta);
-                }
-                bllBitacora.InsertarBitacora(0, $"Error al realizar el respaldo de la base de datos: {ex.Message}", "Seguridad", "Alta");
+                bllBitacora.InsertarBitacora(0, $"Error al realizar el respaldo de la base de datos: {ex.Message}", "Seguridad", "1");
                 throw;
             }
         }
@@ -58,11 +56,11 @@ namespace BLL
             {
                 File.Copy(rutaArchivoTemporalWeb, rutaPuenteCompleta, true);
                 dalBackupRestore.RestoreDatabase(rutaPuenteCompleta);
-                bllBitacora.InsertarBitacora(usu, $"Restauración de base de datos realizada exitosamente por {usu}.", "Seguridad", "Alta");
+                bllBitacora.InsertarBitacora(usu, $"Restauración de base de datos realizada exitosamente por {usu}.", "Seguridad", "1");
             }
             catch (Exception ex)
             {
-                bllBitacora.InsertarBitacora(usu, $"Error al restaurar la base de datos: {ex.Message}", "Seguridad", "Alta");
+                bllBitacora.InsertarBitacora(usu, $"Error al restaurar la base de datos: {ex.Message}", "Seguridad", "1");
                 throw;
             }
             finally

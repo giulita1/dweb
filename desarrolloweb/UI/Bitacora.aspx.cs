@@ -43,36 +43,50 @@ namespace desarrolloweb.UI
         {
             try
             {
+                List<BE.Usuario> usuarios = usuariobll.ObtenerTodosParaDVV();
+
+                ddlUsuario.Items.Clear();
+                ddlUsuario.Items.Add(new ListItem("-- Todos los usuarios --", "Todos"));
+
+                foreach (BE.Usuario usu in usuarios)
+                {
+                    ddlUsuario.Items.Add(new ListItem(usu.User, usu.User));
+                }
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error al cargar filtros: " + ex.Message;
+                lblMensaje.Text = "Error al cargar filtros dinámicos: " + ex.Message;
             }
         }
-
-        protected void btnFiltrar_Click(object sender, EventArgs e)
+        private void CargarGrillaConFiltros()
         {
             try
             {
-                lblMensaje.Text = "";
+                string usuarioSel = ddlUsuario.SelectedValue;
+                if (string.IsNullOrEmpty(usuarioSel)) usuarioSel = "Todos";
 
-                string usuarioSel = string.IsNullOrEmpty(ddlUsuario.SelectedValue) ? "Todos" : ddlUsuario.SelectedValue;
-                string moduloSel = "Todos";
+                string moduloSel = ddlModulo.SelectedValue;
+                if (string.IsNullOrEmpty(moduloSel)) moduloSel = "Todos";
 
-                string eventoSel = string.IsNullOrEmpty(ddlEvento.SelectedValue) ? "Todos" : ddlEvento.SelectedValue;
-                string criticidadSel = string.IsNullOrEmpty(ddlCriticidad.SelectedValue) ? "Todos" : ddlCriticidad.SelectedValue;
+                string eventoSel = ddlEvento.SelectedValue;
+                if (string.IsNullOrEmpty(eventoSel)) eventoSel = "Todos";
+
+                string criticidadSel = ddlCriticidad.SelectedValue;
+                if (string.IsNullOrEmpty(criticidadSel)) criticidadSel = "Todos";
 
                 DateTime fechaDesde;
                 DateTime fechaHasta;
 
                 if (!DateTime.TryParse(txtFechaDesde.Text, out fechaDesde))
                 {
-                    fechaDesde = new DateTime(2000, 1, 1);
+                    fechaDesde = DateTime.Now.AddDays(-3);
+                    txtFechaDesde.Text = fechaDesde.ToString("yyyy-MM-dd");
                 }
 
                 if (!DateTime.TryParse(txtFechaHasta.Text, out fechaHasta))
                 {
                     fechaHasta = DateTime.Now;
+                    txtFechaHasta.Text = fechaHasta.ToString("yyyy-MM-dd");
                 }
 
                 DataTable resultado = bitacoraBLL.FiltrarBitacora(usuarioSel, moduloSel, eventoSel, criticidadSel, fechaDesde, fechaHasta);
@@ -81,10 +95,21 @@ namespace desarrolloweb.UI
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error al filtrar: " + ex.Message;
+                lblMensaje.Text = "Error al cargar los registros de bitácora: " + ex.Message;
             }
-        
-         }
+        }
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            lblMensaje.Text = "";
+            gvBitacora.PageIndex = 0;
+            CargarGrillaConFiltros();
+
+        }
+        protected void gvBitacora_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvBitacora.PageIndex = e.NewPageIndex;
+            CargarGrillaConFiltros();
+        }
 
     }
 }

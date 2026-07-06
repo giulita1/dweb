@@ -1,4 +1,5 @@
-﻿using desarrolloweb.BE;
+﻿using BE;
+using desarrolloweb.BE;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace desarrolloweb.BE
 {
-    public class Usuario : IUsuario
+    public class Usuario : IUsuario, IVerificable
     {
 
         public int Id_Usuario { get; set; }
@@ -19,9 +20,10 @@ namespace desarrolloweb.BE
         public int Intentos { get; set; }
         public int DVH { get; set; }
         public int IdRol { get; set; }
+        public int IdIdioma { get; set; }
         public string GenerarCadenaDVH()
         {
-            return $"{Id_Usuario}{Nombre}{Email}{Apellido}{User}{Contrasena}{Bloqueado}{Intentos}";
+            return $"{Id_Usuario}{Nombre}{Email}{Apellido}{User}{Contrasena}{Bloqueado}{Intentos}{IdRol}{IdIdioma}";
         }
     }
 }

@@ -36,10 +36,11 @@ namespace desarrolloweb.DAL
         {
             try
             {
-                string query = @"SELECT b.Id_Bitacora, b.Id_Usuario, b.Fecha, b.Hora, b.Actividad, b.Criticidad, u.Nombre, u.Apellido 
+                string query = @"SELECT b.Id_Bitacora, b.Id_Usuario, b.Fecha, b.Hora, b.Actividad, b.Modulo, b.Criticidad, u.usuario AS Nombre 
                                  FROM Bitacora b  
                                  INNER JOIN Usuarios u ON b.Id_Usuario = u.Id_Usuario 
-                                 WHERE CONVERT(date, b.Fecha, 103) >= CAST(GETDATE() - 3 AS DATE)";
+                                 WHERE CONVERT(date, b.Fecha, 103) >= CAST(GETDATE() - 3 AS DATE)
+                                 ORDER BY CONVERT(date, b.Fecha, 103) DESC, b.Hora DESC";
 
                 return LeerText(query);
             }
@@ -55,7 +56,7 @@ namespace desarrolloweb.DAL
             {
                 DateTime fechaDesde = desde.Date;
                 DateTime fechaHasta = hasta.Date;
-                string query = @"SELECT b.Id_Bitacora, b.Id_Usuario, b.Fecha, b.Hora, b.Actividad, b.Criticidad, u.Nombre, u.Apellido 
+                string query = @"SELECT b.Id_Bitacora, b.Id_Usuario, b.Fecha, b.Hora, b.Actividad, b.Modulo, b.Criticidad, u.usuario AS Nombre 
                                  FROM Bitacora b 
                                  INNER JOIN Usuarios u ON b.Id_Usuario = u.Id_Usuario 
                                  WHERE CONVERT(date, b.Fecha, 103) >= @Desde 
@@ -71,6 +72,11 @@ namespace desarrolloweb.DAL
                 {
                     query += " AND u.usuario = @Login";
                     parametros.Add(new SqlParameter("@Login", login));
+                }
+                if (modulo != "Todos" && !string.IsNullOrEmpty(modulo))
+                {
+                    query += " AND b.Modulo = @Modulo";
+                    parametros.Add(new SqlParameter("@Modulo", modulo));
                 }
                 if (evento != "Todos" && !string.IsNullOrEmpty(evento))
                 {
@@ -111,7 +117,7 @@ namespace desarrolloweb.DAL
         {
             try
             {
-                string query = "SELECT IdBitacora_62_RS, Usu_62_RS, FechaCambio_62_RS, Descripcion_62_RS, Modulo_62_RS, Criticidad_62_RS, Dvh_62_RS FROM Bitacora_62_RS";
+                string query = "SELECT Id_Bitacora, Id_Usuario, Actividad, Modulo, Criticidad, Fecha, Hora, DVH FROM Bitacora";
                 return LeerText(query);
             }
             catch (SqlException ex)

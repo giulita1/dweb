@@ -88,33 +88,30 @@ namespace desarrolloweb.DAL
         
         }
 
-        public void RegistrarUsuario(Usuario usuario)
+        public int RegistrarUsuario(Usuario usuario)
         {
             string query = "INSERT INTO USUARIOS (nombre, apellido, usuario, email, contrasena) " +
+                           "OUTPUT INSERTED.Id_Usuario " +
                            "VALUES (@nombre, @apellido, @user, @email, @contrasena)";
 
-            SqlCommand cmd = new SqlCommand(query, con);
-
-            cmd.Parameters.AddWithValue("@nombre", usuario.Nombre);
-            cmd.Parameters.AddWithValue("@apellido", usuario.Apellido);
-            cmd.Parameters.AddWithValue("@user", usuario.User);
-            cmd.Parameters.AddWithValue("@email", usuario.Email);
-            cmd.Parameters.AddWithValue("@contrasena", usuario.Contrasena);
+            SqlParameter[] p = {
+        new SqlParameter("@nombre", usuario.Nombre),
+        new SqlParameter("@apellido", usuario.Apellido),
+        new SqlParameter("@user", usuario.User),
+        new SqlParameter("@email", usuario.Email),
+        new SqlParameter("@contrasena", usuario.Contrasena)
+    };
 
             try
             {
-                Conectar();
-                cmd.ExecuteNonQuery();
+                return EscribirYDevolverId_62_RS(query, p);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
-            }
-            finally
-            {
-                Desconectar();
+                throw new Exception("Error al registrar: " + ex.Message);
             }
         }
+
         public static string EncriptarContraseña(string contrasena)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -170,7 +167,9 @@ namespace desarrolloweb.DAL
                         Contrasena = dr["contrasena"].ToString(),
                         Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
                         Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
-                        IdRol = Convert.ToInt32(dr["IdRol"])
+                        IdRol = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0,
+                        IdIdioma = dr["IdIdioma"] != DBNull.Value ? Convert.ToInt32(dr["IdIdioma"]) : 0,
+                        DVH = dr["DVH"] != DBNull.Value ? Convert.ToInt32(dr["DVH"]) : 0
                     };
                 }
                 return null;
@@ -266,6 +265,87 @@ namespace desarrolloweb.DAL
             {
                 throw new Exception("Error en DAL al actualizar contraseña: " + ex.Message);
             }
+        }
+
+        public void ActualizarDVH(int idUsuario, int dvh)
+        {
+            string sql = "UPDATE Usuarios SET DVH = @DVH WHERE Id_Usuario = @id";
+            SqlParameter[] p = {
+        new SqlParameter("@DVH", dvh),
+        new SqlParameter("@id", idUsuario)
+    };
+            EscribirText(sql, p);
+        }
+
+
+        private BE.Usuario MapearObjetoUsuario(DataTable dt)
+        {
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                return new BE.Usuario
+                {
+                    Id_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
+                    Nombre = dr["nombre"].ToString(),
+                    Apellido = dr["apellido"].ToString(),
+                    Email = dr["email"].ToString(),
+                    User = dr["usuario"].ToString(),
+                    Contrasena = dr["contrasena"].ToString(),
+                    Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
+                    Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
+                    IdRol = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0,
+                    IdIdioma = dr["IdIdioma"] != DBNull.Value ? Convert.ToInt32(dr["IdIdioma"]) : 0,
+                    DVH = dr["DVH"] != DBNull.Value ? Convert.ToInt32(dr["DVH"]) : 0
+                };
+            }
+            return null;
+        }
+
+        public BE.Usuario ObtenerUsuarioPorId(int idUsuario)
+        {
+            string query = "SELECT * FROM Usuarios WHERE Id_Usuario = @id";
+            SqlParameter[] p = { new SqlParameter("@id", idUsuario) };
+            return MapearObjetoUsuario(LeerText(query, p));
+        }
+        public BE.Usuario ObtenerUsuarioPorNombre(string usuario)
+        {
+            string query = "SELECT * FROM Usuarios WHERE usuario = @u";
+            SqlParameter[] p = { new SqlParameter("@u", usuario) };
+            return MapearObjetoUsuario(LeerText(query, p));
+        }
+
+        public BE.Usuario ObtenerUsuarioPorEmail(string email)
+        {
+            string query = "SELECT * FROM Usuarios WHERE email = @email";
+            SqlParameter[] p = { new SqlParameter("@email", email) };
+            return MapearObjetoUsuario(LeerText(query, p));
+        }
+
+        public List<BE.Usuario> ObtenerTodosParaDVV()
+        {
+            List<BE.Usuario> lista = new List<BE.Usuario>();
+            string query = "SELECT * FROM Usuarios";
+
+            DataTable dt = LeerText(query);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                lista.Add(new BE.Usuario
+                {
+                    Id_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
+                    Nombre = dr["nombre"].ToString(),
+                    Apellido = dr["apellido"].ToString(),
+                    Email = dr["email"].ToString(),
+                    User = dr["usuario"].ToString(),
+                    Contrasena = dr["contrasena"].ToString(),
+                    Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
+                    Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
+                    IdRol = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0,
+                    IdIdioma = dr["IdIdioma"] != DBNull.Value ? Convert.ToInt32(dr["IdIdioma"]) : 0,
+                    DVH = dr["DVH"] != DBNull.Value ? Convert.ToInt32(dr["DVH"]) : 0
+                });
+            }
+            return lista;
         }
     }
 }

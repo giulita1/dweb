@@ -1,4 +1,5 @@
-﻿using desarrolloweb.BE;
+﻿using BLL;
+using desarrolloweb.BE;
 using desarrolloweb.DAL;
 using SEG;
 using SEG.singleton;
@@ -20,6 +21,8 @@ namespace desarrolloweb.BLL
         DALusuario Dal = new DALusuario();
         BLLbitacora bllBitacora = new BLLbitacora();
 
+        BLLDVV bllDvv = new BLLDVV();
+
         public List<BE.Usuario> ObtenerTodos(string busqueda = "", bool soloBloqueados = false)
         {
             return Dal.ObtenerTodos(busqueda, soloBloqueados);
@@ -31,7 +34,10 @@ namespace desarrolloweb.BLL
                 throw new ArgumentException("Usuario inválido.");
 
             Dal.DesbloquearUsuario(idUsuario);
-            bllBitacora.InsertarBitacora(idUsuario, $"Usuario desbloqueado: {idUsuario}", "Seguridad", "Media");
+            SincronizarDigitos(Dal.ObtenerUsuarioPorId(idUsuario));
+            int idUsuarioBitacora = SingletonSession.Instancia.Usuario.Id_Usuario;
+
+            bllBitacora.InsertarBitacora(idUsuarioBitacora, $"Usuario desbloqueado: {idUsuario}", "Usuarios", "3");
         }
         public string Login(string Usuario, string Contrasena)
         {
@@ -53,13 +59,17 @@ namespace desarrolloweb.BLL
                     {
                         throw new Exception("Credenciales incorrectas.");
                     }
-
+                    BLLDVV verificacionFallo = new BLLDVV();
+                    if (verificacionFallo.VerificarIntegridadGlobal().Count > 0)
+                    {
+                        throw new Exception("Credenciales incorrectas.");
+                    }
                     int intentosResultantes = Dal.SumarIntentosFallidos(Usuario);
-
+                    SincronizarDigitos(Dal.ObtenerUsuarioPorNombre(Usuario));
                     if (intentosResultantes >= 3)
                     {
                         BloquearUsuarioPorNombre(Usuario);
-                        bllBitacora.InsertarBitacora(0, $"Bloqueo preventivo de cuenta: {Usuario}", "Seguridad", "Alta");
+                        bllBitacora.InsertarBitacora(0, $"Bloqueo preventivo de cuenta: {Usuario}", "Administracion", "1");
                         throw new Exception("Has superado los 3 intentos. El usuario ha sido bloqueado por seguridad.");
                     }
 
@@ -75,10 +85,15 @@ namespace desarrolloweb.BLL
                 int usulogin = usuario.Id_Usuario;
 
                 SingletonSession.Instancia.IniciarSesion(usuario);
+                if (bllDvv.VerificarIntegridadGlobal().Count > 0)
+                {
+                    return "¡Bienvenido/a! (Modo de Emergencia por Integridad)";
+                }
                 Dal.ResetearIntentos(Usuario);
+                SincronizarDigitos(Dal.ObtenerUsuarioPorNombre(Usuario));
+                int idUsuarioBitacora = SingletonSession.Instancia.Usuario.Id_Usuario;
 
-                int idUsuarioActual = SingletonSession.Instancia.Usuario.Id_Usuario;
-                bllBitacora.InsertarBitacora(idUsuarioActual, "Inicio de sesión exitoso", "Seguridad", "1");
+                bllBitacora.InsertarBitacora(idUsuarioBitacora, "Inicio de sesión exitoso", "Administracion", "2");
 
                 return "¡Bienvenido/a!";
             }
@@ -98,6 +113,10 @@ namespace desarrolloweb.BLL
             else
 
             {
+                int idUsuarioBitacora = SingletonSession.Instancia.Usuario.Id_Usuario;
+
+                bllBitacora.InsertarBitacora(idUsuarioBitacora, "Cierre de sesión exitoso", "Administracion", "2");
+
                 SingletonSession.Instancia.CerrarSesion();
             }
         }
@@ -110,12 +129,18 @@ namespace desarrolloweb.BLL
         public void RegistrarUsuario(Usuario usuario)
         {
             usuario.Contrasena = SEG.encriptar.EncriptarContraseña(usuario.Contrasena);
-            Dal.RegistrarUsuario(usuario);
+            int nuevoId = Dal.RegistrarUsuario(usuario);
+            SincronizarDigitos(Dal.ObtenerUsuarioPorId(nuevoId));
+            bllBitacora.InsertarBitacora(nuevoId, "Usuario registrado: "+usuario.User, "Usuarios", "4");
+
         }
 
         private void BloquearUsuarioPorNombre(string Usuario)
         {
             Dal.BloquearUsuario_62_RS(Usuario);
+            SincronizarDigitos(Dal.ObtenerUsuarioPorNombre(Usuario));
+            bllBitacora.InsertarBitacora(0, "Usuario bloqueado: " + Usuario, "Usuarios", "3");
+
         }
         public string RecuperarContrasena(string email)
         {
@@ -129,9 +154,9 @@ namespace desarrolloweb.BLL
                 string nuevaContrasena = GenerarContrasenaAleatoria(8);
                 string passHasheada = SEG.encriptar.EncriptarContraseña(nuevaContrasena);
                 Dal.ActualizarContrasenaPorEmail(email, passHasheada);
+                SincronizarDigitos(Dal.ObtenerUsuarioPorEmail(email));
                 EnviarEmailRecuperacion(email, nuevaContrasena);
-                bllBitacora.InsertarBitacora(0, $"Recuperación de contraseña solicitada para email: {email}", "Seguridad", "Media");
-
+                bllBitacora.InsertarBitacora(0, $"Recuperación de contraseña solicitada para email: {email}", "Administracion", "3");
                 return "Se ha enviado una nueva contraseña a tu correo electrónico.";
             }
             catch (Exception)
@@ -163,8 +188,7 @@ namespace desarrolloweb.BLL
                 mail.Body = $"Hola,\n\nSe ha solicitado restablecer tu contraseña.\n\nTu nueva contraseña temporal es: {nuevaContrasena}\n\nTe recomendamos iniciar sesión y cambiarla desde tu perfil lo antes posible.\n\nSaludos.";
                 mail.IsBodyHtml = false;
 
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587); // Puerto estándar para TLS
-                                                                         // Si usas Gmail, necesitas generar una "Contraseña de aplicación" en tu cuenta de Google. No sirve tu contraseña habitual.
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
                 smtp.Credentials = new NetworkCredential("ReservasHotelDweb@gmail.com", "cmxb elyp otyr rcys");
                 smtp.EnableSsl = true;
 
@@ -174,6 +198,23 @@ namespace desarrolloweb.BLL
             {
                 throw new Exception("La contraseña se cambió, pero hubo un error al enviar el correo: " + ex.Message);
             }
+        }
+
+        private void SincronizarDigitos(BE.Usuario usuarioBD)
+        {
+            if (usuarioBD != null)
+            {
+                SEG.DigitoVerificador motorDV = new SEG.DigitoVerificador();
+                int nuevoDvh = motorDV.CalcularDVH(usuarioBD);
+
+                Dal.ActualizarDVH(usuarioBD.Id_Usuario, nuevoDvh);
+
+                bllDvv.RecalcularDVV("Usuarios");
+            }
+        }
+        public List<BE.Usuario> ObtenerTodosParaDVV()
+        {
+            return Dal.ObtenerTodosParaDVV();
         }
     }
 }

@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hotel Patagonia</title>
     <link rel="stylesheet" href="<%= ResolveUrl("~/Styles/site.css") %>" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
@@ -22,14 +22,23 @@
         <button type="button" id="btn-menu"><span class="material-symbols-outlined">menu</span>
     </button>
        
-                <%
+<%
     string pagina = Request.Url.AbsolutePath.ToLower();
     bool logueado = Session["usuario"] != null;
+    
     int rol = 0;
+    bool esAuditor = false;
+    bool esAdmin = false;
+    bool esCliente = false;
+
     if (logueado)
-        rol = ((desarrolloweb.BE.Usuario)Session["usuario"]).IdRol;
-    bool esAdmin  = rol == 1;
-    bool esCliente = rol == 2;
+    {
+        var usuActual = (desarrolloweb.BE.Usuario)Session["usuario"];
+        rol = usuActual.IdRol;
+        esAuditor = (usuActual.Id_Usuario == 0); 
+        esAdmin = (rol == 1 && !esAuditor);     
+        esCliente = (rol == 2);                   
+    }
 %>
 
         <nav id="nav-menu">
@@ -50,6 +59,26 @@
             </li>
         <% } %>
 
+        <% if (esAuditor) { %>
+            <li class="nav-items nav-dropdown">
+                <button type="button" class="btn-dropdown">
+                    Auditoría y Seguridad
+                    <span class="material-symbols-outlined">expand_more</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>">
+                        <span class="material-symbols-outlined">history</span>Bitácora
+                    </a></li>
+                    <li><a href="<%= ResolveUrl("~UI/DigitoVerificador.aspx") %>">
+                        <span class="material-symbols-outlined">verified</span>Dígito Verificador
+                    </a></li>
+                    <li><a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>">
+                        <span class="material-symbols-outlined">backup</span>Backup / Restore
+                    </a></li>
+                </ul>
+            </li>
+        <% } %>
+
         <% if (esAdmin) { %>
             <li class="nav-items nav-dropdown">
                 <button type="button" class="btn-dropdown">
@@ -57,19 +86,10 @@
                     <span class="material-symbols-outlined">expand_more</span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>">
-                        <span class="material-symbols-outlined">history</span>Bitácora
+                    <li><a href="<%= ResolveUrl("~/UI/GestionUsuario.aspx") %>">
+                        <span class="material-symbols-outlined">group</span>Gestión de Usuarios
                     </a></li>
-                    <li><a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>">
-                        <span class="material-symbols-outlined">verified</span>Dígito Verificador
-                    </a></li>
-                    <li><a href="<%= ResolveUrl("~/UI/PanelHabitaciones.aspx") %>">
-                        <span class="material-symbols-outlined">bed</span>Panel de Habitaciones
-                    </a></li>
-                    <li><a href="<%= ResolveUrl("~/UI/PanelUsuarios.aspx") %>">
-                        <span class="material-symbols-outlined">group</span>Panel de Usuarios
-                    </a></li>
-                </ul>
+                    </ul>
             </li>
         <% } %>
 
@@ -217,7 +237,7 @@
 
     <div class="perfil-contenido">
 
-        <% if (((desarrolloweb.BE.Usuario)Session["usuario"]).IdRol == 2) { %>
+        <% if (esCliente) { %>
         <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="perfil-item">
             <span class="material-symbols-outlined">luggage</span>
             <div>
@@ -226,9 +246,17 @@
             </div>
             <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
         </a>
+        <a href="<%= ResolveUrl("~/UI/Reservar.aspx") %>" class="perfil-item">
+            <span class="material-symbols-outlined">hotel_class</span>
+            <div>
+                <p>Nueva Reserva</p>
+                <small>Buscá tu próxima estadía</small>
+            </div>
+            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+        </a>
         <% } %>
 
-        <% if (((desarrolloweb.BE.Usuario)Session["usuario"]).IdRol == 1) { %>
+        <% if (esAuditor) { %>
         <a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
             <span class="material-symbols-outlined">history</span>
             <div>
@@ -237,15 +265,26 @@
             </div>
             <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
         </a>
-        <a href="<%= ResolveUrl("~/UI/PanelHabitaciones.aspx") %>" class="perfil-item">
-            <span class="material-symbols-outlined">bed</span>
+        <a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
+            <span class="material-symbols-outlined">verified</span>
             <div>
-                <p>Panel de Habitaciones</p>
-                <small>Administrá las habitaciones</small>
+                <p>Dígitos Verificadores</p>
+                <small>Control de integridad</small>
             </div>
             <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
         </a>
-        <a href="<%= ResolveUrl("~/UI/PanelUsuarios.aspx") %>" class="perfil-item">
+        <a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
+            <span class="material-symbols-outlined">backup</span>
+            <div>
+                <p>Backup / Restore</p>
+                <small>Respaldo de datos</small>
+            </div>
+            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+        </a>
+        <% } %>
+
+        <% if (esAdmin) { %>
+        <a href="<%= ResolveUrl("~/UI/GestionUsuario.aspx") %>" class="perfil-item">
             <span class="material-symbols-outlined">group</span>
             <div>
                 <p>Panel de Usuarios</p>
@@ -271,4 +310,3 @@
     </form>
     </body>
     </html>
-

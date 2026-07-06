@@ -16,7 +16,8 @@ namespace desarrolloweb.BLL
     public class BLLbitacora
     {
         private desarrolloweb.DAL.DALbitacora dalBitacora = new desarrolloweb.DAL.DALbitacora();
-
+        // criticidad: 1, 2, 3,4 5
+        // modulo: "Usuarios",  "Reservas", "Roles", "Administracion""
         public int InsertarBitacora(int idUsuario, string actividad, string modulo, string criticidad)
         {
             BE.Bitacora bitacora = new BE.Bitacora

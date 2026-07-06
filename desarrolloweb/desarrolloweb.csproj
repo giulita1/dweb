@@ -114,6 +114,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="UI\DigitoVerificador.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="GestionUsuarios.aspx" />
     <Content Include="Global.asax" />
@@ -130,6 +131,7 @@
     <Content Include="img\restaurante.png" />
     <Content Include="ScriptsJS\Bitacora.js" />
     <Content Include="ScriptsJS\inicio.js" />
+    <Content Include="ScriptsJS\integridad.js" />
     <Content Include="ScriptsJS\login.js" />
     <Content Include="ScriptsJS\registro.js" />
     <Content Include="fonts\LibreBaskerville-Regular.woff" />
@@ -175,6 +177,7 @@
     <Content Include="Styles\confirmarReserva.css" />
     <Content Include="Styles\gestionUsuarios.css" />
     <Content Include="Styles\inicio.css" />
+    <Content Include="Styles\integridad.css" />
     <Content Include="Styles\login.css" />
     <Content Include="Styles\misReservas.css" />
     <Content Include="Styles\registro.css" />
@@ -215,6 +218,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DigitoVerificador.aspx.cs">
+      <DependentUpon>DigitoVerificador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\DigitoVerificador.aspx.designer.cs">
+      <DependentUpon>DigitoVerificador.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestionUsuarios.aspx.cs">
       <DependentUpon>GestionUsuarios.aspx</DependentUpon>

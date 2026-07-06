@@ -24,6 +24,15 @@ namespace desarrolloweb.UI
         protected global::System.Web.UI.WebControls.DropDownList ddlUsuario;
 
         /// <summary>
+        /// ddlModulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlModulo;
+
+        /// <summary>
         /// ddlEvento control.
         /// </summary>
         /// <remarks>

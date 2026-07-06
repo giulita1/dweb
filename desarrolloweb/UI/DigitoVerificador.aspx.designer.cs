@@ -11,34 +11,52 @@ namespace desarrolloweb
 {
 
 
-    public partial class SiteMaster
+    public partial class DigitoVerificador
     {
 
         /// <summary>
-        /// HeadContent control.
+        /// pnlMensajeOK control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
+        protected global::System.Web.UI.WebControls.Panel pnlMensajeOK;
 
         /// <summary>
-        /// MainContent control.
+        /// dgvInfracciones control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.GridView dgvInfracciones;
 
         /// <summary>
-        /// btnCerrarSesion2 control.
+        /// btnRecalcular control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnCerrarSesion2;
+        protected global::System.Web.UI.WebControls.Button btnRecalcular;
+
+        /// <summary>
+        /// fuBackup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuBackup;
+
+        /// <summary>
+        /// btnRestore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRestore;
     }
 }

@@ -170,4 +170,43 @@
         background-color: #000 !important;
         color: #fff !important;
     }
+    /* Estilos para el Pager del GridView de Bitácora */
+    .paginacion-grid table {
+        margin: 20px auto 0 auto !important;
+        width: auto !important;
+    }
+
+    .paginacion-grid td {
+        padding: 0 4px !important;
+        border: none !important;
+        background: transparent !important;
+    }
+
+    .paginacion-grid a,
+    .paginacion-grid span {
+        display: block;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .paginacion-grid a {
+        background-color: var(--clarito);
+        color: var(--primarycolor);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+        .paginacion-grid a:hover {
+            background-color: var(--claro);
+            color: black;
+        }
+
+    .paginacion-grid span {
+        background-color: var(--dorado);
+        color: white;
+        font-weight: bold;
+    }
 }

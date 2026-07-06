@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BE;
+using BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,7 +19,6 @@ namespace desarrolloweb.UI
             {
                 string usuarioIngresado = Request.Form["usuario"];
                 string contrasenaIngresada = Request.Form["contrasena"];
-
                 if (string.IsNullOrWhiteSpace(usuarioIngresado) || string.IsNullOrWhiteSpace(contrasenaIngresada))
                 {
                     MostrarAlertaJS("Por favor, ingrese sus credenciales.");
@@ -26,9 +27,30 @@ namespace desarrolloweb.UI
                 try
                 {
                     bllusuario.Login(usuarioIngresado, contrasenaIngresada);
-         
-                    Session["usuario"] = SEG.singleton.SingletonSession.Instancia.Usuario;
+                    BE.Usuario usuarioAutenticado = (BE.Usuario)SEG.singleton.SingletonSession.Instancia.Usuario;
 
+                    BLLDVV bllDvv = new BLLDVV();
+                    System.Collections.Generic.List<Infraccion> errores = bllDvv.VerificarIntegridadGlobal();
+                    if (errores != null && errores.Count > 0)
+                    {
+                        if (usuarioAutenticado.Id_Usuario == 0)
+                        {
+                            Session["usuario"] = usuarioAutenticado;
+
+                            Response.Redirect("~/UI/DigitoVerificador.aspx", false);
+                            Context.ApplicationInstance.CompleteRequest();
+                            return;
+                        }
+                        else
+                        {
+                            bllusuario.logout(); 
+                            Session["usuario"] = null;
+
+                            MostrarAlertaJS("ALERTA CRÍTICA: El sistema no se encuentra en funcionamiento debido a un problema técnico de consistencia de datos. Intente ingresar más tarde o contacte al departamento de Auditoría.");
+                            return;
+                        }
+                    }
+                    Session["usuario"] = SEG.singleton.SingletonSession.Instancia.Usuario;
                     Response.Redirect("~/UI/Inicio.aspx", false);
                 }
                 catch (Exception ex)

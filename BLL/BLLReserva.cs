@@ -1,4 +1,6 @@
 ﻿using BE;
+using desarrolloweb.BLL;
+using SEG.singleton;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,11 @@ namespace BLL
 {
     public class BLLReserva
     {
-            public void CrearReserva(Reserva reserva)
+        int idUsuarioBitacora = SingletonSession.Instancia.Usuario.Id_Usuario;
+        BLLbitacora bllBitacora = new BLLbitacora();
+        BLLDVV bllDvv = new BLLDVV();
+
+        public void CrearReserva(Reserva reserva)
             {
                 if (reserva.FechaLlegada >= reserva.FechaSalida)
                     throw new ArgumentException("Las fechas de la reserva son inválidas.");
@@ -25,8 +31,11 @@ namespace BLL
                     throw new ArgumentException("El total de la reserva es inválido.");
 
                 DalReserva dal = new DalReserva();
-                dal.CrearReserva(reserva);
-            }
+            int idGenerado = dal.CrearReserva(reserva);
+            SincronizarDigitos(dal.ObtenerReservaPorId(idGenerado), dal);
+            bllBitacora.InsertarBitacora(idUsuarioBitacora, "Reserva creada: " + reserva.Id_Reserva, "Reservas", "3");
+
+        }
 
         public List<Reserva> ObtenerReservasPorUsuario(int idUsuario)
         {
@@ -47,7 +56,25 @@ namespace BLL
 
             DalReserva dal = new DalReserva();
             dal.CancelarReserva(idReserva, idUsuario);
-        }
+            SincronizarDigitos(dal.ObtenerReservaPorId(idReserva), dal);
+            bllBitacora.InsertarBitacora(idUsuarioBitacora, "Reserva cancelada: " + idReserva, "Reservas", "4");
 
+        }
+        private void SincronizarDigitos(Reserva reservaBD, DalReserva dal)
+        {
+            if (reservaBD != null)
+            {
+                SEG.DigitoVerificador motorDV = new SEG.DigitoVerificador();
+                int nuevoDvh = motorDV.CalcularDVH(reservaBD);
+
+                dal.ActualizarDVH(reservaBD.Id_Reserva, nuevoDvh);
+                bllDvv.RecalcularDVV("Reservas");
+            }
+        }
+        public List<Reserva> ObtenerTodasParaDVV()
+        {
+            DalReserva dal = new DalReserva();
+            return dal.ObtenerTodasParaDVV();
+        }
     }
 }
