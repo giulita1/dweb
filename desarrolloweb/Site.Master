@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="desarrolloweb.SiteMaster" %>
 <%@ Import Namespace="BE" %>
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head runat="server">
     <meta charset="UTF-8">
@@ -14,264 +14,262 @@
 </head>
 <body>
     <form runat="server">
-    <header>
 
+    <header>
         <div class="logo-container">
             <p>HOTEL</p>
-        </div> 
-        <button type="button" id="btn-menu"><span class="material-symbols-outlined">menu</span>
-    </button>
-       
-<%
-    string pagina = Request.Url.AbsolutePath.ToLower();
-    bool logueado = Session["usuario"] != null;
-    
-    int rol = 0;
-    bool esAuditor = false;
-    bool esAdmin = false;
-    bool esCliente = false;
+        </div>
+        <button type="button" id="btn-menu">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
 
-    if (logueado)
-    {
-        var usuActual = (desarrolloweb.BE.Usuario)Session["usuario"];
-        rol = usuActual.IdRol;
-        esAuditor = (usuActual.Id_Usuario == 0); 
-        esAdmin = (rol == 1 && !esAuditor);     
-        esCliente = (rol == 2);                   
-    }
-    %>
-<nav id="nav-menu">
-    <ul>
+        <%
+            string pagina = Request.Url.AbsolutePath.ToLower();
+            bool logueado = Session["usuario"] != null;
 
-        <% if (!pagina.Contains("login") && !pagina.Contains("registro")) { %>
-            <li class="nav-items">
-                <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
-            </li>
-        <% } %>
+            int rol = 0;
+            bool esAuditor = false;
+            bool esAdmin   = false;
+            bool esCliente = false;
 
-        <% if (!logueado && !pagina.Contains("login")) { %>
-            <li class="nav-items">
-                <a href="<%= ResolveUrl("~/UI/Login.aspx") %>">Iniciar sesión</a>
-            </li>
-        <% } %>
+            if (logueado)
+            {
+                var usuActual = (desarrolloweb.BE.Usuario)Session["usuario"];
+                rol       = usuActual.Id_Usuario;
+                esAuditor = (rol == 0);
+                esCliente = (rol != 0);
+            }
+        %>
 
-        <% if (!logueado && !pagina.Contains("registro")) { %>
-            <li class="nav-items">
-                <a href="<%= ResolveUrl("~/UI/Registro.aspx") %>">Registrarse</a>
-            </li>
-        <% } %>
+        <nav id="nav-menu">
+            <ul>
 
-        <% if (logueado) { %>
-            <li class="nav-items">
-                <button type="button" id="btn-perfil">
-                    <span class="material-symbols-outlined">account_circle</span>
-                </button>
-            </li>
+                <% if (!pagina.Contains("login") && !pagina.Contains("registro")) { %>
+                    <li class="nav-items">
+                        <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
+                    </li>
+                <% } %>
 
-            <% if (esCliente) { %>
-                <li class="nav-items">
-                    <button type="button" id="btn-carrito">
-                        <span class="material-symbols-outlined">shopping_cart</span>
-                    </button>
-                </li>
-            <% } %>
-        <% } %>
+                <% if (!logueado && !pagina.Contains("login")) { %>
+                    <li class="nav-items">
+                        <a href="<%= ResolveUrl("~/UI/Login.aspx") %>">Iniciar sesión</a>
+                    </li>
+                <% } %>
 
-    </ul>
-</nav>
-       
+                <% if (!logueado && !pagina.Contains("registro")) { %>
+                    <li class="nav-items">
+                        <a href="<%= ResolveUrl("~/UI/Registro.aspx") %>">Registrarse</a>
+                    </li>
+                <% } %>
+
+                <% if (logueado) { %>
+                    <li class="nav-items">
+                        <button type="button" id="btn-perfil">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </button>
+                    </li>
+
+                    <% if (esCliente) { %>
+                        <li class="nav-items">
+                            <button type="button" id="btn-carrito">
+                                <span class="material-symbols-outlined">shopping_cart</span>
+                            </button>
+                        </li>
+                    <% } %>
+                <% } %>
+
+            </ul>
+        </nav>
+
     </header>
-    
+
     <main>
-   
         <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-  
     </main>
 
-   <footer class="footer">
+    <footer class="footer">
+        <div class="footer-contenido">
+            <div class="footer-seccion">
+                <h3>Contacto</h3>
+                <p>hotelpatagonia2026@gmail.com</p>
+                <p>+54 11 1234-5678</p>
+            </div>
+            <div class="footer-seccion">
+                <h3>Ubicación</h3>
+                <p>Av. Patagonia 1250</p>
+                <p>Bariloche, Río Negro</p>
+                <p>Argentina</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 Hotel Patagonia. Todos los derechos reservados.
+        </div>
+    </footer>
 
-    <div class="footer-contenido">
+    <%-- ── Carrito ── --%>
+    <% if (esCliente) { %>
+    <div id="overlay-carrito"></div>
+    <div id="carrito">
 
-        <div class="footer-seccion">
-            <h3>Contacto</h3>
-            <p>hotelpatagonia2026@gmail.com</p>
-            <p>+54 11 1234-5678</p>
+        <div class="carrito-header">
+            <h2>Tu carrito</h2>
+            <button type="button" id="btn-cerrar-carrito">
+                <span class="material-symbols-outlined">close</span>
+            </button>
         </div>
 
-        <div class="footer-seccion">
-            <h3>Ubicación</h3>
-            <p>Av. Patagonia 1250</p>
-            <p>Bariloche, Río Negro</p>
-            <p>Argentina</p>
-        </div>
+        <div class="carrito-contenido" id="carrito-contenido">
 
-    </div>
+            <div class="carrito-vacio" id="carrito-vacio">
+                <span class="material-symbols-outlined">hotel</span>
+                <p>Todavía no seleccionaste ninguna habitación.</p>
+            </div>
 
-    <div class="footer-bottom">
-        © 2026 Hotel Patagonia. Todos los derechos reservados.
-    </div>
+            <div id="carrito-item" style="display:none">
 
-</footer>
-        <% if (logueado) { %>
-<div id="overlay-carrito"></div>
-<div id="carrito">
-
-    <div class="carrito-header">
-        <h2>Tu carrito</h2>
-        <button type="button" id="btn-cerrar-carrito">
-            <span class="material-symbols-outlined">close</span>
-        </button>
-    </div>
-
-    <div class="carrito-contenido" id="carrito-contenido">
-
-        <div class="carrito-vacio" id="carrito-vacio">
-            <span class="material-symbols-outlined">hotel</span>
-            <p>Todavía no seleccionaste ninguna habitación.</p>
-        </div>
-
-        <div id="carrito-item" style="display:none">
-
-            <div class="item-habitacion">
-                <div class="item-img-wrapper">
-                    <img id="carrito-img" src="" alt="Habitación">
+                <div class="item-habitacion">
+                    <div class="item-img-wrapper">
+                        <img id="carrito-img" src="" alt="Habitación">
+                    </div>
+                    <div class="item-info">
+                        <span class="item-tipo" id="carrito-tipo"></span>
+                        <h3 id="carrito-nombre"></h3>
+                        <p class="item-fechas" id="carrito-fechas"></p>
+                        <p class="item-noches" id="carrito-noches"></p>
+                    </div>
                 </div>
-                <div class="item-info">
-                    <span class="item-tipo" id="carrito-tipo"></span>
-                    <h3 id="carrito-nombre"></h3>
-                    <p class="item-fechas" id="carrito-fechas"></p>
-                    <p class="item-noches" id="carrito-noches"></p>
+
+                <div class="carrito-extra">
+                    <label class="extra-item">
+                        <span class="extra-info">
+                            <span class="material-symbols-outlined">free_breakfast</span>
+                            <span class="extra-info-texto">
+                                <span class="extra-titulo">Desayuno incluido</span>
+                                <small>Por persona, por noche</small>
+                            </span>
+                        </span>
+                        <span class="extra-derecha">
+                            <span id="precio-desayuno">+ $5.000</span>
+                            <input type="checkbox" id="chk-desayuno">
+                        </span>
+                    </label>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="carrito-footer" id="carrito-footer" style="display:none">
+            <div class="total-desglose">
+                <div class="total-fila">
+                    <span id="lbl-precio-hab"></span>
+                    <span id="val-precio-hab"></span>
+                </div>
+                <div class="total-fila" id="fila-desayuno" style="display:none">
+                    <span id="lbl-desayuno"></span>
+                    <span id="val-desayuno"></span>
+                </div>
+                <div class="total-fila total-final">
+                    <span>Total</span>
+                    <span id="val-total"></span>
                 </div>
             </div>
-
-            <div class="carrito-extra">
-               <label class="extra-item">
-                <span class="extra-info">
-                    <span class="material-symbols-outlined">free_breakfast</span>
-                    <span class="extra-info-texto">
-                        <span class="extra-titulo">Desayuno incluido</span>
-                        <small>Por persona, por noche</small>
-                    </span>
-                </span>
-                <span class="extra-derecha">
-                    <span id="precio-desayuno">+ $5.000</span>
-                    <input type="checkbox" id="chk-desayuno">
-                </span>
-            </label>
-            </div>
-
+            <button type="button" class="btn-confirmar" id="btn-confirmar">
+                Confirmar reserva
+            </button>
         </div>
 
     </div>
+    <% } %>
 
-    <div class="carrito-footer" id="carrito-footer" style="display:none">
-        <div class="total-desglose">
-            <div class="total-fila">
-                <span id="lbl-precio-hab"></span>
-                <span id="val-precio-hab"></span>
+    <%-- ── Panel perfil ── --%>
+    <% if (logueado) { %>
+    <div id="overlay-perfil"></div>
+    <div id="panel-perfil">
+
+        <div class="perfil-header">
+            <div class="perfil-avatar">
+                <span class="material-symbols-outlined">account_circle</span>
             </div>
-            <div class="total-fila" id="fila-desayuno" style="display:none">
-                <span id="lbl-desayuno"></span>
-                <span id="val-desayuno"></span>
+            <div class="perfil-info">
+                <h2><%= ((desarrolloweb.BE.Usuario)Session["usuario"]).Nombre %> <%= ((desarrolloweb.BE.Usuario)Session["usuario"]).Apellido %></h2>
+                <p><%= ((desarrolloweb.BE.Usuario)Session["usuario"]).Email %></p>
             </div>
-            <div class="total-fila total-final">
-                <span>Total</span>
-                <span id="val-total"></span>
-            </div>
+            <button type="button" id="btn-cerrar-perfil">
+                <span class="material-symbols-outlined">close</span>
+            </button>
         </div>
-        <button type="button" class="btn-confirmar" id="btn-confirmar">
-            Confirmar reserva
-        </button>
-    </div>
 
-</div>
-<% } %>
+        <div class="perfil-contenido">
 
-        <% if (logueado) { %>
-<div id="overlay-perfil"></div>
-<div id="panel-perfil">
+            <% if (esCliente) { %>
+            <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">luggage</span>
+                <div>
+                    <p>Mis Reservas</p>
+                    <small>Revisá y gestioná tus reservas</small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <a href="<%= ResolveUrl("~/UI/Reservar.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">hotel_class</span>
+                <div>
+                    <p>Nueva Reserva</p>
+                    <small>Buscá tu próxima estadía</small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <% } %>
 
-    <div class="perfil-header">
-        <div class="perfil-avatar">
-            <span class="material-symbols-outlined">account_circle</span>
+            <% if (esAuditor) { %>
+            <a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">history</span>
+                <div>
+                    <p>Bitácora</p>
+                    <small>Registro de actividad</small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">verified</span>
+                <div>
+                    <p>Dígitos Verificadores</p>
+                    <small>Control de integridad</small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">backup</span>
+                <div>
+                    <p>Backup / Restore</p>
+                    <small>Respaldo de datos</small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <a href="<%= ResolveUrl("~/UI/GestionUsuarios.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">group</span>
+                <div>
+                    <p>Gestión de Usuarios</p>
+                    <small>Administrá los usuarios</small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <% } %>
+
         </div>
-        <div class="perfil-info">
-            <h2><%= ((desarrolloweb.BE.Usuario)Session["usuario"]).Nombre %> <%= ((desarrolloweb.BE.Usuario)Session["usuario"]).Apellido %></h2>
-            <p><%= ((desarrolloweb.BE.Usuario)Session["usuario"]).Email %></p>
+
+        <div class="perfil-footer">
+            <asp:LinkButton ID="btnCerrarSesion2" runat="server"
+                OnClick="btnCerrarSesion_Click"
+                CssClass="btn-cerrar-sesion">
+                <span class="material-symbols-outlined">logout</span>
+                Cerrar sesión
+            </asp:LinkButton>
         </div>
-        <button type="button" id="btn-cerrar-perfil">
-            <span class="material-symbols-outlined">close</span>
-        </button>
-    </div>
 
-    <div class="perfil-contenido">
-
-        <% if (esCliente) { %>
-        <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="perfil-item">
-            <span class="material-symbols-outlined">luggage</span>
-            <div>
-                <p>Mis Reservas</p>
-                <small>Revisá y gestioná tus reservas</small>
-            </div>
-            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-        </a>
-        <a href="<%= ResolveUrl("~/UI/Reservar.aspx") %>" class="perfil-item">
-            <span class="material-symbols-outlined">hotel_class</span>
-            <div>
-                <p>Nueva Reserva</p>
-                <small>Buscá tu próxima estadía</small>
-            </div>
-            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-        </a>
-        <% } %>
-
-       <% if (esAuditor) { %>
-<a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
-    <span class="material-symbols-outlined">history</span>
-    <div>
-        <p>Bitácora</p>
-        <small>Registro de actividad</small>
     </div>
-    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-</a>
-<a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
-    <span class="material-symbols-outlined">verified</span>
-    <div>
-        <p>Dígitos Verificadores</p>
-        <small>Control de integridad</small>
-    </div>
-    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-</a>
-<a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
-    <span class="material-symbols-outlined">backup</span>
-    <div>
-        <p>Backup / Restore</p>
-        <small>Respaldo de datos</small>
-    </div>
-    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-</a>
-<a href="<%= ResolveUrl("~/UI/GestionUsuarios.aspx") %>" class="perfil-item">
-    <span class="material-symbols-outlined">group</span>
-    <div>
-        <p>Gestión de Usuarios</p>
-        <small>Administrá los usuarios</small>
-    </div>
-    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-</a>
-<% } %>
+    <% } %>
 
-
-    <div class="perfil-footer">
-        <asp:LinkButton ID="btnCerrarSesion2" runat="server"
-            OnClick="btnCerrarSesion_Click"
-            CssClass="btn-cerrar-sesion">
-            <span class="material-symbols-outlined">logout</span>
-            Cerrar sesión
-        </asp:LinkButton>
-    </div>
-
-</div>
-<% } %>
     </form>
     </body>
     </html>

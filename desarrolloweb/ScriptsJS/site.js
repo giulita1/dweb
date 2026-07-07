@@ -109,7 +109,7 @@ document.getElementById("btn-confirmar")?.addEventListener("click", () => {
     });
 
     sessionStorage.removeItem("reserva"); // ← limpia el carrito
-    window.location.href = /UI/ConfirmarReserva.aspx ? ${ params.toString() };
+    window.location.href = `/UI/ConfirmarReserva.aspx?${params.toString()}`;
 });
 
 cargarCarrito();
