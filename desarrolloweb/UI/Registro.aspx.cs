@@ -89,9 +89,7 @@ namespace desarrolloweb.UI
                     }
 
                     bllusuario.RegistrarUsuario(usuario);
-                    Session["usuario"] = usuario;
-
-                    Response.Redirect("Inicio.aspx");
+                    Response.Redirect("Login.aspx");
                 }
                 catch (Exception ex)
                 {

@@ -28,16 +28,23 @@ namespace desarrolloweb.UI
 
         private void CargarResumen()
         {
-            // Leer sesión
-            int habitacionId = (int)Session["HabitacionId"];
-            DateTime llegada = (DateTime)Session["FechaLlegada"];
-            DateTime salida = (DateTime)Session["FechaSalida"];
-            int huespedes = (int)Session["Huespedes"];
+            // Leer desde QueryString en vez de Session
+            int habitacionId = Convert.ToInt32(Request.QueryString["hab"]);
             bool conDesayuno = Request.QueryString["desayuno"] == "true";
 
+            // Parsear fechas — vienen como strings del JS
+            DateTime llegada, salida;
+            if (!DateTime.TryParse(Request.QueryString["llegada"], out llegada) ||
+                !DateTime.TryParse(Request.QueryString["salida"], out salida))
+            {
+                Response.Redirect("~/UI/Reservar.aspx");
+                return;
+            }
+
+            int huespedes = Convert.ToInt32(Request.QueryString["huespedes"]);
             int noches = (salida - llegada).Days;
 
-            // Traer habitación
+            // Traer habitación desde BD para tener el precio real
             BLLHabitacion bll = new BLLHabitacion();
             Habitacion hab = bll.ObtenerPorId(habitacionId);
 
@@ -47,10 +54,9 @@ namespace desarrolloweb.UI
             lblNombre.InnerText = hab.Nombre;
 
             // Fechas
-            lblLlegada.InnerText = llegada.ToString("dd 'de' MMMM yyyy",
-                                    new System.Globalization.CultureInfo("es-AR"));
-            lblSalida.InnerText = salida.ToString("dd 'de' MMMM yyyy",
-                                    new System.Globalization.CultureInfo("es-AR"));
+            var cultura = new System.Globalization.CultureInfo("es-AR");
+            lblLlegada.InnerText = llegada.ToString("dd 'de' MMMM yyyy", cultura);
+            lblSalida.InnerText = salida.ToString("dd 'de' MMMM yyyy", cultura);
 
             // Detalles
             lblNoches.InnerText = $"{noches} noche{(noches > 1 ? "s" : "")}";
@@ -61,49 +67,68 @@ namespace desarrolloweb.UI
             double precioDesay = conDesayuno ? PRECIO_DESAYUNO * huespedes * noches : 0;
             double total = precioHab + precioDesay;
 
-
-            lblPrecioHab.InnerText = precioHab.ToString("C0", new System.Globalization.CultureInfo("es-AR"));
+            lblDescHab.InnerText = $"Habitación × {noches} noche{(noches > 1 ? "s" : "")}";
+            lblPrecioHab.InnerText = precioHab.ToString("C0", cultura);
 
             if (conDesayuno)
             {
                 pnlDesayuno.Visible = true;
                 lblDescDesayuno.InnerText = $"Desayuno × {huespedes} pax × {noches} noche{(noches > 1 ? "s" : "")}";
-                lblPrecioDesayuno.InnerText = precioDesay.ToString("C0", new System.Globalization.CultureInfo("es-AR"));
+                lblPrecioDesayuno.InnerText = precioDesay.ToString("C0", cultura);
             }
 
-            lblTotal.InnerText = total.ToString("C0", new System.Globalization.CultureInfo("es-AR"));
+            lblTotal.InnerText = total.ToString("C0", cultura);
 
-
-            // Guardar en sesión para usarlo al confirmar
-            Session["Total"] = total;
+            // Guardar en Session para usar al pagar
+            Session["Id_Habitacion"] = habitacionId;
+            Session["FechaLlegada"] = llegada;
+            Session["FechaSalida"] = salida;
+            Session["Huespedes"] = huespedes;
             Session["ConDesayuno"] = conDesayuno;
+            Session["Total"] = total;
         }
 
         protected void btnPagar_Click(object sender, EventArgs e)
         {
-            // Validaciones básicas del lado servidor
-            // (los valores vienen del JS ya formateados)
-            if (!ValidarFormulario())
-                return;
+            if (!ValidarFormulario()) return;
 
-            //Crear la reserva en la BD
+            // Leer de Session antes de remover
+            int idHabitacion = (int)Session["Id_Habitacion"];
+            DateTime fechaLleg = (DateTime)Session["FechaLlegada"];
+            DateTime fechaSal = (DateTime)Session["FechaSalida"];
+            int huespedes = (int)Session["Huespedes"];
+            bool conDesayuno = (bool)Session["ConDesayuno"];
+            double total = (double)Session["Total"];
+
+            // Traer nombre de la habitación
+            BLLHabitacion bllHab = new BLLHabitacion();
+            Habitacion hab = bllHab.ObtenerPorId(idHabitacion);
+
+            // Crear reserva
             BLLReserva bllreserva = new BLLReserva();
-
             Reserva reserva = new Reserva();
-            reserva.Hab.Id_Habitacion = (int)Session["HabitacionId"];
+            reserva.Hab = new Habitacion();
+            reserva.Usuario_ = new Usuario();
+
+            reserva.Hab.Id_Habitacion = idHabitacion;
             reserva.Usuario_.Id_Usuario = ((Usuario)Session["usuario"]).Id_Usuario;
-            reserva.FechaLlegada = (DateTime)Session["FechaLlegada"];
-            reserva.FechaSalida = (DateTime)Session["FechaSalida"];
-            reserva.Huespedes = (int)Session["Huespedes"];
-            reserva.IncluyeDesayuno = (bool)Session["ConDesayuno"];
-            reserva.Total = (double)Session["Total"];
+            reserva.FechaLlegada = fechaLleg;
+            reserva.FechaSalida = fechaSal;
+            reserva.Huespedes = huespedes;
+            reserva.IncluyeDesayuno = conDesayuno;
+            reserva.Total = total;
             reserva.Estado = "Confirmada";
-            
 
             bllreserva.CrearReserva(reserva);
 
-            // Limpiar sesión de carrito
-            Session.Remove("HabitacionId");
+            // Guardar para ReservaExitosa ANTES de remover
+            Session["UltimaReserva_Nombre"] = hab.Nombre;
+            Session["UltimaReserva_Llegada"] = fechaLleg;
+            Session["UltimaReserva_Salida"] = fechaSal;
+            Session["UltimaReserva_Total"] = total;
+
+            // Remover sesión del carrito
+            Session.Remove("Id_Habitacion");
             Session.Remove("FechaLlegada");
             Session.Remove("FechaSalida");
             Session.Remove("Huespedes");

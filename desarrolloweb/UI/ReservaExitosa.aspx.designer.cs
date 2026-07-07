@@ -11,52 +11,43 @@ namespace desarrolloweb.UI
 {
 
 
-    public partial class Reservar
+    public partial class ReservaExitosa
     {
 
         /// <summary>
-        /// lblMensaje control.
+        /// lblNombreHab control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensaje;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblNombreHab;
 
         /// <summary>
-        /// pnlResultados control.
+        /// lblLlegada control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlResultados;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblLlegada;
 
         /// <summary>
-        /// lblSubtitulo control.
+        /// lblSalida control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSubtitulo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblSalida;
 
         /// <summary>
-        /// rptHabitaciones control.
+        /// lblTotal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptHabitaciones;
-
-        /// <summary>
-        /// pnlSinResultados control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlSinResultados;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTotal;
     }
 }

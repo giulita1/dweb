@@ -115,9 +115,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="ScriptsJS\gestionUsuarios.js" />
+    <Content Include="Styles\ReservaExitosa.css" />
     <Content Include="UI\DigitoVerificador.aspx" />
     <Content Include="favicon.ico" />
-    <Content Include="GestionUsuarios.aspx" />
+    <Content Include="UI\GestionUsuarios.aspx" />
     <Content Include="Global.asax" />
     <Content Include="img\habitaciones\estandardoble.png" />
     <Content Include="img\habitaciones\estandarpremium.png" />
@@ -191,6 +192,7 @@
     <Content Include="UI\Login.aspx" />
     <Content Include="UI\MisReservas.aspx" />
     <Content Include="UI\Registro.aspx" />
+    <Content Include="UI\ReservaExitosa.aspx" />
     <Content Include="UI\Reservar.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -227,11 +229,11 @@
     <Compile Include="UI\DigitoVerificador.aspx.designer.cs">
       <DependentUpon>DigitoVerificador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestionUsuarios.aspx.cs">
+    <Compile Include="UI\GestionUsuarios.aspx.cs">
       <DependentUpon>GestionUsuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestionUsuarios.aspx.designer.cs">
+    <Compile Include="UI\GestionUsuarios.aspx.designer.cs">
       <DependentUpon>GestionUsuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -300,6 +302,13 @@
     </Compile>
     <Compile Include="UI\Registro.aspx.designer.cs">
       <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ReservaExitosa.aspx.cs">
+      <DependentUpon>ReservaExitosa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\ReservaExitosa.aspx.designer.cs">
+      <DependentUpon>ReservaExitosa.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI\Reservar.aspx.cs">
       <DependentUpon>Reservar.aspx</DependentUpon>

@@ -33,6 +33,8 @@ namespace DAL
                 foreach (DataRow dr in dt.Rows)
                 {
                     Reserva r = new Reserva();
+                    r.Hab = new Habitacion();
+                    r.Usuario_ = new desarrolloweb.BE.Usuario();
                     r.Id_Reserva = Convert.ToInt32(dr["Id_Reserva"]);
                     r.Hab.Id_Habitacion = Convert.ToInt32(dr["Id_Habitacion"]);
                     r.Usuario_.Id_Usuario = Convert.ToInt32(dr["Id_Usuario"]);

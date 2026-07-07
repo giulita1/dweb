@@ -12,7 +12,6 @@ namespace BLL
 {
     public class BLLReserva
     {
-        int idUsuarioBitacora = SingletonSession.Instancia.Usuario.Id_Usuario;
         BLLbitacora bllBitacora = new BLLbitacora();
         BLLDVV bllDvv = new BLLDVV();
 
@@ -33,6 +32,8 @@ namespace BLL
                 DalReserva dal = new DalReserva();
             int idGenerado = dal.CrearReserva(reserva);
             SincronizarDigitos(dal.ObtenerReservaPorId(idGenerado), dal);
+            int idUsuarioBitacora = SingletonSession.Instancia.Usuario.Id_Usuario;
+
             bllBitacora.InsertarBitacora(idUsuarioBitacora, "Reserva creada: " + reserva.Id_Reserva, "Reservas", "3");
 
         }
@@ -57,6 +58,8 @@ namespace BLL
             DalReserva dal = new DalReserva();
             dal.CancelarReserva(idReserva, idUsuario);
             SincronizarDigitos(dal.ObtenerReservaPorId(idReserva), dal);
+            int idUsuarioBitacora = SingletonSession.Instancia.Usuario.Id_Usuario;
+
             bllBitacora.InsertarBitacora(idUsuarioBitacora, "Reserva cancelada: " + idReserva, "Reservas", "4");
 
         }

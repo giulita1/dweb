@@ -31,79 +31,67 @@ Inherits="desarrolloweb.UI.MisReservas" %>
         OnItemCommand="rptReservas_ItemCommand">
         <HeaderTemplate>
             <div class="reservas-grid">
-        </HeaderTemplate>
-        <ItemTemplate>
-            <div class="card-reserva <%# Eval("Estado").ToString() == "Cancelada" ? "cancelada" : "" %>">
+        </HeaderTemplate> 
+       <ItemTemplate>
+    <div class="card-reserva <%# ((BE.Reserva)Container.DataItem).Estado == "Cancelada" ? "cancelada" : "" %>">
 
-                <div class="card-reserva-img">
-                    <img src='<%# ResolveUrl("~/img/" + Eval("ImagenUrl")) %>'
-                         alt='<%# Eval("NombreHabitacion") %>'>
-                    <span class="badge-estado <%# Eval("Estado").ToString().ToLower() %>">
-                        <%# Eval("Estado") %>
-                    </span>
+        <div class="card-reserva-contenido">
+
+            <div class="reserva-tipo"><%# ((BE.Reserva)Container.DataItem).Hab.Tipo %></div>
+            <h3><%# ((BE.Reserva)Container.DataItem).Hab.Nombre %></h3>
+
+            <div class="reserva-fechas">
+                <div class="fecha-item">
+                    <span class="material-symbols-outlined">login</span>
+                    <div>
+                        <small>Llegada</small>
+                        <p><%# ((BE.Reserva)Container.DataItem).FechaLlegada.ToString("dd/MM/yyyy") %></p>
+                    </div>
                 </div>
-
-                <div class="card-reserva-contenido">
-
-                    <div class="reserva-tipo"><%# Eval("TipoHabitacion") %></div>
-                    <h3><%# Eval("NombreHabitacion") %></h3>
-
-                    <div class="reserva-fechas">
-                        <div class="fecha-item">
-                            <span class="material-symbols-outlined">login</span>
-                            <div>
-                                <small>Llegada</small>
-                                <p><%# ((DateTime)Eval("FechaLlegada")).ToString("dd/MM/yyyy") %></p>
-                            </div>
-                        </div>
-                        <div class="fecha-sep"></div>
-                        <div class="fecha-item">
-                            <span class="material-symbols-outlined">logout</span>
-                            <div>
-                                <small>Salida</small>
-                                <p><%# ((DateTime)Eval("FechaSalida")).ToString("dd/MM/yyyy") %></p>
-                            </div>
-                        </div>
+                <div class="fecha-sep"></div>
+                <div class="fecha-item">
+                    <span class="material-symbols-outlined">logout</span>
+                    <div>
+                        <small>Salida</small>
+                        <p><%# ((BE.Reserva)Container.DataItem).FechaSalida.ToString("dd/MM/yyyy") %></p>
                     </div>
-
-                    <div class="reserva-detalles">
-                        <span>
-                            <span class="material-symbols-outlined">nights_stay</span>
-                            <%# ((DateTime)Eval("FechaSalida") - (DateTime)Eval("FechaLlegada")).Days %> noches
-                        </span>
-                        <span>
-                            <span class="material-symbols-outlined">group</span>
-                            <%# Eval("Huespedes") %> huéspedes
-                        </span>
-                        <% if ((bool)Eval("IncluyeDesayuno")) { %>
-                        <span>
-                            <span class="material-symbols-outlined">free_breakfast</span>
-                            Desayuno
-                        </span>
-                        <% } %>
-                    </div>
-
-                   <div class="reserva-footer">
-                        <div class="reserva-total">
-                            <small>Total</small>
-                            <span><%# string.Format("{0:C0}", Eval("Total")) %></span>
-                        </div>
-                        <asp:Button runat="server"
-                            Text="Cancelar reserva"
-                            CssClass="btn-cancelar"
-                            CommandName="Cancelar"
-                            CommandArgument='<%# Eval("Id_Reserva") %>'
-                            Visible='<%# Eval("Estado").ToString() != "Cancelada" %>' />
-                        <asp:Label runat="server"
-                            Text="Reserva cancelada"
-                            CssClass="lbl-cancelada"
-                            Visible='<%# Eval("Estado").ToString() == "Cancelada" %>' />
-                    </div>
-
                 </div>
-
             </div>
-        </ItemTemplate>
+
+            <div class="reserva-detalles">
+                <span>
+                    <span class="material-symbols-outlined">nights_stay</span>
+                    <%# (((BE.Reserva)Container.DataItem).FechaSalida - ((BE.Reserva)Container.DataItem).FechaLlegada).Days %> noches
+                </span>
+                <span>
+                    <span class="material-symbols-outlined">group</span>
+                    <%# ((BE.Reserva)Container.DataItem).Huespedes %> huéspedes
+                </span>
+                <%# ((BE.Reserva)Container.DataItem).IncluyeDesayuno ? 
+                    "<span><span class='material-symbols-outlined'>free_breakfast</span> Desayuno</span>" : "" %>
+            </div>
+
+            <div class="reserva-footer">
+                <div class="reserva-total">
+                    <small>Total</small>
+                    <span><%# ((BE.Reserva)Container.DataItem).Total.ToString("C0", new System.Globalization.CultureInfo("es-AR")) %></span>
+                </div>
+                <asp:Button runat="server"
+                    Text="Cancelar reserva"
+                    CssClass="btn-cancelar"
+                    CommandName="Cancelar"
+                    CommandArgument='<%# ((BE.Reserva)Container.DataItem).Id_Reserva %>'
+                    Visible='<%# ((BE.Reserva)Container.DataItem).Estado != "Cancelada" %>' />
+                <asp:Label runat="server"
+                    Text="Reserva cancelada"
+                    CssClass="lbl-cancelada"
+                    Visible='<%# ((BE.Reserva)Container.DataItem).Estado == "Cancelada" %>' />
+            </div>
+
+        </div>
+
+    </div>
+</ItemTemplate>
         <FooterTemplate>
             </div>
         </FooterTemplate>

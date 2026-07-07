@@ -16,16 +16,14 @@ namespace DAL
 
             string query = @"
         SELECT Id_Habitacion, Nombre, Tipo, Descripcion, 
-               PrecioPorNoche, Capacidad, ImagenUrl
-        FROM Habitaciones
+               PrecioPorNoche, Huespedes, ImagenUrl
+        FROM Habitacion
         WHERE Id_Habitacion = @Id";
 
             Conectar();
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Id", id);
-                con.Open();
-
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
@@ -36,13 +34,15 @@ namespace DAL
                             Nombre = reader["Nombre"].ToString(),
                             Tipo = reader["Tipo"].ToString(),
                             Descripcion = reader["Descripcion"].ToString(),
-                            PrecioPorNoche = (double)reader["PrecioPorNoche"],
-                            Huespedes = (int)reader["Capacidad"],
+                            PrecioPorNoche = Convert.ToDouble(reader["PrecioPorNoche"]),
+                            Huespedes = (int)reader["Huespedes"],
                             ImagenUrl = reader["ImagenUrl"].ToString()
                         };
                     }
                 }
-            }
+                Desconectar();
+
+    }
 
             return hab;
         }
@@ -85,10 +85,8 @@ namespace DAL
                 habitaciones.Add(hab);
             
             }
-
-            Desconectar();
             reader.Close();
-
+            Desconectar();
             return habitaciones;
         }
     }

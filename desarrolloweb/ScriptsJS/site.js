@@ -95,8 +95,21 @@ chkDesayuno?.addEventListener("change", () => {
 document.getElementById("btn-confirmar")?.addEventListener("click", () => {
     const datos = JSON.parse(sessionStorage.getItem("reserva"));
     if (!datos) return;
-    window.location.href =
-        `/UI/ConfirmarReserva.aspx?hab=${datos.habitacionId}&desayuno=${datos.conDesayuno}`;
+
+    const params = new URLSearchParams({
+        hab: datos.habitacionId,
+        llegada: datos.llegada,
+        salida: datos.salida,
+        huespedes: datos.huespedes,
+        precio: datos.precioPorNoche,
+        nombre: datos.nombre,
+        tipo: datos.tipo,
+        img: datos.imagenUrl,
+        desayuno: datos.conDesayuno ? "true" : "false"
+    });
+
+    sessionStorage.removeItem("reserva"); // ← limpia el carrito
+    window.location.href = /UI/ConfirmarReserva.aspx ? ${ params.toString() };
 });
 
 cargarCarrito();

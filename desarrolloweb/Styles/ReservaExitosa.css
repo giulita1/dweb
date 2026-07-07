@@ -1,0 +1,129 @@
+﻿.contenedor-exitosa {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: var(--verdecito);
+}
+
+.card-exitosa {
+    background: white;
+    border-radius: 28px;
+    padding: 60px 50px;
+    max-width: 560px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.icono-exito .material-symbols-outlined {
+    font-size: 72px;
+    color: var(--dorado);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.card-exitosa h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: normal;
+    color: var(--primarycolor);
+    letter-spacing: -0.5px;
+}
+
+.card-exitosa > p {
+    font-size: 0.95rem;
+    color: #7a7673;
+    line-height: 1.7;
+    max-width: 400px;
+}
+
+/* ── Detalle ── */
+.detalle-exitosa {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    background: var(--clarito);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 8px 0;
+}
+
+.detalle-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: var(--primarycolor);
+}
+
+    .detalle-item .material-symbols-outlined {
+        font-size: 20px;
+        color: var(--dorado);
+        flex-shrink: 0;
+    }
+
+/* ── Botones ── */
+.exitosa-acciones {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.btn-mis-reservas {
+    padding: 14px 28px;
+    background: var(--primarycolor);
+    color: white;
+    border-radius: 999px;
+    font-family: 'Montserrat';
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+    .btn-mis-reservas:hover {
+        background: #2a2220;
+        transform: translateY(-2px);
+    }
+
+.btn-inicio {
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--primarycolor);
+    border-radius: 999px;
+    border: 1.5px solid #e0dbd8;
+    font-family: 'Montserrat';
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+    .btn-inicio:hover {
+        background: var(--clarito);
+    }
+
+@media (max-width: 768px) {
+    .card-exitosa {
+        padding: 40px 24px;
+    }
+
+    .exitosa-acciones {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-mis-reservas,
+    .btn-inicio {
+        text-align: center;
+    }
+}

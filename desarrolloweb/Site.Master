@@ -40,11 +40,10 @@
         esCliente = (rol == 2);                   
     }
     %>
-
-       <nav id="nav-menu">
+<nav id="nav-menu">
     <ul>
 
-               <% if (!pagina.Contains("login") && !pagina.Contains("registro")) { %>
+        <% if (!pagina.Contains("login") && !pagina.Contains("registro")) { %>
             <li class="nav-items">
                 <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
             </li>
@@ -62,43 +61,6 @@
             </li>
         <% } %>
 
-        <%-- Auditor --%>
-        <% if (esAuditor) { %>
-            <li class="nav-items nav-dropdown">
-                <button type="button" class="btn-dropdown">
-                    Auditoría y Seguridad
-                    <span class="material-symbols-outlined">expand_more</span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>">
-                        <span class="material-symbols-outlined">history</span>Bitácora
-                    </a></li>
-                    <li><a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>">
-                        <span class="material-symbols-outlined">verified</span>Dígito Verificador
-                    </a></li>
-                    <li><a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>">
-                        <span class="material-symbols-outlined">backup</span>Backup / Restore
-                    </a></li>
-                </ul>
-            </li>
-        <% } %>
-
-        <%-- Admin --%>
-        <% if (esAdmin) { %>
-            <li class="nav-items nav-dropdown">
-                <button type="button" class="btn-dropdown">
-                    Administración
-                    <span class="material-symbols-outlined">expand_more</span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="<%= ResolveUrl("~/UI/GestionUsuario.aspx") %>">
-                        <span class="material-symbols-outlined">group</span>Gestión de Usuarios
-                    </a></li>
-                </ul>
-            </li>
-        <% } %>
-
-        <%-- Perfil y carrito --%>
         <% if (logueado) { %>
             <li class="nav-items">
                 <button type="button" id="btn-perfil">
@@ -117,6 +79,7 @@
 
     </ul>
 </nav>
+       
     </header>
     
     <main>
@@ -262,45 +225,41 @@
         </a>
         <% } %>
 
-        <% if (esAuditor) { %>
-        <a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
-            <span class="material-symbols-outlined">history</span>
-            <div>
-                <p>Bitácora</p>
-                <small>Registro de actividad</small>
-            </div>
-            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-        </a>
-        <a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
-            <span class="material-symbols-outlined">verified</span>
-            <div>
-                <p>Dígitos Verificadores</p>
-                <small>Control de integridad</small>
-            </div>
-            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-        </a>
-        <a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
-            <span class="material-symbols-outlined">backup</span>
-            <div>
-                <p>Backup / Restore</p>
-                <small>Respaldo de datos</small>
-            </div>
-            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-        </a>
-        <% } %>
-
-        <% if (esAdmin) { %>
-        <a href="<%= ResolveUrl("~/UI/GestionUsuario.aspx") %>" class="perfil-item">
-            <span class="material-symbols-outlined">group</span>
-            <div>
-                <p>Panel de Usuarios</p>
-                <small>Administrá los usuarios</small>
-            </div>
-            <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-        </a>
-        <% } %>
-
+       <% if (esAuditor) { %>
+<a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
+    <span class="material-symbols-outlined">history</span>
+    <div>
+        <p>Bitácora</p>
+        <small>Registro de actividad</small>
     </div>
+    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+</a>
+<a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
+    <span class="material-symbols-outlined">verified</span>
+    <div>
+        <p>Dígitos Verificadores</p>
+        <small>Control de integridad</small>
+    </div>
+    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+</a>
+<a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
+    <span class="material-symbols-outlined">backup</span>
+    <div>
+        <p>Backup / Restore</p>
+        <small>Respaldo de datos</small>
+    </div>
+    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+</a>
+<a href="<%= ResolveUrl("~/UI/GestionUsuarios.aspx") %>" class="perfil-item">
+    <span class="material-symbols-outlined">group</span>
+    <div>
+        <p>Gestión de Usuarios</p>
+        <small>Administrá los usuarios</small>
+    </div>
+    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+</a>
+<% } %>
+
 
     <div class="perfil-footer">
         <asp:LinkButton ID="btnCerrarSesion2" runat="server"

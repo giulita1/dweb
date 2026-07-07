@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ConfirmarReserva.aspx.cs" Inherits="desarrolloweb.UI.ConfirmarReserva" %>
+﻿<%@ Page Title="Confirmar Reserva - Hotel Patagonia" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ConfirmarReserva.aspx.cs" Inherits="desarrolloweb.UI.ConfirmarReserva" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="<%= ResolveUrl("~/Styles/confirmarReserva.css") %>" />
 </asp:Content>
