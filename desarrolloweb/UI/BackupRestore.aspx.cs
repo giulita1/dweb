@@ -12,12 +12,18 @@ namespace desarrolloweb.UI
     public partial class BackupRestore : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {  if (Session["usuario"] == null)
+                {
+                    Response.Redirect("~/UI/Login.aspx");
+                    return;
+                }
+
             if (!IsPostBack)
             {
                 CargarListaBackups();
             }
 
+            
             pnlMensaje.Visible = false;
         }
 

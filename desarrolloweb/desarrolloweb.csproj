@@ -114,6 +114,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="ScriptsJS\gestionUsuarios.js" />
     <Content Include="UI\DigitoVerificador.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="GestionUsuarios.aspx" />

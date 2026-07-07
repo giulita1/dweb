@@ -14,6 +14,7 @@ namespace desarrolloweb.UI
         BLLusuario bllusuario = new BLLusuario();
         protected void Page_Load(object sender, EventArgs e)
         {
+         
             if (IsPostBack)
             {
                 Usuario usuario = new Usuario();

@@ -39,26 +39,30 @@
         esAdmin = (rol == 1 && !esAuditor);     
         esCliente = (rol == 2);                   
     }
-%>
+    %>
 
-        <nav id="nav-menu">
+       <nav id="nav-menu">
     <ul>
-        <li class="nav-items">
-            <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
-        </li>
 
-        <% if (!logueado && !pagina.Contains("login.aspx")) { %>
+               <% if (!pagina.Contains("login") && !pagina.Contains("registro")) { %>
+            <li class="nav-items">
+                <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>">Inicio</a>
+            </li>
+        <% } %>
+
+        <% if (!logueado && !pagina.Contains("login")) { %>
             <li class="nav-items">
                 <a href="<%= ResolveUrl("~/UI/Login.aspx") %>">Iniciar sesión</a>
             </li>
         <% } %>
 
-        <% if (!logueado && !pagina.Contains("registro.aspx")) { %>
+        <% if (!logueado && !pagina.Contains("registro")) { %>
             <li class="nav-items">
                 <a href="<%= ResolveUrl("~/UI/Registro.aspx") %>">Registrarse</a>
             </li>
         <% } %>
 
+        <%-- Auditor --%>
         <% if (esAuditor) { %>
             <li class="nav-items nav-dropdown">
                 <button type="button" class="btn-dropdown">
@@ -69,7 +73,7 @@
                     <li><a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>">
                         <span class="material-symbols-outlined">history</span>Bitácora
                     </a></li>
-                    <li><a href="<%= ResolveUrl("~UI/DigitoVerificador.aspx") %>">
+                    <li><a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>">
                         <span class="material-symbols-outlined">verified</span>Dígito Verificador
                     </a></li>
                     <li><a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>">
@@ -79,6 +83,7 @@
             </li>
         <% } %>
 
+        <%-- Admin --%>
         <% if (esAdmin) { %>
             <li class="nav-items nav-dropdown">
                 <button type="button" class="btn-dropdown">
@@ -89,10 +94,11 @@
                     <li><a href="<%= ResolveUrl("~/UI/GestionUsuario.aspx") %>">
                         <span class="material-symbols-outlined">group</span>Gestión de Usuarios
                     </a></li>
-                    </ul>
+                </ul>
             </li>
         <% } %>
 
+        <%-- Perfil y carrito --%>
         <% if (logueado) { %>
             <li class="nav-items">
                 <button type="button" id="btn-perfil">

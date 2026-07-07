@@ -24,31 +24,27 @@ namespace desarrolloweb
                 CargarUsuarios();
         }
 
-        private void CargarUsuarios()
-        {
-            //string busqueda = txtBusqueda.Value.Trim();
-            //bool soloBloqueados = chkSoloBloqueados.Checked;
-
-            //BLLusuario bll = new BLLusuario();
-            //List<Usuario> usuarios = bll.ObtenerTodos(busqueda, soloBloqueados);
-
-            //int total = usuarios.Count;
-            //lblContador.Text = total == 0
-            //    ? "Sin resultados"
-            //    : $"{total} usuario{(total > 1 ? "s" : "")} encontrado{(total > 1 ? "s" : "")}";
-
-            //pnlTabla.Visible = total > 0;
-            //pnlSinResultados.Visible = total == 0;
-
-            //rptUsuarios.DataSource = usuarios;
-            //rptUsuarios.DataBind();
-        }
-
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             CargarUsuarios();
         }
+        private void CargarUsuarios()
+        {
+            string busqueda = Request.QueryString["busqueda"] ?? "";
+            bool soloBloqueados = Request.QueryString["bloqueados"] == "1";
 
+            BLLusuario bll = new BLLusuario();
+            List<Usuario> usuarios = bll.ObtenerTodos(busqueda, soloBloqueados);
+
+            int total = usuarios.Count;
+            lblContador.Text = total == 0 ? "Sin resultados" : $"{total} usuario{(total > 1 ? "s" : "")} encontrado{(total > 1 ? "s" : "")}";
+
+            pnlTabla.Visible = total > 0;
+            pnlSinResultados.Visible = total == 0;
+
+            rptUsuarios.DataSource = usuarios;
+            rptUsuarios.DataBind();
+        }
         protected void rptUsuarios_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             if (e.CommandName == "Desbloquear")

@@ -1,6 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master"
-AutoEventWireup="true" CodeBehind="GestionUsuarios.aspx.cs"
-Inherits="desarrolloweb.UI.GestionUsuarios" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GestionUsuarios.aspx.cs" Inherits="desarrolloweb.GestionUsuarios" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="<%= ResolveUrl("~/Styles/gestionUsuarios.css") %>" />
@@ -19,28 +17,28 @@ Inherits="desarrolloweb.UI.GestionUsuarios" %>
 <div class="contenedor-gestion">
 
     <%-- Filtros --%>
-    <div class="filtros-gestion">
+   <div class="filtros-gestion">
 
-        <div class="filtro-busqueda">
-            <span class="material-symbols-outlined">search</span>
-            <input type="text" id="txtBusqueda" runat="server"
-                   class="input-busqueda"
-                   placeholder="Buscar por nombre, apellido, email o usuario...">
-        </div>
-
-        <div class="filtro-checks">
-            <label class="check-item">
-                <asp:CheckBox ID="chkSoloBloqueados" runat="server" />
-                <span>Solo bloqueados</span>
-            </label>
-        </div>
-
-        <asp:Button ID="btnBuscar" runat="server"
-            Text="Buscar"
-            CssClass="btn-buscar-gestion"
-            OnClick="btnBuscar_Click" />
-
+    <div class="filtro-busqueda">
+        <span class="material-symbols-outlined">search</span>
+        <input type="text" id="txtBusqueda" class="input-busqueda"
+               placeholder="Buscar por nombre, apellido, email o usuario..."
+               value="<%= Request.QueryString["busqueda"] ?? "" %>">
     </div>
+
+    <div class="filtro-checks">
+        <label class="check-item">
+            <input type="checkbox" id="chkBloqueados"
+                   <%= Request.QueryString["bloqueados"] == "1" ? "checked" : "" %>>
+            <span>Solo bloqueados</span>
+        </label>
+    </div>
+
+    <button type="button" class="btn-buscar-gestion" onclick="buscar()">
+        Buscar
+    </button>
+
+</div>
 
     <%-- Contador --%>
     <asp:Label ID="lblContador" runat="server" CssClass="contador-resultados" />
