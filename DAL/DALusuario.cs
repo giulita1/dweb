@@ -91,8 +91,8 @@ namespace desarrolloweb.DAL
         public int RegistrarUsuario(Usuario usuario)
         {
             string query = "INSERT INTO USUARIOS (nombre, apellido, usuario, email, contrasena) " +
-                           "OUTPUT INSERTED.Id_Usuario " +
-                           "VALUES (@nombre, @apellido, @user, @email, @contrasena)";
+
+                           "VALUES (@nombre, @apellido, @user, @email, @contrasena); SELECT SCOPE_IDENTITY();";
 
             SqlParameter[] p = {
         new SqlParameter("@nombre", usuario.Nombre),

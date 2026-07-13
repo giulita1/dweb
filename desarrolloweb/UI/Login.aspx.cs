@@ -65,28 +65,6 @@ namespace desarrolloweb.UI
             ClientScript.RegisterStartupScript(this.GetType(), "AlertaLogin", $"alert('{mensajeSeguro}');", true);
         }
 
-        protected void btnRecuperar_Click(object sender, EventArgs e)
-        {
-            string emailIngresado = txtEmailRecuperar.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(emailIngresado))
-            {
-                MostrarAlertaJS("Por favor, ingrese un email para recuperar la contraseña.");
-                return;
-            }
-
-            try
-            {
-                string mensaje = bllusuario.RecuperarContrasena(emailIngresado);
-
-                txtEmailRecuperar.Text = "";
-
-                MostrarAlertaJS(mensaje);
-            }
-            catch (Exception ex)
-            {
-                MostrarAlertaJS(ex.Message);
-            }
-        }
+       
     }
 }

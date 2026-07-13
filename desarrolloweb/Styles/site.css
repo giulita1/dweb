@@ -35,16 +35,8 @@ body {
 
 @font-face {
     font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-ExtraLight.woff2') format('woff2');
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Merriweather';
-    src: url('../fonts/Merriweather-Light.woff2') format('woff2'), url('../fonts/Merriweather-Light.woff') format('woff');
-    font-weight: 300;
+    src: url('../fonts/Montserrat-Regular.woff2') format('woff2'), url('../fonts/Montserrat-Regular.woff') format('woff');
+    font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
@@ -275,7 +267,6 @@ a {
 
 #btn-perfil .material-symbols-outlined {
     font-size: 26px;
-    color: var(--primarycolor);
 }
 
 /* ── Overlay perfil ── */
@@ -435,6 +426,18 @@ a {
 .btn-cerrar-sesion .material-symbols-outlined {
     font-size: 18px;
 }
+
+#btn-carrito,
+#btn-perfil,
+#btn-menu {
+    color: var(--primarycolor);
+}
+
+    #btn-carrito .material-symbols-outlined,
+    #btn-perfil .material-symbols-outlined,
+    #btn-menu .material-symbols-outlined {
+        color: var(--primarycolor);
+    }
 
 @media (max-width: 768px) {
     #panel-perfil {

@@ -1,6 +1,7 @@
 ﻿using BE;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -89,5 +90,46 @@ namespace DAL
             Desconectar();
             return habitaciones;
         }
+
+        public List<Habitacion> ObtenerTodasParaDVV()
+        {
+            List<Habitacion> lista = new List<Habitacion>();
+
+            string query = @"SELECT Id_Habitacion, Nombre, Tipo, Descripcion, 
+                            PrecioPorNoche, Huespedes, ImagenUrl, DVH
+                     FROM Habitaciones";
+
+            DataTable dt = LeerText(query);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                lista.Add(new Habitacion
+                {
+                    Id_Habitacion = Convert.ToInt32(dr["Id_Habitacion"]),
+                    Nombre = dr["Nombre"].ToString(),
+                    Tipo = dr["Tipo"].ToString(),
+                    Descripcion = dr["Descripcion"].ToString(),
+                    PrecioPorNoche = Convert.ToDouble(dr["PrecioPorNoche"]),
+                    Huespedes = Convert.ToInt32(dr["Huespedes"]),
+                    ImagenUrl = dr["ImagenUrl"].ToString(),
+                    DVH = dr["DVH"] != DBNull.Value ? Convert.ToInt32(dr["DVH"]) : 0
+                });
+            }
+
+            return lista;
+        }
+
+        public void ActualizarDVH(int idHabitacion, int dvh)
+        {
+            string query = "UPDATE Habitaciones SET DVH = @dvh WHERE Id_Habitacion = @id";
+            SqlParameter[] p = {
+        new SqlParameter("@dvh", dvh),
+        new SqlParameter("@id",  idHabitacion)
+    };
+            EscribirText(query, p);
+        }
+
+
+
     }
 }

@@ -10,7 +10,6 @@
   <div id="form-login" class="form-login" >
 
       <div class="datos-container">
-
           <div class="input-container">
               <label for="input-usuario">Nombre de usuario</label>
               <input type="text" id="input-usuario" name="usuario">
@@ -27,20 +26,20 @@
           </div>
 
           <input type="submit" class="btn-login" value="INICIAR SESIÓN">
-          
-          <div id="panel-recuperar" class="panel-recuperar" style="display: none;">
-              <hr class="separador" />
-              
-              <div class="input-container">
-                  <label for="txtEmailRecuperar">Ingresá tu Email registrado</label>
-                  <asp:TextBox ID="txtEmailRecuperar" runat="server" ClientIDMode="Static" placeholder="ejemplo@correo.com"></asp:TextBox>
-              </div>
-              
-              <asp:Button ID="btnRecuperar" runat="server" Text="ENVIAR NUEVA CLAVE" CssClass="btn-login btn-recuperar" OnClick="btnRecuperar_Click" />
-          </div>
+      </div>
 
+      <div id="panel-recuperar" class="panel-recuperar">
+          <hr class="separador" />
+    
+          <div class="input-container">
+              <label for="txtEmailRecuperar">Ingresá tu Email registrado</label>
+              <input type="email" id="txtEmailRecuperar" class="input-recuperar" placeholder="ejemplo@correo.com">
+          </div>
+    
+          <button type="button" class="btn-login btn-recuperar" onclick="enviarClave()">
+              ENVIAR NUEVA CLAVE
+          </button>
       </div>
 
   </div>
-
 </asp:Content>

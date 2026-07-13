@@ -10,6 +10,6 @@ namespace BE
     {
         public string Tabla{ get; set; }
         public string IdRegistro { get; set; }
-        public string TipoError { get; set; }
+        public string Operacion { get; set; }
     }
 }

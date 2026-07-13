@@ -10,9 +10,9 @@ namespace DAL
 {
     public class DALconexion
     {
-        //protected SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=hotel_;Integrated Security=True");
+        protected SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=hotel_;Integrated Security=True");
 
-         protected SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=hotel_;Integrated Security=True;TrustServerCertificate=True");
+        // protected SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=hotel_;Integrated Security=True;TrustServerCertificate=True");
         //protected SqlConnection con = new SqlConnection("Data Source=HORACIO;Initial Catalog=hotel_;Integrated Security=True;TrustServerCertificate=True");
         
         private SqlTransaction transaccion;

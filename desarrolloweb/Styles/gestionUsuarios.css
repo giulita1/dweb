@@ -16,6 +16,10 @@
     margin: 12px 0 10px;
 }
 
+.subtitulo-section {
+    color: white !important;
+}
+
 .hero-gestion .hero-texto p {
     color: rgba(255,255,255,0.65);
     font-size: 15px;

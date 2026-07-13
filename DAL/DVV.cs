@@ -81,5 +81,41 @@ namespace DAL
                 throw new Exception($"Error al obtener DVV guardado de la tabla {nombreTabla}: {ex.Message}");
             }
         }
+
+        public string ObtenerUltimaOperacion(string tabla, int idRegistro)
+        {
+            try
+            {
+                string sql = idRegistro == -1
+                    ? @"SELECT TOP 1 Operacion, Fecha FROM AuditoriaTablas 
+                WHERE Tabla = @tabla ORDER BY Fecha DESC"
+                    : @"SELECT TOP 1 Operacion, Fecha FROM AuditoriaTablas 
+                WHERE Tabla = @tabla AND Id_Registro = @id ORDER BY Fecha DESC";
+
+                List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@tabla", tabla)
+        };
+
+                if (idRegistro != -1)
+                    parametros.Add(new SqlParameter("@id", idRegistro));
+
+                DataTable dt = accesos.LeerText(sql, parametros.ToArray());
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    string operacion = dt.Rows[0]["Operacion"].ToString();
+                    string fecha = Convert.ToDateTime(dt.Rows[0]["Fecha"])
+                                              .ToString("dd/MM/yyyy HH:mm");
+                    return $"{operacion} el {fecha}";
+                }
+
+                return "sin registro de auditoría";
+            }
+            catch
+            {
+                return "no se pudo determinar";
+            }
+        }
     }
 }

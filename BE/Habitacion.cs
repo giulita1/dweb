@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    public class Habitacion
+    public class Habitacion:IVerificable
     {
         public int Id_Habitacion { get; set; }
         public string Nombre { get; set; }
@@ -15,6 +15,11 @@ namespace BE
         public double PrecioPorNoche { get; set; }
         public int Huespedes { get; set; }
         public string ImagenUrl { get; set; }
-       
+
+        public int DVH { get; set; }
+        public string GenerarCadenaDVH()
+        {
+            return $"{Id_Habitacion}{Nombre}{Tipo}{Descripcion}{PrecioPorNoche}{Huespedes}{ImagenUrl}";
+        }
     }
 }

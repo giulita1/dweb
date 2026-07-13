@@ -1,9 +1,15 @@
-﻿function toggleRecuperacion(e) {
-    e.preventDefault();
-    var panel = document.getElementById('panel-recuperar');
-    if (panel.style.display === 'none' || panel.style.display === '') {
-        panel.style.display = 'flex';
-    } else {
-        panel.style.display = 'none';
+﻿function toggleRecuperacion(event) {
+    event.preventDefault();
+    var panel = document.getElementById("panel-recuperar");
+
+    panel.classList.toggle("visible");
+}
+
+function enviarClave() {
+    const email = document.getElementById('txtEmailRecuperar').value;
+    if (!email) {
+        alert('Por favor ingresá tu email.');
+        return;
     }
+    alert('Si el email existe en el sistema, recibirás una nueva clave.');
 }

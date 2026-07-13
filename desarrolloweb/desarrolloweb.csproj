@@ -137,7 +137,6 @@
     <Content Include="ScriptsJS\login.js" />
     <Content Include="ScriptsJS\registro.js" />
     <Content Include="fonts\LibreBaskerville-Regular.woff" />
-    <Content Include="fonts\Montserrat-ExtraLight.woff2" />
     <Content Include="img\hotel2.webp" />
     <Content Include="ScriptsJS\reservar.js" />
     <Content Include="ScriptsJS\site.js" />
@@ -147,6 +146,8 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\Montserrat-Regular.woff" />
+    <Content Include="fonts\Montserrat-Regular.woff2" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

@@ -76,10 +76,9 @@ namespace DAL
                 INSERT INTO Reservas 
                     (Id_Habitacion, Id_Usuario, FechaLlegada, FechaSalida, 
                      Huespedes, IncluyeDesayuno, Total, Estado, FechaReserva)
-                OUTPUT INSERTED.Id_Reserva
                 VALUES 
                     (@HabitacionId, @UsuarioId, @FechaLlegada, @FechaSalida,
-                     @Huespedes, @IncluyeDesayuno, @Total, @Estado, @FechaReserva)";
+                     @Huespedes, @IncluyeDesayuno, @Total, @Estado, @FechaReserva); SELECT SCOPE_IDENTITY();";
 
                 SqlParameter[] p = {
                     new SqlParameter("@HabitacionId", reserva.Hab.Id_Habitacion),

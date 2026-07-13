@@ -18,9 +18,9 @@
 
         <asp:GridView ID="dgvInfracciones" runat="server" AutoGenerateColumns="false" CssClass="grid-error" GridLines="None">
             <Columns>
-                <asp:BoundField DataField="Tabla" HeaderText="Nombre de la Tabla" />
-                <asp:BoundField DataField="IdRegistro" HeaderText="Fila Afectada (ID / COLUMNA)" />
-                <asp:BoundField DataField="TipoError" HeaderText="Tipo de Error Detectado" />
+                <asp:BoundField DataField="Tabla"      HeaderText="Tabla" />
+                <asp:BoundField DataField="IdRegistro" HeaderText="N° Registro" />
+                <asp:BoundField DataField="Operacion"  HeaderText="Operación" />
             </Columns>
         </asp:GridView>
 

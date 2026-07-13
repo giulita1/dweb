@@ -27,17 +27,18 @@
             string pagina = Request.Url.AbsolutePath.ToLower();
             bool logueado = Session["usuario"] != null;
 
-            int rol = 0;
-            bool esAuditor = false;
-            bool esAdmin   = false;
-            bool esCliente = false;
+            int idUsuario  = 0;
+            bool esAuditor  = false;
+            bool esAdmin    = false;
+            bool esCliente  = false;
 
             if (logueado)
             {
                 var usuActual = (desarrolloweb.BE.Usuario)Session["usuario"];
-                rol       = usuActual.Id_Usuario;
-                esAuditor = (rol == 0);
-                esCliente = (rol != 0);
+                idUsuario = usuActual.Id_Usuario;
+                esAuditor = (idUsuario == 0);  // webmaster
+                esAdmin   = (idUsuario == 3);  // admin
+                esCliente = (!esAuditor && !esAdmin);
             }
         %>
 
@@ -202,59 +203,65 @@
 
         <div class="perfil-contenido">
 
-            <% if (esCliente) { %>
-            <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="perfil-item">
-                <span class="material-symbols-outlined">luggage</span>
-                <div>
-                    <p>Mis Reservas</p>
-                    <small>Revisá y gestioná tus reservas</small>
-                </div>
-                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-            </a>
-            <a href="<%= ResolveUrl("~/UI/Reservar.aspx") %>" class="perfil-item">
-                <span class="material-symbols-outlined">hotel_class</span>
-                <div>
-                    <p>Nueva Reserva</p>
-                    <small>Buscá tu próxima estadía</small>
-                </div>
-                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-            </a>
-            <% } %>
+    
+                <% if (esAdmin) { %>
+                <a href="<%= ResolveUrl("~/UI/GestionUsuarios.aspx") %>" class="perfil-item">
+                    <span class="material-symbols-outlined">group</span>
+                    <div>
+                        <p>Gestión de Usuarios</p>
+                        <small>Administrá los usuarios</small>
+                    </div>
+                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+                </a>
+                <a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
+                    <span class="material-symbols-outlined">history</span>
+                    <div>
+                        <p>Bitácora</p>
+                        <small>Registro de actividad</small>
+                    </div>
+                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+                </a>
+                <% } %>
 
-            <% if (esAuditor) { %>
-            <a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
-                <span class="material-symbols-outlined">history</span>
-                <div>
-                    <p>Bitácora</p>
-                    <small>Registro de actividad</small>
-                </div>
-                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-            </a>
-            <a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
-                <span class="material-symbols-outlined">verified</span>
-                <div>
-                    <p>Dígitos Verificadores</p>
-                    <small>Control de integridad</small>
-                </div>
-                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-            </a>
-            <a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
-                <span class="material-symbols-outlined">backup</span>
-                <div>
-                    <p>Backup / Restore</p>
-                    <small>Respaldo de datos</small>
-                </div>
-                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-            </a>
-            <a href="<%= ResolveUrl("~/UI/GestionUsuarios.aspx") %>" class="perfil-item">
-                <span class="material-symbols-outlined">group</span>
-                <div>
-                    <p>Gestión de Usuarios</p>
-                    <small>Administrá los usuarios</small>
-                </div>
-                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-            </a>
-            <% } %>
+
+                <% if (esAuditor) { %>
+                <a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
+                    <span class="material-symbols-outlined">backup</span>
+                    <div>
+                        <p>Backup / Restore</p>
+                        <small>Respaldo de datos</small>
+                    </div>
+                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+                </a>
+                <a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
+                    <span class="material-symbols-outlined">verified</span>
+                    <div>
+                        <p>Dígitos Verificadores</p>
+                        <small>Control de integridad</small>
+                    </div>
+                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+                </a>
+                <% } %>
+
+
+                <% if (esCliente) { %>
+                <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="perfil-item">
+                    <span class="material-symbols-outlined">luggage</span>
+                    <div>
+                        <p>Mis Reservas</p>
+                        <small>Revisá y gestioná tus reservas</small>
+                    </div>
+                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+                </a>
+                <a href="<%= ResolveUrl("~/UI/Reservar.aspx") %>" class="perfil-item">
+                    <span class="material-symbols-outlined">hotel_class</span>
+                    <div>
+                        <p>Nueva Reserva</p>
+                        <small>Buscá tu próxima estadía</small>
+                    </div>
+                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+                </a>
+                <% } %>
 
         </div>
 

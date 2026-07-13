@@ -10,12 +10,18 @@ namespace BLL
 {
     public class BLLHabitacion
     {
+        DALHabitacion dal = new DALHabitacion();
+        public List<Habitacion> ObtenerTodasParaDVV()
+        {
+           
+            return dal.ObtenerTodasParaDVV();
+        }
         public Habitacion ObtenerPorId(int id)
         {
             if (id <= 0)
                 throw new ArgumentException("ID de habitación inválido.");
 
-            DALHabitacion dal = new DALHabitacion();
+           ;
             Habitacion hab = dal.ObtenerPorId(id);
 
             if (hab == null)
@@ -34,7 +40,7 @@ namespace BLL
             if (huespedes < 1 || huespedes > 10)
                 throw new ArgumentException("La cantidad de huéspedes debe estar entre 1 y 10.");
 
-            DALHabitacion dal = new DALHabitacion();
+          
             return dal.ObtenerHabitacionesDisponibles(inicio, fin, huespedes);
         }
     }
