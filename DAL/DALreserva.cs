@@ -57,16 +57,16 @@ namespace DAL
 
             public void CancelarReserva(int idReserva, int idUsuario)
             {
-                string query = @"UPDATE Reservas 
-                     SET Estado = 'Cancelada' 
-                     WHERE Id_Reserva = @IdReserva 
-                     AND Id_Usuario = @IdUsuario
-                     AND Estado != 'Cancelada'";
+                        string query = @"UPDATE Reservas 
+                             SET Estado = 'Cancelada' 
+                             WHERE Id_Reserva = @IdReserva 
+                             AND Id_Usuario = @IdUsuario
+                             AND Estado != 'Cancelada'";
 
-                SqlParameter[] p = {
-        new SqlParameter("@IdReserva", idReserva),
-        new SqlParameter("@IdUsuario", idUsuario)
-    };
+                        SqlParameter[] p = {
+                new SqlParameter("@IdReserva", idReserva),
+                new SqlParameter("@IdUsuario", idUsuario)
+            };
 
                 EscribirText(query, p);
             }

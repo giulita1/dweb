@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BE;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -82,40 +83,69 @@ namespace DAL
             }
         }
 
-        public string ObtenerUltimaOperacion(string tabla, int idRegistro)
+        public void LimpiarAuditoria()
         {
+            string sql = "DELETE FROM AuditoriaTablas";
+            accesos.EscribirText(sql, null);
+        }
+
+        public List<Infraccion> ObtenerOperaciones(string tabla)
+        {
+            List<Infraccion> operaciones = new List<Infraccion>();
+
             try
             {
-                string sql = idRegistro == -1
-                    ? @"SELECT TOP 1 Operacion, Fecha FROM AuditoriaTablas 
-                WHERE Tabla = @tabla ORDER BY Fecha DESC"
-                    : @"SELECT TOP 1 Operacion, Fecha FROM AuditoriaTablas 
-                WHERE Tabla = @tabla AND Id_Registro = @id ORDER BY Fecha DESC";
+                string sql = @"SELECT Operacion, Id_Registro, Fecha
+                       FROM AuditoriaTablas
+                       WHERE Tabla = @tabla
+                       ORDER BY Fecha DESC";
 
-                List<SqlParameter> parametros = new List<SqlParameter>
-        {
+
+                SqlParameter[] p =
+                {
             new SqlParameter("@tabla", tabla)
         };
 
-                if (idRegistro != -1)
-                    parametros.Add(new SqlParameter("@id", idRegistro));
 
-                DataTable dt = accesos.LeerText(sql, parametros.ToArray());
+                DataTable dt = accesos.LeerText(sql, p);
 
-                if (dt != null && dt.Rows.Count > 0)
+
+
+                foreach (DataRow dr in dt.Rows)
                 {
-                    string operacion = dt.Rows[0]["Operacion"].ToString();
-                    string fecha = Convert.ToDateTime(dt.Rows[0]["Fecha"])
-                                              .ToString("dd/MM/yyyy HH:mm");
-                    return $"{operacion} el {fecha}";
+                    operaciones.Add(new Infraccion
+                    {
+                        Tabla = tabla,
+
+                        IdRegistro =
+                            dr["Id_Registro"].ToString(),
+
+                        Operacion =
+                            $"{dr["Operacion"]} ({Convert.ToDateTime(dr["Fecha"]):dd/MM/yyyy HH:mm})"
+                    });
                 }
 
-                return "sin registro de auditoría";
+
+                return operaciones;
             }
-            catch
+            catch (Exception ex)
             {
-                return "no se pudo determinar";
+                return new List<Infraccion>
+                {
+                    new Infraccion
+                    {
+                        Tabla = tabla,
+                        IdRegistro = "ERROR",
+                        Operacion = ex.Message
+                    }
+                };
             }
         }
+
     }
+
 }
+
+
+       
+    

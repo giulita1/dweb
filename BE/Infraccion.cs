@@ -11,5 +11,6 @@ namespace BE
         public string Tabla{ get; set; }
         public string IdRegistro { get; set; }
         public string Operacion { get; set; }
+        public string Fecha { get; set; }
     }
 }

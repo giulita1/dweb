@@ -97,7 +97,7 @@ namespace DAL
 
             string query = @"SELECT Id_Habitacion, Nombre, Tipo, Descripcion, 
                             PrecioPorNoche, Huespedes, ImagenUrl, DVH
-                     FROM Habitaciones";
+                     FROM Habitacion";
 
             DataTable dt = LeerText(query);
 

@@ -49,21 +49,39 @@ namespace DAL
         public int EscribirText(string query, SqlParameter[] parametros)
         {
             Conectar();
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.CommandType = CommandType.Text;
-            if (parametros != null) cmd.Parameters.AddRange(parametros);
 
-            transaccion = con.BeginTransaction();
-            cmd.Transaction = transaccion;
             try
             {
+                SqlCommand contexto = new SqlCommand(
+                    @"EXEC sp_set_session_context 
+              @key = N'Aplicacion', 
+              @value = N'WebForms';",
+                    con);
+
+                contexto.ExecuteNonQuery();
+
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.CommandType = CommandType.Text;
+
+                if (parametros != null)
+                    cmd.Parameters.AddRange(parametros);
+
+
+                transaccion = con.BeginTransaction();
+                cmd.Transaction = transaccion;
+
                 int filasafectadas = cmd.ExecuteNonQuery();
+
                 transaccion.Commit();
+
                 return filasafectadas;
             }
             catch (Exception ex)
             {
-                transaccion.Rollback();
+                if (transaccion != null)
+                    transaccion.Rollback();
+
                 throw new Exception("Error al ejecutar la consulta: " + ex.Message);
             }
             finally
@@ -106,6 +124,14 @@ namespace DAL
         public int EscribirYDevolverId_62_RS(string query, SqlParameter[] parametros)
         {
             Conectar();
+            
+            SqlCommand contexto = new SqlCommand(
+            @"EXEC sp_set_session_context 
+              @key = N'Aplicacion', 
+              @value = N'WebForms';",
+            con);
+
+            contexto.ExecuteNonQuery();
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.CommandType = CommandType.Text;
             if (parametros != null) cmd.Parameters.AddRange(parametros);
