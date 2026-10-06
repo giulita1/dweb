@@ -42,10 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bitacora.cs" />
+    <Compile Include="Familia.cs" />
     <Compile Include="Habitacion.cs" />
+    <Compile Include="IComponente.cs" />
     <Compile Include="Infraccion.cs" />
     <Compile Include="IUsuario.cs" />
     <Compile Include="IVerificable.cs" />
+    <Compile Include="Patente.cs" />
+    <Compile Include="Perfil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reserva.cs" />
     <Compile Include="Usuario.cs" />

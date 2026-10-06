@@ -15,11 +15,19 @@ namespace desarrolloweb
         private BLLDVV gestorIntegridad = new BLLDVV();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null)
+            var usuario = Session["usuario"] as BE.Usuario;
+            if (usuario == null)
             {
-                Response.Redirect("~/UI/Login.aspx");
+                Response.Redirect("~/UI/Login.aspx", true);
                 return;
             }
+
+            if (usuario.Perfil?.TienePermiso("DigitoVerificador") != true)
+            {
+                Response.Redirect("~/UI/Inicio.aspx", true);
+                return;
+            }
+
             if (!IsPostBack)
             {
                 ValidarIntegridadBaseDatos();

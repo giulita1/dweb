@@ -11,12 +11,19 @@ namespace desarrolloweb.UI
 {
     public partial class GestionUsuarios : System.Web.UI.Page
     {
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null ||
-                ((Usuario)Session["usuario"]).Id_Usuario != 0)
+            var usuario = Session["usuario"] as BE.Usuario;
+            if (usuario == null)
             {
-                Response.Redirect("~/UI/Inicio.aspx");
+                Response.Redirect("~/UI/Login.aspx", true);
+                return;
+            }
+
+            if (usuario.Perfil?.TienePermiso("GestionUsuarios") != true)
+            {
+                Response.Redirect("~/UI/Inicio.aspx", true);
                 return;
             }
 

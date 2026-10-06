@@ -15,15 +15,23 @@ namespace desarrolloweb.UI
         private const double PRECIO_DESAYUNO = 5000;
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Redirigir si no está logueado
-            if (Session["usuario"] == null)
+            var usuario = Session["usuario"] as BE.Usuario;
+            if (usuario == null)
             {
-                Response.Redirect("~/UI/Login.aspx");
+                Response.Redirect("~/UI/Login.aspx", true);
+                return;
+            }
+
+            if (usuario.Perfil?.TienePermiso("RegistrarReserva") != true)
+            {
+                Response.Redirect("~/UI/Inicio.aspx", true);
                 return;
             }
 
             if (!IsPostBack)
+            {
                 CargarResumen();
+            }
         }
 
         private void CargarResumen()

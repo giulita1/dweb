@@ -45,6 +45,7 @@
     <Compile Include="DALbitacora.cs" />
     <Compile Include="DALconexion.cs" />
     <Compile Include="DALHabitacion.cs" />
+    <Compile Include="DALPerfil.cs" />
     <Compile Include="DALreserva.cs" />
     <Compile Include="DALusuario.cs" />
     <Compile Include="DVV.cs" />

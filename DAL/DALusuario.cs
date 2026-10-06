@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using BE;
+using DAL;
 using desarrolloweb.BE;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,10 @@ namespace desarrolloweb.DAL
                     User = dr["usuario"].ToString(),
                     Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
                     Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
-                    IdRol = Convert.ToInt32(dr["IdRol"])
+                    Perfil = new Perfil
+                    {
+                        Id = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0
+                    }
                 });
             }
 
@@ -143,14 +147,13 @@ namespace desarrolloweb.DAL
 
         public BE.Usuario ValidarAcceso(string usuario, string contrasena)
         {
-
             try
             {
                 string query = "SELECT * FROM Usuarios WHERE usuario = @u AND contrasena = @p";
                 SqlParameter[] p = {
             new SqlParameter("@u", usuario),
             new SqlParameter("@p", contrasena)
-                };
+        };
 
                 DataTable dt = LeerText(query, p);
 
@@ -167,7 +170,10 @@ namespace desarrolloweb.DAL
                         Contrasena = dr["contrasena"].ToString(),
                         Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
                         Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
-                        IdRol = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0,
+                        Perfil = new Perfil
+                        {
+                            Id = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0
+                        },
                         IdIdioma = dr["IdIdioma"] != DBNull.Value ? Convert.ToInt32(dr["IdIdioma"]) : 0,
                         DVH = dr["DVH"] != DBNull.Value ? Convert.ToInt32(dr["DVH"]) : 0
                     };
@@ -190,19 +196,20 @@ namespace desarrolloweb.DAL
         {
             try
             {
-                string query = @"UPDATE Usuarios 
-                         SET intentos = intentos + 1 
-                         OUTPUT INSERTED.intentos 
-                         WHERE usuario = @u";
+                // Primero actualiza
+                string queryUpdate = @"UPDATE Usuarios 
+                               SET intentos = ISNULL(intentos, 0) + 1 
+                               WHERE usuario = @u";
 
-                SqlParameter[] p = {
-            new SqlParameter("@u", usuario)
-        };
-                DataTable dt = LeerText(query, p);
+                SqlParameter[] p = { new SqlParameter("@u", usuario) };
+                EscribirText(queryUpdate, p);
+
+                // Luego lee el valor actualizado
+                string querySelect = "SELECT intentos FROM Usuarios WHERE usuario = @u";
+                DataTable dt = LeerText(querySelect, p);
+
                 if (dt != null && dt.Rows.Count > 0)
-                {
-                    return Convert.ToInt16(dt.Rows[0]["intentos"]);
-                }
+                    return Convert.ToInt32(dt.Rows[0]["intentos"]);
 
                 return 0;
             }
@@ -293,7 +300,10 @@ namespace desarrolloweb.DAL
                     Contrasena = dr["contrasena"].ToString(),
                     Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
                     Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
-                    IdRol = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0,
+                    Perfil = new Perfil
+                    {
+                        Id = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0
+                    },
                     IdIdioma = dr["IdIdioma"] != DBNull.Value ? Convert.ToInt32(dr["IdIdioma"]) : 0,
                     DVH = dr["DVH"] != DBNull.Value ? Convert.ToInt32(dr["DVH"]) : 0
                 };
@@ -340,7 +350,10 @@ namespace desarrolloweb.DAL
                     Contrasena = dr["contrasena"].ToString(),
                     Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
                     Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
-                    IdRol = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0,
+                    Perfil = new Perfil
+                    {
+                        Id = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0
+                    },
                     IdIdioma = dr["IdIdioma"] != DBNull.Value ? Convert.ToInt32(dr["IdIdioma"]) : 0,
                     DVH = dr["DVH"] != DBNull.Value ? Convert.ToInt32(dr["DVH"]) : 0
                 });
