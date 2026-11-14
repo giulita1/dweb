@@ -196,17 +196,16 @@ namespace desarrolloweb.DAL
         {
             try
             {
-                // Primero actualiza
                 string queryUpdate = @"UPDATE Usuarios 
                                SET intentos = ISNULL(intentos, 0) + 1 
                                WHERE usuario = @u";
 
-                SqlParameter[] p = { new SqlParameter("@u", usuario) };
-                EscribirText(queryUpdate, p);
+                SqlParameter[] p1 = { new SqlParameter("@u", usuario) };
+                EscribirText(queryUpdate, p1);
 
-                // Luego lee el valor actualizado
                 string querySelect = "SELECT intentos FROM Usuarios WHERE usuario = @u";
-                DataTable dt = LeerText(querySelect, p);
+                SqlParameter[] p2 = { new SqlParameter("@u", usuario) }; // ← nuevo array
+                DataTable dt = LeerText(querySelect, p2);
 
                 if (dt != null && dt.Rows.Count > 0)
                     return Convert.ToInt32(dt.Rows[0]["intentos"]);
@@ -218,6 +217,7 @@ namespace desarrolloweb.DAL
                 throw new Exception("Error en DAL al sumar intentos: " + ex.Message);
             }
         }
+
         public void ResetearIntentos(string usuario)
         {
             try

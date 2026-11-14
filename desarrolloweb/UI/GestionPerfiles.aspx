@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master"
 AutoEventWireup="true" CodeBehind="GestionPerfiles.aspx.cs"
-Inherits="desarrolloweb.UI.GestionPerfiles" %>
+Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="true"
+%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="<%= ResolveUrl("~/Styles/gestionPerfiles.css") %>" />
@@ -16,6 +17,12 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
     </div>
 </section>
 
+<asp:ScriptManager ID="ScriptManager1" runat="server" />
+
+
+<asp:UpdatePanel ID="upGestion" runat="server">
+<ContentTemplate>
+
 <div class="contenedor-gestion">
 
     <asp:Label ID="lblMensaje" runat="server" CssClass="lbl-mensaje" Visible="false" />
@@ -26,7 +33,7 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
         <button type="button" class="tab" onclick="cambiarTab('patentes', this)">Patentes</button>
     </div>
 
- 
+
     <div id="tab-perfiles" class="tab-content active">
 
         <div class="card-gestion">
@@ -35,10 +42,6 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
                 <div class="form-grupo">
                     <label>Nombre</label>
                     <asp:TextBox ID="txtNombrePerfil" runat="server" CssClass="input-gestion" placeholder="Ej: Administrador" />
-                </div>
-                <div class="form-grupo">
-                    <label>Descripción</label>
-                    <asp:TextBox ID="txtDescPerfil" runat="server" CssClass="input-gestion" placeholder="Descripción opcional" />
                 </div>
                 <asp:Button ID="btnAgregarPerfil" runat="server" Text="Agregar"
                     CssClass="btn-agregar" OnClick="btnAgregarPerfil_Click" />
@@ -53,7 +56,6 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-nombre"><%# Eval("Nombre") %></span>
-                            <span class="item-desc"><%# Eval("Descripcion") %></span>
                         </div>
                         <div class="item-acciones">
                             <asp:Button runat="server" Text="Ver árbol"
@@ -94,6 +96,7 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
                     CssClass="btn-cancelar" OnClick="btnCancelar_Click" />
             </div>
         </asp:Panel>
+
         <asp:Panel ID="pnlAgregarPatenteAPerfil" runat="server" Visible="false" CssClass="card-gestion panel-accion">
             <h2>Agregar patente al perfil <asp:Label ID="lblNombrePerfilSeleccionado2" runat="server" CssClass="highlight" /></h2>
             <asp:HiddenField ID="hfIdPerfilSeleccionado2" runat="server" />
@@ -108,7 +111,6 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
                     CssClass="btn-cancelar" OnClick="btnCancelar_Click" />
             </div>
         </asp:Panel>
-
 
         <asp:Panel ID="pnlArbol" runat="server" Visible="false" CssClass="card-gestion">
             <h2>Árbol del perfil: <asp:Label ID="lblNombreArbol" runat="server" CssClass="highlight" /></h2>
@@ -128,10 +130,6 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
                     <label>Nombre</label>
                     <asp:TextBox ID="txtNombreFamilia" runat="server" CssClass="input-gestion" placeholder="Ej: Seguridad" />
                 </div>
-                <div class="form-grupo">
-                    <label>Descripción</label>
-                    <asp:TextBox ID="txtDescFamilia" runat="server" CssClass="input-gestion" placeholder="Descripción opcional" />
-                </div>
                 <asp:Button ID="btnAgregarFamilia" runat="server" Text="Agregar"
                     CssClass="btn-agregar" OnClick="btnAgregarFamilia_Click" />
             </div>
@@ -145,7 +143,6 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-nombre"><%# Eval("Nombre") %></span>
-                            <span class="item-desc"><%# Eval("Descripcion") %></span>
                         </div>
                         <div class="item-acciones">
                             <asp:Button runat="server" Text="Agregar subfamilia"
@@ -209,10 +206,6 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
                     <label>Nombre</label>
                     <asp:TextBox ID="txtNombrePatente" runat="server" CssClass="input-gestion" placeholder="Ej: GestionUsuarios" />
                 </div>
-                <div class="form-grupo">
-                    <label>Descripción</label>
-                    <asp:TextBox ID="txtDescPatente" runat="server" CssClass="input-gestion" placeholder="Descripción opcional" />
-                </div>
                 <asp:Button ID="btnAgregarPatente" runat="server" Text="Agregar"
                     CssClass="btn-agregar" OnClick="btnAgregarPatente_Click" />
             </div>
@@ -226,7 +219,6 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-nombre"><%# Eval("Nombre") %></span>
-                            <span class="item-desc"><%# Eval("Descripcion") %></span>
                         </div>
                         <div class="item-acciones">
                             <asp:Button runat="server" Text="Eliminar"
@@ -245,13 +237,37 @@ Inherits="desarrolloweb.UI.GestionPerfiles" %>
 
 </div>
 
-<script>
-function cambiarTab(nombre, btn) {
+</ContentTemplate>
+</asp:UpdatePanel>
+    <script>
+function mostrarTab(nombre, btn) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById('tab-' + nombre).classList.add('active');
     btn.classList.add('active');
+    try { sessionStorage.setItem('tabActiva', nombre); } catch (e) { }
 }
-</script>
+
+// Lo llaman los botones de las pestañas: cambia de pestaña y oculta el mensaje
+function cambiarTab(nombre, btn) {
+    mostrarTab(nombre, btn);
+    document.querySelectorAll('.lbl-mensaje').forEach(m => m.style.display = 'none');
+}
+
+// Restaura la pestaña activa sin tocar el mensaje
+function restaurarTab() {
+    var nombre = null;
+    try { nombre = sessionStorage.getItem('tabActiva'); } catch (e) { }
+    if (!nombre) return;
+    var btn = document.querySelector(".tab[onclick*=\"'" + nombre + "'\"]");
+    if (btn) mostrarTab(nombre, btn);
+}
+
+if (window.Sys && Sys.Application) {
+    Sys.Application.add_load(restaurarTab);
+} else {
+    document.addEventListener('DOMContentLoaded', restaurarTab);
+}
+    </script>
 
 </asp:Content>

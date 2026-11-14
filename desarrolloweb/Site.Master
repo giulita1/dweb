@@ -27,7 +27,7 @@
             string pagina = Request.Url.AbsolutePath.ToLower();
             var usuActual = Session["usuario"] as desarrolloweb.BE.Usuario;
             bool logueado = usuActual != null;
-
+            bool puedeGestionarPerfiles = logueado && usuActual.Perfil?.TienePermiso("GestionPerfiles") == true;
             bool puedeReservar        = logueado && usuActual.Perfil?.TienePermiso("RegistrarReserva") == true;
             bool puedeVerReservas     = logueado && usuActual.Perfil?.TienePermiso("VerReservas") == true;
             bool puedeGestionarUsuarios = logueado && usuActual.Perfil?.TienePermiso("GestionUsuarios") == true;
@@ -215,6 +215,17 @@
                     <div>
                         <p>Dígitos Verificadores</p>
                         <small>Control de integridad</small>
+                    </div>
+                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+                </a>
+                <% } %>
+
+                <% if (puedeGestionarPerfiles) { %>
+                <a href="<%= ResolveUrl("~/UI/GestionPerfiles.aspx") %>" class="perfil-item">
+                    <span class="material-symbols-outlined">manage_accounts</span>
+                    <div>
+                        <p>Gestión de Perfiles</p>
+                        <small>Administrá perfiles y permisos</small>
                     </div>
                     <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
                 </a>

@@ -75,9 +75,11 @@
                                 </td>
                                 <td><%# Eval("Email") %></td>
                                 <td>
-                                    <span class='badge-rol <%# (int)Eval("IdRol") == 1 ? "admin" : "cliente" %>'>
-                                        <%# (int)Eval("IdRol") == 1 ? "Admin" : "Cliente" %>
+                                   <td>
+                                    <span class="badge-rol">
+                                        <%# ((desarrolloweb.BE.Usuario)Container.DataItem).Perfil?.Id %>
                                     </span>
+                                </td>
                                 </td>
                                 <td class="td-intentos"><%# Eval("Intentos") %>/3</td>
                                 <td>

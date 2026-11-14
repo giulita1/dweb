@@ -15,6 +15,24 @@ namespace desarrolloweb.UI
     {
 
         /// <summary>
+        /// Control ScriptManager1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
+        /// Control upGestion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upGestion;
+
+        /// <summary>
         /// Control lblMensaje.
         /// </summary>
         /// <remarks>
@@ -31,15 +49,6 @@ namespace desarrolloweb.UI
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNombrePerfil;
-
-        /// <summary>
-        /// Control txtDescPerfil.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescPerfil;
 
         /// <summary>
         /// Control btnAgregarPerfil.
@@ -204,15 +213,6 @@ namespace desarrolloweb.UI
         protected global::System.Web.UI.WebControls.TextBox txtNombreFamilia;
 
         /// <summary>
-        /// Control txtDescFamilia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescFamilia;
-
-        /// <summary>
         /// Control btnAgregarFamilia.
         /// </summary>
         /// <remarks>
@@ -346,15 +346,6 @@ namespace desarrolloweb.UI
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNombrePatente;
-
-        /// <summary>
-        /// Control txtDescPatente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescPatente;
 
         /// <summary>
         /// Control btnAgregarPatente.

@@ -89,7 +89,7 @@ namespace desarrolloweb.UI
                     Nombre = txtNombrePerfil.Text.Trim()
                 });
                 txtNombrePerfil.Text = "";
-                txtDescPerfil.Text = "";
+      
                 MostrarMensaje("Perfil agregado correctamente.", "ok");
                 CargarPerfiles();
             }
@@ -174,7 +174,7 @@ namespace desarrolloweb.UI
                    
                 });
                 txtNombreFamilia.Text = "";
-                txtDescFamilia.Text = "";
+        
                 MostrarMensaje("Familia agregada correctamente.", "ok");
                 CargarFamilias();
             }
@@ -248,7 +248,6 @@ namespace desarrolloweb.UI
                     Nombre = txtNombrePatente.Text.Trim()
                 });
                 txtNombrePatente.Text = "";
-                txtDescPatente.Text = "";
                 MostrarMensaje("Patente agregada correctamente.", "ok");
                 CargarPatentes();
             }
