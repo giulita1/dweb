@@ -9,6 +9,33 @@
     --dorado: #B89B72;
 }
 
+#nav-menu .nav-inicio,
+#nav-menu select.selector-idioma {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.88rem !important;
+    letter-spacing: 0.3px;
+    color: var(--primarycolor);
+}
+
+#nav-menu .nav-inicio {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+#nav-menu .nav-inicio:hover {
+    opacity: 1;
+}
+
+#nav-menu select.selector-idioma {
+    background: transparent;
+    cursor: pointer;
+}
+
+.selector-idioma {
+    background: transparent;
+    cursor: pointer;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -748,4 +775,9 @@ a {
     .btn-dropdown .material-symbols-outlined {
         display: none;
     }
+}
+#nav-menu .nav-inicio,
+#nav-menu select.selector-idioma {
+    line-height: 1.2;
+    padding: 6px 4px;
 }

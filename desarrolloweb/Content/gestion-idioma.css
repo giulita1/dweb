@@ -1,135 +1,226 @@
-﻿/* Contenedor principal de la página de gestión */
-.main-content, main {
-    padding: 30px;
-    max-width: 1200px;
+﻿/* ── Hero ── */
+.hero-gestion {
+    background-color: var(--primarycolor);
+    padding: 80px 8% 60px;
+    display: flex;
+    align-items: flex-end;
+    min-height: 240px;
+}
+
+.hero-gestion .subtitulo-section {
+    color: var(--dorado);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.hero-gestion .hero-texto h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: normal;
+    color: white;
+    letter-spacing: -1px;
+    margin: 12px 0 10px;
+}
+
+.hero-gestion .hero-texto p {
+    color: rgba(255,255,255,0.65);
+    font-size: 15px;
+}
+
+/* ── Contenedor ── */
+.contenedor-gestion {
+    max-width: 1100px;
     margin: 0 auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
+    padding: 40px 5% 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
-/* Títulos y secciones */
-h2 {
-    font-size: 1.5rem;
-    color: #2c3e50;
-    margin-bottom: 15px;
-    font-weight: 600;
-    border-bottom: 2px solid #eaeaea;
-    padding-bottom: 8px;
+/* ── Cards ── */
+.card-gestion {
+    background: white;
+    border: 1px solid #f0ede9;
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 20px rgba(63, 57, 54, 0.06);
 }
 
-hr {
-    border: none;
-    height: 1px;
-    background-color: #ddd;
-    margin: 30px 0;
+.card-gestion h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.25rem;
+    font-weight: normal;
+    color: var(--primarycolor);
+    margin-bottom: 22px;
 }
 
-/* Formularios y controles ASP.NET */
-label {
-    font-weight: 500;
-    margin-right: 10px;
-    color: #495057;
+/* ── Formularios ── */
+.form-inline {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
-input[type="text"], select {
-    padding: 8px 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1rem;
-    margin-right: 10px;
-    margin-bottom: 15px;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 200px;
 }
 
-    input[type="text"]:focus, select:focus {
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-
-/* Botones con estilo moderno */
-.btn {
-    display: inline-block;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    user-select: none;
-    border: 1px solid transparent;
-    padding: 8px 16px;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-    text-decoration: none;
+.form-grupo span,
+.form-grupo label {
+    font-size: 0.75rem;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--fondooscuro2);
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-.btn-secondary {
-    color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-    .btn-secondary:hover {
-        background-color: #5a6268;
-    }
-
-.btn-success {
-    color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
-}
-
-    .btn-success:hover {
-        background-color: #218838;
-    }
-
-/* GridView Moderno */
-.table {
+.input-gestion {
     width: 100%;
-    margin-bottom: 1rem;
-    color: #212529;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    border-radius: 6px;
-    overflow: hidden;
+    padding: 12px 16px;
+    background: var(--clarito);
+    border: 1px solid var(--claro);
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-size: 0.9rem;
+    color: var(--primarycolor);
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
-    .table th, .table td {
-        padding: 12px 15px;
-        vertical-align: middle;
-        border-top: 1px solid #dee2e6;
-    }
+.input-gestion::placeholder {
+    color: var(--fondooscuro);
+}
 
-    .table th {
-        background-color: #f8f9fa;
-        color: #495057;
-        font-weight: 600;
-        border-bottom: 2px solid #dee2e6;
-        text-align: left;
-    }
+.input-gestion:focus {
+    outline: none;
+    background: white;
+    border-color: var(--dorado);
+    box-shadow: 0 0 0 3px rgba(184, 155, 114, 0.18);
+}
 
-    .table tr:hover {
-        background-color: #f1f3f5;
-    }
+.input-gestion[readonly] {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
 
-/* Inputs de edición inferiores */
-.gestion-edicion {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-    margin-top: 20px;
+select.input-gestion {
+    cursor: pointer;
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%237a7673' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+/* ── Botones ── */
+.btn-agregar,
+.btn-secundario {
+    padding: 12px 26px;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.btn-agregar {
+    background: var(--dorado);
+    color: white;
+    border: 1px solid var(--dorado);
+}
+
+.btn-agregar:hover {
+    background: var(--primarycolor);
+    border-color: var(--primarycolor);
+}
+
+.btn-secundario {
+    background: transparent;
+    color: var(--primarycolor);
+    border: 1px solid var(--claro);
+}
+
+.btn-secundario:hover {
+    border-color: var(--dorado);
+    color: var(--dorado);
+}
+
+/* ── Tabla de traducciones ── */
+.tabla-wrapper {
+    margin-top: 24px;
+    border: 1px solid #f0ede9;
+    border-radius: 12px;
+    overflow: hidden;
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+.tabla-gestion {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    color: var(--primarycolor);
+}
+
+.tabla-gestion th {
+    position: sticky;
+    top: 0;
+    background: var(--clarito);
+    text-align: left;
+    padding: 14px 18px;
+    font-size: 0.72rem;
+    font-weight: normal;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--fondooscuro2);
+    border-bottom: 1px solid var(--claro);
+}
+
+.tabla-gestion td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f0ede9;
+}
+
+.tabla-gestion tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla-gestion tbody tr:hover td {
+    background: #faf9f8;
+}
+
+.tabla-gestion a {
+    color: var(--dorado);
+    font-size: 0.82rem;
+    transition: 0.2s;
+}
+
+.tabla-gestion a:hover {
+    color: var(--primarycolor);
+}
+
+.tabla-gestion .fila-seleccionada td {
+    background: var(--verdecito);
+}
+
+/* ── Panel de edición ── */
+.panel-edicion {
+    margin-top: 24px;
+    padding: 22px;
+    background: var(--clarito);
+    border-radius: 12px;
+}
+
+.panel-edicion .input-gestion {
+    background: white;
+}
+
+@media (max-width: 640px) {
+    .card-gestion { padding: 22px 20px; }
+    .form-inline { flex-direction: column; align-items: stretch; }
+    .btn-agregar, .btn-secundario { width: 100%; }
 }

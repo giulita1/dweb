@@ -70,8 +70,14 @@ namespace desarrolloweb.UI
             int.TryParse(huespedesStr, out huespedes);
             if (huespedes < 1) huespedes = 1;
 
-            BLLHabitacion bll = new BLLHabitacion();
-            List<Habitacion> habitaciones = bll.ObtenerHabitacionesDisponibles(llegada, salida, huespedes);
+            ServiceReference1.DisponibilidadServiceSoapClient ws =new ServiceReference1.DisponibilidadServiceSoapClient();
+
+            ServiceReference1.HabitacionDTO[] habitaciones =
+                ws.ConsultarDisponibilidad(
+                    llegada.ToString("yyyy-MM-dd"),
+                    salida.ToString("yyyy-MM-dd"),
+                    huespedes
+                );
 
             pnlResultados.Visible = true;
 
@@ -79,7 +85,7 @@ namespace desarrolloweb.UI
             lblSubtitulo.Text = $"Estadía de <strong>{noches} noche{(noches > 1 ? "s" : "")}</strong> · " +
                                 $"{llegada:dd/MM/yyyy} → {salida:dd/MM/yyyy} · {huespedes} huésped{(huespedes > 1 ? "es" : "")}";
 
-            if (habitaciones == null || habitaciones.Count == 0)
+            if (habitaciones == null || habitaciones.Length == 0)
             {
                 rptHabitaciones.Visible = false;
                 pnlSinResultados.Visible = true;

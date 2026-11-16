@@ -25,6 +25,8 @@
 
        <%
             string pagina = Request.Url.AbsolutePath.ToLower();
+            bool esInicio = pagina == "/" || pagina.EndsWith("/Inicio.aspx");
+            string urlInicio = ResolveUrl("~/UI/Inicio.aspx");
             var usuActual = Session["usuario"] as desarrolloweb.BE.Usuario;
             bool logueado = usuActual != null;
             bool puedeGestionarPerfiles = logueado && usuActual.Perfil?.TienePermiso("GestionPerfiles") == true;
@@ -37,11 +39,22 @@
         %>
         <nav id="nav-menu">
             <ul>
+
+               <% if (!esInicio) { %>
+<li class="nav-items">
+   <a href="<%= urlInicio %>" class="nav-inicio"
+       style="font-family:'Montserrat', sans-serif; font-size:0.88rem; letter-spacing:0.3px; color:rgba(63,57,54); opacity:1;">
+        <asp:Literal ID="litNavInicio" runat="server" Text="Inicio" />
+    </a>
+</li>
+<% } %>
+
                 <li class="nav-items">
                     <asp:DropDownList ID="ddlIdiomaMaster" runat="server"
-                        AutoPostBack="True"
-                        OnSelectedIndexChanged="ddlIdiomaMaster_SelectedIndexChanged"
-                        CssClass="selector-idioma" />
+    AutoPostBack="True"
+    OnSelectedIndexChanged="ddlIdiomaMaster_SelectedIndexChanged"
+    CssClass="selector-idioma"
+    style="font-family:'Montserrat', sans-serif; font-size:0.88rem; letter-spacing:0.3px; color:rgba(63,57,54); cursor:pointer; " />
                 </li>
 
                 <% if (logueado) { %>
