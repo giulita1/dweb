@@ -9,9 +9,9 @@
 
 <section class="hero-reserva">
     <div class="hero-reserva-texto">
-        <span class="subtitulo-section">RESERVAS</span>
-        <h1>Encontrá tu habitación ideal</h1>
-        <p>Seleccioná tus fechas y te mostramos las habitaciones disponibles para tu estadía.</p>
+        <span class="subtitulo-section"><asp:Literal ID="litSubReservas" runat="server" Text="RESERVAS" /></span>
+        <h1><asp:Literal ID="litTituloEncontraHabitacion" runat="server" Text="Encontrá tu habitación ideal" /></h1>
+        <p><asp:Literal ID="litDescReservarHero" runat="server" Text="Seleccioná tus fechas y te mostramos las habitaciones disponibles para tu estadía." /></p>
     </div>
 </section>
 
@@ -22,19 +22,19 @@
         <div class="filtros">
 
             <div class="input-container">
-                <label>Fecha de llegada</label>
+                <label><asp:Literal ID="litLblFechaLlegadaReserva" runat="server" Text="Fecha de llegada" /></label>
                 <input type="date" id="fechaLlegada" class="input-date"
                        value="<%= Request.QueryString["llegada"] %>">
             </div>
 
             <div class="input-container">
-                <label>Fecha de salida</label>
+                <label><asp:Literal ID="litLblFechaSalidaReserva" runat="server" Text="Fecha de salida" /></label>
                 <input type="date" id="fechaSalida" class="input-date"
                        value="<%= Request.QueryString["salida"] %>">
             </div>
 
             <div class="input-container">
-                <label>Huéspedes</label>
+                <label><asp:Literal ID="litLblHuespedesReserva" runat="server" Text="Huéspedes" /></label>
                 <div class="input-huespedes-wrapper">
                     <button type="button" class="btn-cantidad" id="btn-menos-r">−</button>
                     <span id="display-huespedes-r">
@@ -47,7 +47,7 @@
             </div>
 
             <button type="button" class="btn-buscar" onclick="buscar()">
-                Buscar disponibilidad
+                <asp:Literal ID="litBtnBuscarDisponibilidad" runat="server" Text="Buscar disponibilidad" />
             </button>
 
         </div>
@@ -58,7 +58,7 @@
     <asp:Panel ID="pnlResultados" runat="server" Visible="false">
 
         <div class="titulo-seccion">
-            <h2>Habitaciones disponibles</h2>
+            <h2><asp:Literal ID="litTituloHabitacionesDisponibles" runat="server" Text="Habitaciones disponibles" /></h2>
             <asp:Label ID="lblSubtitulo" runat="server" CssClass="subtitulo-resultado" />
         </div>
 
@@ -107,8 +107,8 @@
 
         <asp:Panel ID="pnlSinResultados" runat="server" Visible="false" CssClass="sin-resultados">
             <span class="material-symbols-outlined">hotel</span>
-            <h3>Sin disponibilidad</h3>
-            <p>No hay habitaciones disponibles para las fechas y cantidad de huéspedes seleccionados. Probá con otras fechas.</p>
+            <h3><asp:Literal ID="litSinDisponibilidadTitulo" runat="server" Text="Sin disponibilidad" /></h3>
+            <p><asp:Literal ID="litSinDisponibilidadDesc" runat="server" Text="No hay habitaciones disponibles para las fechas y cantidad de huéspedes seleccionados. Probá con otras fechas." /></p>
         </asp:Panel>
 
     </asp:Panel>

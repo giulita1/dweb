@@ -10,8 +10,8 @@
     <%-- Columna izquierda: resumen --%>
     <div class="resumen-reserva">
 
-        <span class="subtitulo-section">RESUMEN DE RESERVA</span>
-        <h1>Tu estadía</h1>
+        <span class="subtitulo-section"><asp:Literal ID="litSubResumen" runat="server" Text="RESUMEN DE RESERVA" /></span>
+        <h1><asp:Literal ID="litTituloEstadia" runat="server" Text="Tu estadía" /></h1>
 
         <div class="resumen-card">
 
@@ -28,7 +28,7 @@
                     <div class="fecha-item">
                         <span class="material-symbols-outlined">login</span>
                         <div>
-                            <small>Llegada</small>
+                            <small><asp:Literal ID="litLblLlegada" runat="server" Text="Llegada" /></small>
                             <p id="lblLlegada" runat="server"></p>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                     <div class="fecha-item">
                         <span class="material-symbols-outlined">logout</span>
                         <div>
-                            <small>Salida</small>
+                            <small><asp:Literal ID="litLblSalida" runat="server" Text="Salida" /></small>
                             <p id="lblSalida" runat="server"></p>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
             </asp:Panel>
 
             <div class="desglose-total">
-                <span>Total</span>
+                <span><asp:Literal ID="litTotal" runat="server" Text="Total" /></span>
                 <span id="lblTotal" runat="server"></span>
             </div>
 
@@ -83,17 +83,17 @@
     <%-- Columna derecha: pago --%>
     <div class="formulario-pago">
 
-        <span class="subtitulo-section">DATOS DE PAGO</span>
-        <h1>Completá tu reserva</h1>
+        <span class="subtitulo-section"><asp:Literal ID="litSubDatosPago" runat="server" Text="DATOS DE PAGO" /></span>
+        <h1><asp:Literal ID="litTituloCompletarReserva" runat="server" Text="Completá tu reserva" /></h1>
 
         <div class="form-grupo">
-            <label>Nombre en la tarjeta</label>
+            <label><asp:Literal ID="litLblNombreTarjeta" runat="server" Text="Nombre en la tarjeta" /></label>
             <input type="text" id="txtNombreTarjeta" class="input-pago"
                    placeholder="Ej: JUAN PEREZ" maxlength="50">
         </div>
 
         <div class="form-grupo">
-            <label>Número de tarjeta</label>
+            <label><asp:Literal ID="litLblNumeroTarjeta" runat="server" Text="Número de tarjeta" /></label>
             <div class="input-tarjeta-wrapper">
                 <input type="text" id="txtNumeroTarjeta" class="input-pago"
                        placeholder="0000 0000 0000 0000" maxlength="19">
@@ -103,26 +103,26 @@
 
         <div class="form-fila">
             <div class="form-grupo">
-                <label>Vencimiento</label>
+                <label><asp:Literal ID="litLblVencimiento" runat="server" Text="Vencimiento" /></label>
                 <input type="text" id="txtVencimiento" class="input-pago"
                        placeholder="MM/AA" maxlength="5">
             </div>
             <div class="form-grupo">
-                <label>CVV</label>
+                <label><asp:Literal ID="litLblCvv" runat="server" Text="CVV" /></label>
                 <input type="text" id="txtCvv" class="input-pago"
                        placeholder="***" maxlength="3">
             </div>
         </div>
 
         <div class="form-grupo">
-            <label>Email de confirmación</label>
+            <label><asp:Literal ID="litLblEmailConfirmacion" runat="server" Text="Email de confirmación" /></label>
             <input type="email" id="txtEmail" class="input-pago"
                    placeholder="tu@email.com">
         </div>
 
         <div class="seguro-pago">
             <span class="material-symbols-outlined">lock</span>
-            <p>Pago simulado — tus datos no serán procesados ni almacenados.</p>
+            <p><asp:Literal ID="litSeguroPagoTexto" runat="server" Text="Pago simulado — tus datos no serán procesados ni almacenados." /></p>
         </div>
 
         <asp:Button ID="btnPagar" runat="server"
@@ -138,20 +138,17 @@
 </div>
 
 <script>
-    // Formateo automático número de tarjeta
     document.getElementById('txtNumeroTarjeta').addEventListener('input', function () {
         let val = this.value.replace(/\D/g, '').substring(0, 16);
         this.value = val.replace(/(.{4})/g, '$1 ').trim();
     });
 
-    // Formateo automático vencimiento
     document.getElementById('txtVencimiento').addEventListener('input', function () {
         let val = this.value.replace(/\D/g, '').substring(0, 4);
         if (val.length >= 2) val = val.substring(0, 2) + '/' + val.substring(2);
         this.value = val;
     });
 
-    // Solo números en CVV
     document.getElementById('txtCvv').addEventListener('input', function () {
         this.value = this.value.replace(/\D/g, '').substring(0, 3);
     });

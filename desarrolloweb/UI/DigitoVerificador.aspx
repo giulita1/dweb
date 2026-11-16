@@ -9,11 +9,11 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <div class="panel-integridad">
-        <h2>Verificación de Integridad de Datos</h2>
+        <h2><asp:Literal ID="litTituloVerificacion" runat="server" Text="Verificación de Integridad de Datos" /></h2>
 
         <asp:Panel ID="pnlMensajeOK" runat="server" Visible="false" CssClass="msg-ok">
             <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">verified</span>
-            No se detectaron fallas de integridad en la base de datos. El sistema está seguro.
+            <asp:Literal ID="litMsgIntegridadSegura" runat="server" Text="No se detectaron fallas de integridad en la base de datos. El sistema está seguro." />
         </asp:Panel>
 
         <asp:GridView ID="dgvInfracciones" runat="server" AutoGenerateColumns="false" CssClass="grid-error" GridLines="None">
@@ -29,9 +29,9 @@
         </div>
 
         <div class="seccion-restore">
-            <h2>Restauración del Sistema</h2>
+            <h2><asp:Literal ID="litRestauracionSistema" runat="server" Text="Restauración del Sistema" /></h2>
             <div class="file-upload-wrapper">
-                <label for="fuBackup">Seleccionar archivo de copia de seguridad (.bak)</label>
+                <label for="fuBackup"><asp:Literal ID="litSelBackup" runat="server" Text="Seleccionar archivo de copia de seguridad (.bak)" /></label>
                 <asp:FileUpload ID="fuBackup" runat="server" />
             </div>
             <asp:Button ID="btnRestore" runat="server" Text="REALIZAR RESTORE" CssClass="btn-login" style="background-color: #b91c1c; max-width: 250px;" OnClientClick="return confirmarRestore();" OnClick="btnRestore_Click" />

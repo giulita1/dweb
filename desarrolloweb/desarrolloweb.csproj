@@ -95,7 +95,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Contact.aspx" />
-    <Content Include="Content\bitacora.css" />
+    <Content Include="Styles\bitacora.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -112,6 +112,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\gestion-idioma.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="ScriptsJS\gestionUsuarios.js" />
@@ -119,6 +120,7 @@
     <Content Include="Styles\ReservaExitosa.css" />
     <Content Include="UI\DigitoVerificador.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="UI\GestionIdioma.aspx" />
     <Content Include="UI\GestionPerfiles.aspx" />
     <Content Include="UI\GestionUsuarios.aspx" />
     <Content Include="Global.asax" />
@@ -231,6 +233,13 @@
     </Compile>
     <Compile Include="UI\DigitoVerificador.aspx.designer.cs">
       <DependentUpon>DigitoVerificador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\GestionIdioma.aspx.cs">
+      <DependentUpon>GestionIdioma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\GestionIdioma.aspx.designer.cs">
+      <DependentUpon>GestionIdioma.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI\GestionPerfiles.aspx.cs">
       <DependentUpon>GestionPerfiles.aspx</DependentUpon>

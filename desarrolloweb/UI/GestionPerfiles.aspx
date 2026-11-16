@@ -11,9 +11,9 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
 
 <section class="hero-gestion">
     <div class="hero-texto">
-        <span class="subtitulo-section">ADMINISTRACIÓN</span>
-        <h1>Gestión de Perfiles</h1>
-        <p>Administrá perfiles, familias y patentes del sistema.</p>
+        <span class="subtitulo-section"><asp:Literal ID="litSubAdmin" runat="server" Text="ADMINISTRACIÓN" /></span>
+        <h1><asp:Literal ID="litTituloGestionPerfiles" runat="server" Text="Gestión de Perfiles" /></h1>
+        <p><asp:Literal ID="litDescGestionPerfiles" runat="server" Text="Administrá perfiles, familias y patentes del sistema." /></p>
     </div>
 </section>
 
@@ -28,19 +28,19 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
     <asp:Label ID="lblMensaje" runat="server" CssClass="lbl-mensaje" Visible="false" />
 
     <div class="tabs">
-        <button type="button" class="tab active" onclick="cambiarTab('perfiles', this)">Perfiles</button>
-        <button type="button" class="tab" onclick="cambiarTab('familias', this)">Familias</button>
-        <button type="button" class="tab" onclick="cambiarTab('patentes', this)">Patentes</button>
+        <button type="button" class="tab active" onclick="cambiarTab('perfiles', this)"><asp:Literal ID="litTabPerfiles" runat="server" Text="Perfiles" /></button>
+        <button type="button" class="tab" onclick="cambiarTab('familias', this)"><asp:Literal ID="litTabFamilias" runat="server" Text="Familias" /></button>
+        <button type="button" class="tab" onclick="cambiarTab('patentes', this)"><asp:Literal ID="litTabPatentes" runat="server" Text="Patentes" /></button>
     </div>
 
 
     <div id="tab-perfiles" class="tab-content active">
 
         <div class="card-gestion">
-            <h2>Nuevo perfil</h2>
+            <h2><asp:Literal ID="litNuevoPerfil" runat="server" Text="Nuevo perfil" /></h2>
             <div class="form-inline">
                 <div class="form-grupo">
-                    <label>Nombre</label>
+                    <label><asp:Literal ID="litLblNombrePerfil" runat="server" Text="Nombre" /></label>
                     <asp:TextBox ID="txtNombrePerfil" runat="server" CssClass="input-gestion" placeholder="Ej: Administrador" />
                 </div>
                 <asp:Button ID="btnAgregarPerfil" runat="server" Text="Agregar"
@@ -49,7 +49,7 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
         </div>
 
         <div class="card-gestion">
-            <h2>Perfiles existentes</h2>
+            <h2><asp:Literal ID="litPerfilesExistentes" runat="server" Text="Perfiles existentes" /></h2>
             <asp:Repeater ID="rptPerfiles" runat="server" OnItemCommand="rptPerfiles_ItemCommand">
                 <HeaderTemplate><div class="lista-items"></HeaderTemplate>
                 <ItemTemplate>
@@ -124,10 +124,10 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
     <div id="tab-familias" class="tab-content">
 
         <div class="card-gestion">
-            <h2>Nueva familia</h2>
+            <h2><asp:Literal ID="litNuevaFamilia" runat="server" Text="Nueva familia" /></h2>
             <div class="form-inline">
                 <div class="form-grupo">
-                    <label>Nombre</label>
+                    <label><asp:Literal ID="litLblNombreFamilia" runat="server" Text="Nombre" /></label>
                     <asp:TextBox ID="txtNombreFamilia" runat="server" CssClass="input-gestion" placeholder="Ej: Seguridad" />
                 </div>
                 <asp:Button ID="btnAgregarFamilia" runat="server" Text="Agregar"
@@ -136,7 +136,7 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
         </div>
 
         <div class="card-gestion">
-            <h2>Familias existentes</h2>
+            <h2><asp:Literal ID="litFamiliasExistentes" runat="server" Text="Familias existentes" /></h2>
             <asp:Repeater ID="rptFamilias" runat="server" OnItemCommand="rptFamilias_ItemCommand">
                 <HeaderTemplate><div class="lista-items"></HeaderTemplate>
                 <ItemTemplate>
@@ -200,10 +200,10 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
     <div id="tab-patentes" class="tab-content">
 
         <div class="card-gestion">
-            <h2>Nueva patente</h2>
+            <h2><asp:Literal ID="litNuevaPatente" runat="server" Text="Nueva patente" /></h2>
             <div class="form-inline">
                 <div class="form-grupo">
-                    <label>Nombre</label>
+                    <label><asp:Literal ID="litLblNombrePatente" runat="server" Text="Nombre" /></label>
                     <asp:TextBox ID="txtNombrePatente" runat="server" CssClass="input-gestion" placeholder="Ej: GestionUsuarios" />
                 </div>
                 <asp:Button ID="btnAgregarPatente" runat="server" Text="Agregar"
@@ -212,7 +212,7 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
         </div>
 
         <div class="card-gestion">
-            <h2>Patentes existentes</h2>
+            <h2><asp:Literal ID="litPatentesExistentes" runat="server" Text="Patentes existentes" /></h2>
             <asp:Repeater ID="rptPatentes" runat="server" OnItemCommand="rptPatentes_ItemCommand">
                 <HeaderTemplate><div class="lista-items"></HeaderTemplate>
                 <ItemTemplate>
@@ -240,34 +240,32 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
 </ContentTemplate>
 </asp:UpdatePanel>
     <script>
-function mostrarTab(nombre, btn) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-' + nombre).classList.add('active');
-    btn.classList.add('active');
-    try { sessionStorage.setItem('tabActiva', nombre); } catch (e) { }
-}
+        function mostrarTab(nombre, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-' + nombre).classList.add('active');
+            btn.classList.add('active');
+            try { sessionStorage.setItem('tabActiva', nombre); } catch (e) { }
+        }
 
-// Lo llaman los botones de las pestañas: cambia de pestaña y oculta el mensaje
-function cambiarTab(nombre, btn) {
-    mostrarTab(nombre, btn);
-    document.querySelectorAll('.lbl-mensaje').forEach(m => m.style.display = 'none');
-}
+        function cambiarTab(nombre, btn) {
+            mostrarTab(nombre, btn);
+            document.querySelectorAll('.lbl-mensaje').forEach(m => m.style.display = 'none');
+        }
 
-// Restaura la pestaña activa sin tocar el mensaje
-function restaurarTab() {
-    var nombre = null;
-    try { nombre = sessionStorage.getItem('tabActiva'); } catch (e) { }
-    if (!nombre) return;
-    var btn = document.querySelector(".tab[onclick*=\"'" + nombre + "'\"]");
-    if (btn) mostrarTab(nombre, btn);
-}
+        function restaurarTab() {
+            var nombre = null;
+            try { nombre = sessionStorage.getItem('tabActiva'); } catch (e) { }
+            if (!nombre) return;
+            var btn = document.querySelector(".tab[onclick*=\"'" + nombre + "'\"]");
+            if (btn) mostrarTab(nombre, btn);
+        }
 
-if (window.Sys && Sys.Application) {
-    Sys.Application.add_load(restaurarTab);
-} else {
-    document.addEventListener('DOMContentLoaded', restaurarTab);
-}
+        if (window.Sys && Sys.Application) {
+            Sys.Application.add_load(restaurarTab);
+        } else {
+            document.addEventListener('DOMContentLoaded', restaurarTab);
+        }
     </script>
 
 </asp:Content>

@@ -33,9 +33,16 @@
             bool puedeGestionarUsuarios = logueado && usuActual.Perfil?.TienePermiso("GestionUsuarios") == true;
             bool puedeRespaldar       = logueado && usuActual.Perfil?.TienePermiso("Respaldos") == true;
             bool puedeVerDigitos      = logueado && usuActual.Perfil?.TienePermiso("DigitoVerificador") == true;
+            bool puedeGestionarIdiomas  = logueado && usuActual.Perfil?.TienePermiso("CambiarIdioma") == true;
         %>
         <nav id="nav-menu">
             <ul>
+                <li class="nav-items">
+                    <asp:DropDownList ID="ddlIdiomaMaster" runat="server"
+                        AutoPostBack="True"
+                        OnSelectedIndexChanged="ddlIdiomaMaster_SelectedIndexChanged"
+                        CssClass="selector-idioma" />
+                </li>
 
                 <% if (logueado) { %>
                 <li class="nav-items">
@@ -65,19 +72,19 @@
     <footer class="footer">
         <div class="footer-contenido">
             <div class="footer-seccion">
-                <h3>Contacto</h3>
+                <h3><asp:Literal ID="litFooterContacto" runat="server" Text="Contacto" /></h3>
                 <p>hotelpatagonia2026@gmail.com</p>
                 <p>+54 11 1234-5678</p>
             </div>
             <div class="footer-seccion">
-                <h3>Ubicación</h3>
+                <h3><asp:Literal ID="litFooterUbicacion" runat="server" Text="Ubicación" /></h3>
                 <p>Av. Patagonia 1250</p>
                 <p>Bariloche, Río Negro</p>
                 <p>Argentina</p>
             </div>
         </div>
         <div class="footer-bottom">
-            © 2026 Hotel Patagonia. Todos los derechos reservados.
+            <asp:Literal ID="litFooterDerechos" runat="server" Text="© 2026 Hotel Patagonia. Todos los derechos reservados." />
         </div>
     </footer>
 
@@ -87,7 +94,7 @@
     <div id="carrito">
 
         <div class="carrito-header">
-            <h2>Tu carrito</h2>
+            <h2><asp:Literal ID="litCarritoTitulo" runat="server" Text="Tu carrito" /></h2>
             <button type="button" id="btn-cerrar-carrito">
                 <span class="material-symbols-outlined">close</span>
             </button>
@@ -97,7 +104,7 @@
 
             <div class="carrito-vacio" id="carrito-vacio">
                 <span class="material-symbols-outlined">hotel</span>
-                <p>Todavía no seleccionaste ninguna habitación.</p>
+                <p><asp:Literal ID="litCarritoVacio" runat="server" Text="Todavía no seleccionaste ninguna habitación." /></p>
             </div>
 
             <div id="carrito-item" style="display:none">
@@ -119,8 +126,8 @@
                         <span class="extra-info">
                             <span class="material-symbols-outlined">free_breakfast</span>
                             <span class="extra-info-texto">
-                                <span class="extra-titulo">Desayuno incluido</span>
-                                <small>Por persona, por noche</small>
+                                <span class="extra-titulo"><asp:Literal ID="litDesayunoIncluido" runat="server" Text="Desayuno incluido" /></span>
+                                <small><asp:Literal ID="litDesayunoSub" runat="server" Text="Por persona, por noche" /></small>
                             </span>
                         </span>
                         <span class="extra-derecha">
@@ -145,12 +152,12 @@
                     <span id="val-desayuno"></span>
                 </div>
                 <div class="total-fila total-final">
-                    <span>Total</span>
+                    <span><asp:Literal ID="litCarritoTotal" runat="server" Text="Total" /></span>
                     <span id="val-total"></span>
                 </div>
             </div>
             <button type="button" class="btn-confirmar" id="btn-confirmar">
-                Confirmar reserva
+                <asp:Literal ID="litBtnConfirmarReservaCarrito" runat="server" Text="Confirmar reserva" />
             </button>
         </div>
 
@@ -177,33 +184,42 @@
 
         <div class="perfil-contenido">
 
-    
                 <% if (puedeGestionarUsuarios) { %>
                 <a href="<%= ResolveUrl("~/UI/GestionUsuarios.aspx") %>" class="perfil-item">
                     <span class="material-symbols-outlined">group</span>
                     <div>
-                        <p>Gestión de Usuarios</p>
-                        <small>Administrá los usuarios</small>
+                        <p><asp:Literal ID="litMenuGestionUsuarios" runat="server" Text="Gestión de Usuarios" /></p>
+                        <small><asp:Literal ID="litMenuGestionUsuariosSub" runat="server" Text="Administrá los usuarios" /></small>
                     </div>
                     <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
                 </a>
                 <a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
                     <span class="material-symbols-outlined">history</span>
                     <div>
-                        <p>Bitácora</p>
-                        <small>Registro de actividad</small>
+                        <p><asp:Literal ID="litMenuBitacora" runat="server" Text="Bitácora" /></p>
+                        <small><asp:Literal ID="litMenuBitacoraSub" runat="server" Text="Registro de actividad" /></small>
                     </div>
                     <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
                 </a>
                 <% } %>
 
+                <% if (puedeGestionarIdiomas) { %>
+                <a href="<%= ResolveUrl("~/UI/GestionIdioma.aspx") %>" class="perfil-item">
+                    <span class="material-symbols-outlined">language</span>
+                    <div>
+                        <p><asp:Literal ID="litMenuGestionIdiomas" runat="server" Text="Gestión de Idiomas" /></p>
+                        <small><asp:Literal ID="litMenuGestionIdiomasSub" runat="server" Text="Agregá y traducí idiomas" /></small>
+                    </div>
+                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+                </a>
+                <% } %>
 
-                                <% if (puedeRespaldar) { %>
+                <% if (puedeRespaldar) { %>
                 <a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
                     <span class="material-symbols-outlined">backup</span>
                     <div>
-                        <p>Backup / Restore</p>
-                        <small>Respaldo de datos</small>
+                        <p><asp:Literal ID="litMenuBackupRestore" runat="server" Text="Backup / Restore" /></p>
+                        <small><asp:Literal ID="litMenuBackupRestoreSub" runat="server" Text="Respaldo de datos" /></small>
                     </div>
                     <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
                 </a>
@@ -213,8 +229,8 @@
                 <a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
                     <span class="material-symbols-outlined">verified</span>
                     <div>
-                        <p>Dígitos Verificadores</p>
-                        <small>Control de integridad</small>
+                        <p><asp:Literal ID="litMenuDigitosVerificadores" runat="server" Text="Dígitos Verificadores" /></p>
+                        <small><asp:Literal ID="litMenuDigitosVerificadoresSub" runat="server" Text="Control de integridad" /></small>
                     </div>
                     <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
                 </a>
@@ -224,8 +240,8 @@
                 <a href="<%= ResolveUrl("~/UI/GestionPerfiles.aspx") %>" class="perfil-item">
                     <span class="material-symbols-outlined">manage_accounts</span>
                     <div>
-                        <p>Gestión de Perfiles</p>
-                        <small>Administrá perfiles y permisos</small>
+                        <p><asp:Literal ID="litMenuGestionPerfiles" runat="server" Text="Gestión de Perfiles" /></p>
+                        <small><asp:Literal ID="litMenuGestionPerfilesSub" runat="server" Text="Administrá perfiles y permisos" /></small>
                     </div>
                     <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
                 </a>
@@ -235,8 +251,8 @@
                 <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="perfil-item">
                     <span class="material-symbols-outlined">luggage</span>
                     <div>
-                        <p>Mis Reservas</p>
-                        <small>Revisá y gestioná tus reservas</small>
+                        <p><asp:Literal ID="litMenuMisReservas" runat="server" Text="Mis Reservas" /></p>
+                        <small><asp:Literal ID="litMenuMisReservasSub" runat="server" Text="Revisá y gestioná tus reservas" /></small>
                     </div>
                     <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
                 </a>
@@ -246,8 +262,8 @@
                 <a href="<%= ResolveUrl("~/UI/Reservar.aspx") %>" class="perfil-item">
                     <span class="material-symbols-outlined">hotel_class</span>
                     <div>
-                        <p>Nueva Reserva</p>
-                        <small>Buscá tu próxima estadía</small>
+                        <p><asp:Literal ID="litMenuNuevaReserva" runat="server" Text="Nueva Reserva" /></p>
+                        <small><asp:Literal ID="litMenuNuevaReservaSub" runat="server" Text="Buscá tu próxima estadía" /></small>
                     </div>
                     <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
                 </a>
@@ -260,7 +276,7 @@
                 OnClick="btnCerrarSesion_Click"
                 CssClass="btn-cerrar-sesion">
                 <span class="material-symbols-outlined">logout</span>
-                Cerrar sesión
+                <asp:Literal ID="litCerrarSesion" runat="server" Text="Cerrar sesión" />
             </asp:LinkButton>
         </div>
 
@@ -268,5 +284,5 @@
     <% } %>
 
     </form>
-    </body>
-    </html>
+</body>
+</html>

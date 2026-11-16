@@ -1,23 +1,23 @@
 ﻿<%@ Page Title="Consulta de Bitácora" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Bitacora.aspx.cs" Inherits="desarrolloweb.UI.Bitacora" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-     <link href='<%= ResolveUrl("~/Content/bitacora.css") %>' rel="stylesheet" type="text/css" />
+     <link href='<%= ResolveUrl("~/Styles/bitacora.css") %>' rel="stylesheet" type="text/css" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="bitacora-container">
-        <h2 class="bitacora-title">Consulta de Bitácora del Sistema</h2>          
+        <h2 class="bitacora-title"><asp:Literal ID="litTituloBitacora" runat="server" Text="Consulta de Bitácora del Sistema" /></h2>        
         
         <div class="filter-panel">
             <div class="filter-grid">                 
                 <div class="form-group">
-                    <label for="<%= ddlUsuario.ClientID %>">Usuario (Login)</label>
+                    <label for="<%= ddlUsuario.ClientID %>"><asp:Literal ID="litLblUsuario" runat="server" Text="Usuario (Login)" /></label>
                     <asp:DropDownList ID="ddlUsuario" runat="server" CssClass="form-control js-filter-field">
                     </asp:DropDownList>
-                </div>                                                 
+                </div>                                                    
                 
                 <div class="form-group">
-                    <label for="<%= ddlModulo.ClientID %>">Módulo</label>
+                    <label for="<%= ddlModulo.ClientID %>"><asp:Literal ID="litLblModulo" runat="server" Text="Módulo" /></label>
                     <asp:DropDownList ID="ddlModulo" runat="server" CssClass="form-control js-filter-field">
                         <asp:ListItem Text="-- Todos los módulos --" Value="Todos"></asp:ListItem>
                         <asp:ListItem Text="Usuarios" Value="Usuarios"></asp:ListItem>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="<%= ddlEvento.ClientID %>">Evento / Actividad</label>
+                    <label for="<%= ddlEvento.ClientID %>"><asp:Literal ID="litLblEvento" runat="server" Text="Evento / Actividad" /></label>
                     <asp:DropDownList ID="ddlEvento" runat="server" CssClass="form-control js-filter-field">
                         <asp:ListItem Text="-- Todos los eventos --" Value="Todos"></asp:ListItem>
                         <asp:ListItem Text="Inicio de sesión exitoso" Value="Inicio de sesión exitoso"></asp:ListItem>
@@ -43,7 +43,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="<%= ddlCriticidad.ClientID %>">Criticidad</label>
+                    <label for="<%= ddlCriticidad.ClientID %>"><asp:Literal ID="litLblCriticidad" runat="server" Text="Criticidad" /></label>
                     <asp:DropDownList ID="ddlCriticidad" runat="server" CssClass="form-control js-filter-field">
                         <asp:ListItem Text="-- Todas --" Value="Todos"></asp:ListItem>
                         <asp:ListItem Text="1" Value="1"></asp:ListItem>
@@ -55,12 +55,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="<%= txtFechaDesde.ClientID %>">Fecha Desde</label>
+                    <label for="<%= txtFechaDesde.ClientID %>"><asp:Literal ID="litLblFechaDesde" runat="server" Text="Fecha Desde" /></label>
                     <asp:TextBox ID="txtFechaDesde" runat="server" CssClass="form-control js-filter-field" TextMode="Date" Height="19px"></asp:TextBox>
                 </div>
                 
                 <div class="form-group">
-                    <label for="<%= txtFechaHasta.ClientID %>">Fecha Hasta</label>
+                    <label for="<%= txtFechaHasta.ClientID %>"><asp:Literal ID="litLblFechaHasta" runat="server" Text="Fecha Hasta" /></label>
                     <asp:TextBox ID="txtFechaHasta" runat="server" CssClass="form-control js-filter-field" TextMode="Date"></asp:TextBox>
                 </div>
             </div>    

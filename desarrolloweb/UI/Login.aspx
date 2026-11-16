@@ -1,4 +1,4 @@
-﻿ <%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="desarrolloweb.UI.Login" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="desarrolloweb.UI.Login" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="<%= ResolveUrl("~/Styles/login.css") %>" />
@@ -11,18 +11,18 @@
 
       <div class="datos-container">
           <div class="input-container">
-              <label for="input-usuario">Nombre de usuario</label>
+              <label for="input-usuario"><asp:Literal ID="litLblUsuarioLogin" runat="server" Text="Nombre de usuario" /></label>
               <input type="text" id="input-usuario" name="usuario">
           </div>
 
           <div class="input-container">
-              <label for="input-contrasena">Contraseña</label>
+              <label for="input-contrasena"><asp:Literal ID="litLblContrasenaLogin" runat="server" Text="Contraseña" /></label>
               <input type="password" id="input-contrasena" name="contrasena">
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 10px;">
-              <span><a href="<%= ResolveUrl("~/UI/Registro.aspx") %>" class="pregunta">¿No estás registrado? Registrate acá</a></span>
-              <span><a href="#" class="pregunta" onclick="toggleRecuperacion(event)">¿Olvidaste tu contraseña?</a></span>
+              <span><asp:HyperLink ID="lnkRegistrarse" runat="server" NavigateUrl="~/UI/Registro.aspx" CssClass="pregunta" Text="¿No estás registrado? Registrate acá" /></span>
+              <span><a href="#" class="pregunta" onclick="toggleRecuperacion(event)"><asp:Literal ID="litOlvideContrasena" runat="server" Text="¿Olvidaste tu contraseña?" /></a></span>
           </div>
 
           <input type="submit" class="btn-login" value="INICIAR SESIÓN">
@@ -32,12 +32,12 @@
           <hr class="separador" />
     
           <div class="input-container">
-              <label for="txtEmailRecuperar">Ingresá tu Email registrado</label>
+              <label for="txtEmailRecuperar"><asp:Literal ID="litLblEmailRecuperar" runat="server" Text="Ingresá tu Email registrado" /></label>
               <input type="email" id="txtEmailRecuperar" class="input-recuperar" placeholder="ejemplo@correo.com">
           </div>
     
           <button type="button" class="btn-login btn-recuperar" onclick="enviarClave()">
-              ENVIAR NUEVA CLAVE
+              <asp:Literal ID="litBtnEnviarClave" runat="server" Text="ENVIAR NUEVA CLAVE" />
           </button>
       </div>
 

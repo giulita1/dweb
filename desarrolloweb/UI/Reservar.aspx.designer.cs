@@ -15,6 +15,69 @@ namespace desarrolloweb.UI
     {
 
         /// <summary>
+        /// litSubReservas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSubReservas;
+
+        /// <summary>
+        /// litTituloEncontraHabitacion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloEncontraHabitacion;
+
+        /// <summary>
+        /// litDescReservarHero control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDescReservarHero;
+
+        /// <summary>
+        /// litLblFechaLlegadaReserva control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblFechaLlegadaReserva;
+
+        /// <summary>
+        /// litLblFechaSalidaReserva control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblFechaSalidaReserva;
+
+        /// <summary>
+        /// litLblHuespedesReserva control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblHuespedesReserva;
+
+        /// <summary>
+        /// litBtnBuscarDisponibilidad control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litBtnBuscarDisponibilidad;
+
+        /// <summary>
         /// lblMensaje control.
         /// </summary>
         /// <remarks>
@@ -31,6 +94,15 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlResultados;
+
+        /// <summary>
+        /// litTituloHabitacionesDisponibles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloHabitacionesDisponibles;
 
         /// <summary>
         /// lblSubtitulo control.
@@ -58,5 +130,23 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlSinResultados;
+
+        /// <summary>
+        /// litSinDisponibilidadTitulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSinDisponibilidadTitulo;
+
+        /// <summary>
+        /// litSinDisponibilidadDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSinDisponibilidadDesc;
     }
 }

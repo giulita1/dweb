@@ -8,9 +8,9 @@
 
 <section class="hero-gestion">
     <div class="hero-texto">
-        <span class="subtitulo-section">ADMINISTRACIÓN</span>
-        <h1>Gestión de Usuarios</h1>
-        <p>Buscá, filtrá y administrá los usuarios del sistema.</p>
+        <span class="subtitulo-section"><asp:Literal ID="litSubAdminUsuarios" runat="server" Text="ADMINISTRACIÓN" /></span>
+        <h1><asp:Literal ID="litTituloGestionUsuarios" runat="server" Text="Gestión de Usuarios" /></h1>
+        <p><asp:Literal ID="litDescGestionUsuarios" runat="server" Text="Buscá, filtrá y administrá los usuarios del sistema." /></p>
     </div>
 </section>
 
@@ -30,12 +30,12 @@
         <label class="check-item">
             <input type="checkbox" id="chkBloqueados"
                    <%= Request.QueryString["bloqueados"] == "1" ? "checked" : "" %>>
-            <span>Solo bloqueados</span>
+            <span><asp:Literal ID="litChkSoloBloqueados" runat="server" Text="Solo bloqueados" /></span>
         </label>
     </div>
 
     <button type="button" class="btn-buscar-gestion" onclick="buscar()">
-        Buscar
+        <asp:Literal ID="litBtnBuscarUsuario" runat="server" Text="Buscar" />
     </button>
 
 </div>
@@ -49,12 +49,12 @@
             <table class="tabla-usuarios">
                 <thead>
                     <tr>
-                        <th>Usuario</th>
-                        <th>Email</th>
-                        <th>Rol</th>
-                        <th>Intentos</th>
-                        <th>Estado</th>
-                        <th>Acción</th>
+                        <th><asp:Literal ID="litThUsuario" runat="server" Text="Usuario" /></th>
+                        <th><asp:Literal ID="litThEmail" runat="server" Text="Email" /></th>
+                        <th><asp:Literal ID="litThRol" runat="server" Text="Rol" /></th>
+                        <th><asp:Literal ID="litThIntentos" runat="server" Text="Intentos" /></th>
+                        <th><asp:Literal ID="litThEstado" runat="server" Text="Estado" /></th>
+                        <th><asp:Literal ID="litThAccion" runat="server" Text="Acción" /></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,7 +75,7 @@
                                 </td>
                                 <td><%# Eval("Email") %></td>
                                 <td>
-                                   <td>
+                                   <div>
                                     <span class="badge-rol">
                                         <%# ((desarrolloweb.BE.Usuario)Container.DataItem).Perfil?.Id %>
                                     </span>
@@ -109,8 +109,8 @@
 
     <asp:Panel ID="pnlSinResultados" runat="server" Visible="false" CssClass="sin-resultados">
         <span class="material-symbols-outlined">person_search</span>
-        <h3>Sin resultados</h3>
-        <p>No se encontraron usuarios con los filtros aplicados.</p>
+        <h3><asp:Literal ID="litSinResultadosTitulo" runat="server" Text="Sin resultados" /></h3>
+        <p><asp:Literal ID="litSinResultadosDesc" runat="server" Text="No se encontraron usuarios con los filtros aplicados." /></p>
     </asp:Panel>
 
 </div>

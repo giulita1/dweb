@@ -10,9 +10,9 @@ Inherits="desarrolloweb.UI.MisReservas" %>
 
 <section class="hero-misreservas">
     <div class="hero-texto">
-        <span class="subtitulo-section">MI CUENTA</span>
-        <h1>Mis Reservas</h1>
-        <p>Revisá y gestioná tus reservas activas.</p>
+        <span class="subtitulo-section"><asp:Literal ID="litSubMiCuenta" runat="server" Text="MI CUENTA" /></span>
+        <h1><asp:Literal ID="litTituloMisReservas" runat="server" Text="Mis Reservas" /></h1>
+        <p><asp:Literal ID="litDescMisReservas" runat="server" Text="Revisá y gestioná tus reservas activas." /></p>
     </div>
 </section>
 
@@ -20,10 +20,10 @@ Inherits="desarrolloweb.UI.MisReservas" %>
 
     <asp:Panel ID="pnlSinReservas" runat="server" Visible="false" CssClass="sin-reservas">
         <span class="material-symbols-outlined">hotel</span>
-        <h3>No tenés reservas todavía</h3>
-        <p>Cuando hagas una reserva aparecerá acá.</p>
+        <h3><asp:Literal ID="litSinReservasTitulo" runat="server" Text="No tenés reservas todavía" /></h3>
+        <p><asp:Literal ID="litSinReservasDesc" runat="server" Text="Cuando hagas una reserva aparecerá acá." /></p>
         <a href="<%= ResolveUrl("~/UI/Reservar.aspx") %>" class="btn-ir-reservar">
-            Buscar habitaciones
+            <asp:Literal ID="litBtnBuscarHabitaciones" runat="server" Text="Buscar habitaciones" />
         </a>
     </asp:Panel>
 

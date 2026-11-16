@@ -1,0 +1,194 @@
+﻿/* ── Contenedor Principal de la Bitácora ── */
+.bitacora-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 5% 80px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.bitacora-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: normal;
+    color: var(--primarycolor, #2a2220);
+    letter-spacing: -1px;
+    margin-bottom: 30px;
+}
+
+/* ── Panel de Filtros ── */
+.filter-panel {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    margin-bottom: 30px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+    .form-group label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #555;
+    }
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #e0dbd8;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: var(--primarycolor, #2a2220);
+    background: var(--clarito, #faf9f8);
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    box-sizing: border-box;
+}
+
+    .form-control:focus {
+        border-color: var(--dorado, #b89b72);
+        box-shadow: 0 0 0 3px rgba(184, 155, 114, 0.15);
+    }
+
+/* ── Barra de Acciones y Botones ── */
+.action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.btn {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+.btn-clear {
+    background-color: #f3f0ed;
+    color: #666;
+}
+
+    .btn-clear:hover {
+        background-color: #e2deda;
+    }
+
+.btn-print {
+    background-color: #6b7280;
+    color: white;
+}
+
+    .btn-print:hover {
+        background-color: #4b5563;
+    }
+
+.btn-filter {
+    background-color: var(--primarycolor, #2a2220);
+    color: white;
+}
+
+    .btn-filter:hover {
+        background-color: #1a1514;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+/* ── Contenedor y Estilos de la Tabla (GridView) ── */
+.table-container {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+}
+
+.grid-view {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+    .grid-view th {
+        background-color: #faf9f8;
+        color: var(--primarycolor, #2a2220);
+        padding: 14px 16px;
+        font-weight: 600;
+        border-bottom: 2px solid #e0dbd8;
+    }
+
+    .grid-view td {
+        padding: 14px 16px;
+        border-bottom: 1px solid #f0ece9;
+        color: #4a4542;
+    }
+
+    .grid-view tr:hover td {
+        background-color: #fdfbfb;
+    }
+
+/* Paginación del GridView */
+.paginacion-grid {
+    padding-top: 15px;
+    text-align: center;
+}
+
+    .paginacion-grid table {
+        margin: 0 auto;
+    }
+
+    .paginacion-grid td {
+        padding: 6px 10px;
+        border: none !important;
+    }
+
+    .paginacion-grid a {
+        color: var(--dorado, #b89b72);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .paginacion-grid span {
+        background-color: var(--primarycolor, #2a2220);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+    }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

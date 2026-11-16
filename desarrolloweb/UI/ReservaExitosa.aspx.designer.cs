@@ -15,6 +15,33 @@ namespace desarrolloweb.UI
     {
 
         /// <summary>
+        /// litSubReservaConfirmada control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSubReservaConfirmada;
+
+        /// <summary>
+        /// litTituloReservaExitosa control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloReservaExitosa;
+
+        /// <summary>
+        /// litDescReservaExitosa control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDescReservaExitosa;
+
+        /// <summary>
         /// lblNombreHab control.
         /// </summary>
         /// <remarks>
@@ -49,5 +76,23 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTotal;
+
+        /// <summary>
+        /// litBtnVerMisReservasExitosa control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litBtnVerMisReservasExitosa;
+
+        /// <summary>
+        /// litBtnVolverInicioExitosa control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litBtnVolverInicioExitosa;
     }
 }

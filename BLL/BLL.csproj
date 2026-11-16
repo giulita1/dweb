@@ -45,8 +45,10 @@
     <Compile Include="BLLbitacora.cs" />
     <Compile Include="BLLDVV.cs" />
     <Compile Include="BLLHabitacion.cs" />
+    <Compile Include="BLLidioma.cs" />
     <Compile Include="BLLPerfil.cs" />
     <Compile Include="BLLReserva.cs" />
+    <Compile Include="BLLTraductor.cs" />
     <Compile Include="BLLusuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

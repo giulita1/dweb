@@ -12,23 +12,23 @@
      class="imagen-principal">
 
     <div class="hero-titulo">
-        <span class="subtitulo-section">BARILOCHE, PATAGONIA</span>
-        <h1>Hotel Patagonia</h1>
+        <span class="subtitulo-section"><asp:Literal ID="litSubBariloche" runat="server" Text="BARILOCHE, PATAGONIA" /></span>
+        <h1><asp:Literal ID="litTituloHotelPatagonia" runat="server" Text="Hotel Patagonia" /></h1>
     </div>
 
     <div class="form-reservar">
 
         <div class="input-container">
-        <label for="fecha-llegada">Fecha de llegada</label>
+        <label for="fecha-llegada"><asp:Literal ID="litLblFechaLlegada" runat="server" Text="Fecha de llegada" /></label>
         <input type="date" id="fecha-llegada" class="input-date" name="fecha-llegada" required>
     </div>
     <div class="input-container">
-        <label for="fecha-salida">Fecha de salida</label>
+        <label for="fecha-salida"><asp:Literal ID="litLblFechaSalida" runat="server" Text="Fecha de salida" /></label>
         <input type="date" id="fecha-salida" class="input-date" name="fecha-salida" required>
     </div>
 
     <div class="input-container">
-    <label>Cantidad de huéspedes</label>
+    <label><asp:Literal ID="litLblCantidadHuespedes" runat="server" Text="Cantidad de huéspedes" /></label>
     <div class="input-huespedes-wrapper">
         <button type="button" class="btn-cantidad" id="btn-menos">−</button>
         <input type="number" id="cant-huespedes" class="display-huespedes"
@@ -37,7 +37,7 @@
     </div>
 </div>
 
-    <button type="button" class="btn-reservar">RESERVAR</button>
+    <button type="button" class="btn-reservar"><asp:Literal ID="litBtnReservarHero" runat="server" Text="RESERVAR" /></button>
     </div>
         
 </section>
@@ -46,36 +46,33 @@
     <div class="descripcion-hotel">
 
         <span class="subtitulo-section">
-            HOTEL 5 ESTRELLAS
+            <asp:Literal ID="litSubHotelEstrellas" runat="server" Text="HOTEL 5 ESTRELLAS" />
         </span>
 
-        <h1>El Hotel</h1>
+        <h1><asp:Literal ID="litTituloElHotel" runat="server" Text="El Hotel" /></h1>
 
         <p>
-            Ubicado en el corazón de la Patagonia, nuestro hotel combina
-            arquitectura elegante, naturaleza y experiencias exclusivas.
-            Habitaciones premium, spa de lujo y vistas únicas acompañan
-            cada estadía.
+            <asp:Literal ID="litDescElHotel" runat="server" Text="Ubicado en el corazón de la Patagonia, nuestro hotel combina arquitectura elegante, naturaleza y experiencias exclusivas. Habitaciones premium, spa de lujo y vistas únicas acompañan cada estadía." />
         </p>
 
         <div class="cards-hotel">
 
             <div class="card-hotel">
                 <span class="material-symbols-outlined">bed</span>
-                <h3>Suites Premium</h3>
-                <p>Habitaciones amplias con vista panorámica.</p>
+                <h3><asp:Literal ID="litCardSuites" runat="server" Text="Suites Premium" /></h3>
+                <p><asp:Literal ID="litCardSuitesDesc" runat="server" Text="Habitaciones amplias con vista panorámica." /></p>
             </div>
 
             <div class="card-hotel">
                 <span class="material-symbols-outlined">spa</span>
-                <h3>Spa & Relax</h3>
-                <p>Espacios diseñados para descanso total.</p>
+                <h3><asp:Literal ID="litCardSpa" runat="server" Text="Spa & Relax" /></h3>
+                <p><asp:Literal ID="litCardSpaDesc" runat="server" Text="Espacios diseñados para descanso total." /></p>
             </div>
 
             <div class="card-hotel">
                 <span class="material-symbols-outlined">pool</span>
-                <h3>Piscina Climatizada</h3>
-                <p>Disponible durante todo el año.</p>
+                <h3><asp:Literal ID="litCardPiscina" runat="server" Text="Piscina Climatizada" /></h3>
+                <p><asp:Literal ID="litCardPiscinaDesc" runat="server" Text="Disponible durante todo el año." /></p>
             </div>
 
         </div>
@@ -111,32 +108,30 @@
     <div class="restaurante-descripcion">
 
         <span class="subtitulo-section">
-            EXPERIENCIA GASTRONÓMICA
+            <asp:Literal ID="litSubGastronomia" runat="server" Text="EXPERIENCIA GASTRONÓMICA" />
         </span>
 
-        <h2>El Restaurante</h2>
+        <h2><asp:Literal ID="litTituloRestaurante" runat="server" Text="El Restaurante" /></h2>
 
         <p>
-            Cocina de autor inspirada en sabores patagónicos,
-            ingredientes frescos y una experiencia gastronómica
-            acompañada por vinos seleccionados.
+            <asp:Literal ID="litDescRestaurante" runat="server" Text="Cocina de autor inspirada en sabores patagónicos, ingredientes frescos y una experiencia gastronómica acompañada por vinos seleccionados." />
         </p>
 
         <div class="restaurant-info">
 
             <div class="info-item">
                 <span class="material-symbols-outlined">restaurant</span>
-                <p>Menú internacional</p>
+                <p><asp:Literal ID="litInfoMenu" runat="server" Text="Menú internacional" /></p>
             </div>
 
             <div class="info-item">
                 <span class="material-symbols-outlined">wine_bar</span>
-                <p>Cava premium</p>
+                <p><asp:Literal ID="litInfoCava" runat="server" Text="Cava premium" /></p>
             </div>
 
             <div class="info-item">
                 <span class="material-symbols-outlined">schedule</span>
-                <p>Abierto de 12hs a 00hs</p>
+                <p><asp:Literal ID="litInfoHorario" runat="server" Text="Abierto de 12hs a 00hs" /></p>
             </div>
 
         </div>
@@ -144,7 +139,7 @@
         <button type="button"
                 id="btn-ver-restaurante"
                 class="btn-ver">
-            VER MENÚ
+            <asp:Literal ID="litBtnVerMenu" runat="server" Text="VER MENÚ" />
         </button>
 
     </div>

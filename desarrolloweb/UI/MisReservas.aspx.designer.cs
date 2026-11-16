@@ -15,6 +15,33 @@ namespace desarrolloweb.UI
     {
 
         /// <summary>
+        /// litSubMiCuenta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSubMiCuenta;
+
+        /// <summary>
+        /// litTituloMisReservas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloMisReservas;
+
+        /// <summary>
+        /// litDescMisReservas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDescMisReservas;
+
+        /// <summary>
         /// pnlSinReservas control.
         /// </summary>
         /// <remarks>
@@ -22,6 +49,33 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlSinReservas;
+
+        /// <summary>
+        /// litSinReservasTitulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSinReservasTitulo;
+
+        /// <summary>
+        /// litSinReservasDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSinReservasDesc;
+
+        /// <summary>
+        /// litBtnBuscarHabitaciones control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litBtnBuscarHabitaciones;
 
         /// <summary>
         /// rptReservas control.

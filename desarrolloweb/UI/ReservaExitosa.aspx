@@ -9,7 +9,7 @@ Inherits="desarrolloweb.UI.ReservaExitosa" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <script>
         sessionStorage.removeItem("reserva");
-</script>
+    </script>
 <div class="contenedor-exitosa">
 
     <div class="card-exitosa">
@@ -18,9 +18,9 @@ Inherits="desarrolloweb.UI.ReservaExitosa" %>
             <span class="material-symbols-outlined">check_circle</span>
         </div>
 
-        <span class="subtitulo-section">RESERVA CONFIRMADA</span>
-        <h1>¡Tu estadía está reservada!</h1>
-        <p>Recibimos tu reserva correctamente. Te esperamos en Hotel Patagonia.</p>
+        <span class="subtitulo-section"><asp:Literal ID="litSubReservaConfirmada" runat="server" Text="RESERVA CONFIRMADA" /></span>
+        <h1><asp:Literal ID="litTituloReservaExitosa" runat="server" Text="¡Tu estadía está reservada!" /></h1>
+        <p><asp:Literal ID="litDescReservaExitosa" runat="server" Text="Recibimos tu reserva correctamente. Te esperamos en Hotel Patagonia." /></p>
 
         <div class="detalle-exitosa">
             <div class="detalle-item">
@@ -43,10 +43,10 @@ Inherits="desarrolloweb.UI.ReservaExitosa" %>
 
         <div class="exitosa-acciones">
             <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="btn-mis-reservas">
-                Ver mis reservas
+                <asp:Literal ID="litBtnVerMisReservasExitosa" runat="server" Text="Ver mis reservas" />
             </a>
             <a href="<%= ResolveUrl("~/UI/Inicio.aspx") %>" class="btn-inicio">
-                Volver al inicio
+                <asp:Literal ID="litBtnVolverInicioExitosa" runat="server" Text="Volver al inicio" />
             </a>
         </div>
 

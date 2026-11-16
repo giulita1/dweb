@@ -15,6 +15,24 @@ namespace desarrolloweb.UI
     {
 
         /// <summary>
+        /// litSubResumen control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSubResumen;
+
+        /// <summary>
+        /// litTituloEstadia control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloEstadia;
+
+        /// <summary>
         /// imgHabitacion control.
         /// </summary>
         /// <remarks>
@@ -42,6 +60,15 @@ namespace desarrolloweb.UI
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblNombre;
 
         /// <summary>
+        /// litLblLlegada control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblLlegada;
+
+        /// <summary>
         /// lblLlegada control.
         /// </summary>
         /// <remarks>
@@ -49,6 +76,15 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblLlegada;
+
+        /// <summary>
+        /// litLblSalida control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblSalida;
 
         /// <summary>
         /// lblSalida control.
@@ -123,6 +159,15 @@ namespace desarrolloweb.UI
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPrecioDesayuno;
 
         /// <summary>
+        /// litTotal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTotal;
+
+        /// <summary>
         /// lblTotal control.
         /// </summary>
         /// <remarks>
@@ -130,6 +175,78 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTotal;
+
+        /// <summary>
+        /// litSubDatosPago control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSubDatosPago;
+
+        /// <summary>
+        /// litTituloCompletarReserva control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloCompletarReserva;
+
+        /// <summary>
+        /// litLblNombreTarjeta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblNombreTarjeta;
+
+        /// <summary>
+        /// litLblNumeroTarjeta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblNumeroTarjeta;
+
+        /// <summary>
+        /// litLblVencimiento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblVencimiento;
+
+        /// <summary>
+        /// litLblCvv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblCvv;
+
+        /// <summary>
+        /// litLblEmailConfirmacion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblEmailConfirmacion;
+
+        /// <summary>
+        /// litSeguroPagoTexto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSeguroPagoTexto;
 
         /// <summary>
         /// btnPagar control.

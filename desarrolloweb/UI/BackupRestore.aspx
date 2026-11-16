@@ -6,7 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="br-container">
-        <h2 class="br-header">Gestión de Base de Datos</h2>
+        <h2 class="br-header"><asp:Literal ID="litTituloGestionDB" runat="server" Text="Gestión de Base de Datos" /></h2>
         
         <asp:Panel ID="pnlMensaje" runat="server" Visible="false" CssClass="alert">
             <asp:Label ID="lblMensaje" runat="server"></asp:Label>
@@ -14,14 +14,18 @@
 
         <div class="cards-wrapper">
             <div class="br-card">
-                <h3>Realizar Backup</h3>
-                <p>Genera una copia de seguridad completa de la base de datos actual. El archivo se guardará automáticamente en el servidor del proyecto.</p>
+                <h3><asp:Literal ID="litTituloBackup" runat="server" Text="Realizar Backup" /></h3>
+                <p><asp:Literal ID="litDescBackup" runat="server" Text="Genera una copia de seguridad completa de la base de datos actual. El archivo se guardará automáticamente en el servidor del proyecto." /></p>
                 <asp:Button ID="btnBackup" runat="server" Text="Generar Backup" CssClass="btn-custom btn-blue" OnClick="btnBackup_Click" />
             </div>
 
             <div class="br-card">
-                <h3>Realizar Restore</h3>
-                <p>Seleccione un archivo de copia de seguridad del servidor para restaurar el sistema. <strong>Atención:</strong> Esta acción sobreescribirá los datos actuales.</p>
+                <h3><asp:Literal ID="litTituloRestore" runat="server" Text="Realizar Restore" /></h3>
+                <p>
+                    <asp:Literal ID="litDescRestore" runat="server" Text="Seleccione un archivo de copia de seguridad del servidor para restaurar el sistema." />
+                    <strong><asp:Literal ID="litAtencionRestore" runat="server" Text="Atención:" /></strong>
+                    <asp:Literal ID="litDescAtencion" runat="server" Text="Esta acción sobreescribirá los datos actuales." />
+                </p>
                 
                 <div class="file-upload-box">
                     <asp:DropDownList ID="ddlBackups" runat="server" CssClass="ddl-custom"></asp:DropDownList>

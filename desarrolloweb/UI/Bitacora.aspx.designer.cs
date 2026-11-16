@@ -15,6 +15,24 @@ namespace desarrolloweb.UI
     {
 
         /// <summary>
+        /// litTituloBitacora control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloBitacora;
+
+        /// <summary>
+        /// litLblUsuario control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblUsuario;
+
+        /// <summary>
         /// ddlUsuario control.
         /// </summary>
         /// <remarks>
@@ -22,6 +40,15 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlUsuario;
+
+        /// <summary>
+        /// litLblModulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblModulo;
 
         /// <summary>
         /// ddlModulo control.
@@ -33,6 +60,15 @@ namespace desarrolloweb.UI
         protected global::System.Web.UI.WebControls.DropDownList ddlModulo;
 
         /// <summary>
+        /// litLblEvento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblEvento;
+
+        /// <summary>
         /// ddlEvento control.
         /// </summary>
         /// <remarks>
@@ -40,6 +76,15 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlEvento;
+
+        /// <summary>
+        /// litLblCriticidad control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblCriticidad;
 
         /// <summary>
         /// ddlCriticidad control.
@@ -51,6 +96,15 @@ namespace desarrolloweb.UI
         protected global::System.Web.UI.WebControls.DropDownList ddlCriticidad;
 
         /// <summary>
+        /// litLblFechaDesde control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblFechaDesde;
+
+        /// <summary>
         /// txtFechaDesde control.
         /// </summary>
         /// <remarks>
@@ -58,6 +112,15 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFechaDesde;
+
+        /// <summary>
+        /// litLblFechaHasta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litLblFechaHasta;
 
         /// <summary>
         /// txtFechaHasta control.

@@ -15,6 +15,15 @@ namespace desarrolloweb.UI
     {
 
         /// <summary>
+        /// litTituloGestionDB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloGestionDB;
+
+        /// <summary>
         /// pnlMensaje control.
         /// </summary>
         /// <remarks>
@@ -33,6 +42,24 @@ namespace desarrolloweb.UI
         protected global::System.Web.UI.WebControls.Label lblMensaje;
 
         /// <summary>
+        /// litTituloBackup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloBackup;
+
+        /// <summary>
+        /// litDescBackup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDescBackup;
+
+        /// <summary>
         /// btnBackup control.
         /// </summary>
         /// <remarks>
@@ -40,6 +67,42 @@ namespace desarrolloweb.UI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBackup;
+
+        /// <summary>
+        /// litTituloRestore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloRestore;
+
+        /// <summary>
+        /// litDescRestore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDescRestore;
+
+        /// <summary>
+        /// litAtencionRestore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litAtencionRestore;
+
+        /// <summary>
+        /// litDescAtencion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDescAtencion;
 
         /// <summary>
         /// ddlBackups control.
