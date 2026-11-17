@@ -19,7 +19,6 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
 
 <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
-
 <asp:UpdatePanel ID="upGestion" runat="server">
 <ContentTemplate>
 
@@ -32,7 +31,6 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
         <button type="button" class="tab" onclick="cambiarTab('familias', this)"><asp:Literal ID="litTabFamilias" runat="server" Text="Familias" /></button>
         <button type="button" class="tab" onclick="cambiarTab('patentes', this)"><asp:Literal ID="litTabPatentes" runat="server" Text="Patentes" /></button>
     </div>
-
 
     <div id="tab-perfiles" class="tab-content active">
 
@@ -69,6 +67,14 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
                             <asp:Button runat="server" Text="Agregar patente"
                                 CssClass="btn-secundario"
                                 CommandName="AbrirAgregarPatente"
+                                CommandArgument='<%# Eval("Id") %>' />
+                            <asp:Button runat="server" Text="Quitar familia"
+                                CssClass="btn-secundario"
+                                CommandName="QuitarFamilia"
+                                CommandArgument='<%# Eval("Id") %>' />
+                            <asp:Button runat="server" Text="Quitar patente"
+                                CssClass="btn-secundario"
+                                CommandName="QuitarPatente"
                                 CommandArgument='<%# Eval("Id") %>' />
                             <asp:Button runat="server" Text="Eliminar"
                                 CssClass="btn-eliminar"
@@ -145,6 +151,10 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
                             <span class="item-nombre"><%# Eval("Nombre") %></span>
                         </div>
                         <div class="item-acciones">
+                            <asp:Button runat="server" Text="Ver árbol"
+                                CssClass="btn-ver-arbol"
+                                CommandName="VerArbolFamilia"
+                                CommandArgument='<%# Eval("Id") %>' />
                             <asp:Button runat="server" Text="Agregar subfamilia"
                                 CssClass="btn-secundario"
                                 CommandName="AbrirAgregarSubfamilia"
@@ -152,6 +162,14 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
                             <asp:Button runat="server" Text="Agregar patente"
                                 CssClass="btn-secundario"
                                 CommandName="AbrirAgregarPatenteAFamilia"
+                                CommandArgument='<%# Eval("Id") %>' />
+                            <asp:Button runat="server" Text="Quitar subfamilia"
+                                CssClass="btn-secundario"
+                                CommandName="QuitarSubfamilia"
+                                CommandArgument='<%# Eval("Id") %>' />
+                            <asp:Button runat="server" Text="Quitar patente"
+                                CssClass="btn-secundario"
+                                CommandName="QuitarPatenteDeFamilia"
                                 CommandArgument='<%# Eval("Id") %>' />
                             <asp:Button runat="server" Text="Eliminar"
                                 CssClass="btn-eliminar"
@@ -195,6 +213,13 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
             </div>
         </asp:Panel>
 
+        <asp:Panel ID="pnlArbolFamilia" runat="server" Visible="false" CssClass="card-gestion">
+            <h2>Árbol de la familia: <asp:Label ID="lblNombreArbolFamilia" runat="server" CssClass="highlight" /></h2>
+            <div class="arbol-container">
+                <asp:Literal ID="litArbolFamilia" runat="server" />
+            </div>
+        </asp:Panel>
+
     </div>
 
     <div id="tab-patentes" class="tab-content">
@@ -235,37 +260,56 @@ Inherits="desarrolloweb.UI.GestionPerfiles" MaintainScrollPositionOnPostBack="tr
 
     </div>
 
+
+    <asp:Panel ID="pnlQuitar" runat="server" Visible="false" CssClass="card-gestion panel-accion panel-quitar">
+        <h2><asp:Label ID="lblTituloQuitar" runat="server" /></h2>
+        <asp:HiddenField ID="hfQuitarModo" runat="server" />
+        <asp:HiddenField ID="hfQuitarPadreId" runat="server" />
+        <div class="form-inline">
+            <div class="form-grupo">
+                <label>Elemento</label>
+                <asp:DropDownList ID="ddlQuitar" runat="server" CssClass="input-gestion" />
+            </div>
+            <asp:Button ID="btnConfirmarQuitar" runat="server" Text="Quitar"
+                CssClass="btn-eliminar" OnClick="btnConfirmarQuitar_Click" />
+            <asp:Button ID="btnCancelarQuitar" runat="server" Text="Cancelar"
+                CssClass="btn-cancelar" OnClick="btnCancelar_Click" />
+        </div>
+    </asp:Panel>
+
 </div>
 
 </ContentTemplate>
 </asp:UpdatePanel>
-    <script>
-        function mostrarTab(nombre, btn) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.getElementById('tab-' + nombre).classList.add('active');
-            btn.classList.add('active');
-            try { sessionStorage.setItem('tabActiva', nombre); } catch (e) { }
-        }
 
-        function cambiarTab(nombre, btn) {
-            mostrarTab(nombre, btn);
-            document.querySelectorAll('.lbl-mensaje').forEach(m => m.style.display = 'none');
-        }
+<script>
+    function mostrarTab(nombre, btn) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab-' + nombre).classList.add('active');
+        btn.classList.add('active');
+        try { sessionStorage.setItem('tabActiva', nombre); } catch (e) { }
+    }
 
-        function restaurarTab() {
-            var nombre = null;
-            try { nombre = sessionStorage.getItem('tabActiva'); } catch (e) { }
-            if (!nombre) return;
-            var btn = document.querySelector(".tab[onclick*=\"'" + nombre + "'\"]");
-            if (btn) mostrarTab(nombre, btn);
-        }
+    function cambiarTab(nombre, btn) {
+        mostrarTab(nombre, btn);
+        document.querySelectorAll('.lbl-mensaje').forEach(m => m.style.display = 'none');
+        document.querySelectorAll('.panel-quitar').forEach(p => p.style.display = 'none');
+    }
 
-        if (window.Sys && Sys.Application) {
-            Sys.Application.add_load(restaurarTab);
-        } else {
-            document.addEventListener('DOMContentLoaded', restaurarTab);
-        }
-    </script>
+    function restaurarTab() {
+        var nombre = null;
+        try { nombre = sessionStorage.getItem('tabActiva'); } catch (e) { }
+        if (!nombre) return;
+        var btn = document.querySelector(".tab[onclick*=\"'" + nombre + "'\"]");
+        if (btn) mostrarTab(nombre, btn);
+    }
+
+    if (window.Sys && Sys.Application) {
+        Sys.Application.add_load(restaurarTab);
+    } else {
+        document.addEventListener('DOMContentLoaded', restaurarTab);
+    }
+</script>
 
 </asp:Content>

@@ -23,39 +23,44 @@
             <span class="material-symbols-outlined">menu</span>
         </button>
 
-       <%
+        <%
             string pagina = Request.Url.AbsolutePath.ToLower();
-            bool esInicio = pagina == "/" || pagina.EndsWith("/Inicio.aspx");
+            bool esInicio = pagina == "/" || pagina.Contains("inicio");
             string urlInicio = ResolveUrl("~/UI/Inicio.aspx");
             var usuActual = Session["usuario"] as desarrolloweb.BE.Usuario;
             bool logueado = usuActual != null;
+
+            bool puedeCambiarIdioma     = logueado && usuActual.Perfil?.TienePermiso("CambiarIdioma") == true;
+            bool puedeGestionarIdiomas  = logueado && usuActual.Perfil?.TienePermiso("GestionIdiomas") == true;
             bool puedeGestionarPerfiles = logueado && usuActual.Perfil?.TienePermiso("GestionPerfiles") == true;
-            bool puedeReservar        = logueado && usuActual.Perfil?.TienePermiso("RegistrarReserva") == true;
-            bool puedeVerReservas     = logueado && usuActual.Perfil?.TienePermiso("VerReservas") == true;
+            bool puedeReservar          = logueado && usuActual.Perfil?.TienePermiso("RegistrarReserva") == true;
+            bool puedeVerReservas       = logueado && usuActual.Perfil?.TienePermiso("VerReservas") == true;
             bool puedeGestionarUsuarios = logueado && usuActual.Perfil?.TienePermiso("GestionUsuarios") == true;
-            bool puedeRespaldar       = logueado && usuActual.Perfil?.TienePermiso("Respaldos") == true;
-            bool puedeVerDigitos      = logueado && usuActual.Perfil?.TienePermiso("DigitoVerificador") == true;
-            bool puedeGestionarIdiomas  = logueado && usuActual.Perfil?.TienePermiso("CambiarIdioma") == true;
+            bool puedeRespaldar         = logueado && usuActual.Perfil?.TienePermiso("Respaldos") == true;
+            bool puedeVerDigitos        = logueado && usuActual.Perfil?.TienePermiso("DigitoVerificador") == true;
         %>
+
         <nav id="nav-menu">
             <ul>
 
-               <% if (!esInicio) { %>
-<li class="nav-items">
-   <a href="<%= urlInicio %>" class="nav-inicio"
-       style="font-family:'Montserrat', sans-serif; font-size:0.88rem; letter-spacing:0.3px; color:rgba(63,57,54); opacity:1;">
-        <asp:Literal ID="litNavInicio" runat="server" Text="Inicio" />
-    </a>
-</li>
-<% } %>
+                <% if (logueado && !esInicio) { %>
+                <li class="nav-items">
+                    <a href="<%= urlInicio %>" class="nav-inicio"
+                       style="font-family:'Montserrat', sans-serif; font-size:0.88rem; letter-spacing:0.3px; color:rgba(63,57,54); opacity:1;">
+                        <asp:Literal ID="litNavInicio" runat="server" Text="Inicio" />
+                    </a>
+                </li>
+                <% } %>
 
+                <% if (puedeCambiarIdioma) { %>
                 <li class="nav-items">
                     <asp:DropDownList ID="ddlIdiomaMaster" runat="server"
-    AutoPostBack="True"
-    OnSelectedIndexChanged="ddlIdiomaMaster_SelectedIndexChanged"
-    CssClass="selector-idioma"
-    style="font-family:'Montserrat', sans-serif; font-size:0.88rem; letter-spacing:0.3px; color:rgba(63,57,54); cursor:pointer; " />
+                        AutoPostBack="True"
+                        OnSelectedIndexChanged="ddlIdiomaMaster_SelectedIndexChanged"
+                        CssClass="selector-idioma"
+                        style="font-family:'Montserrat', sans-serif; font-size:0.88rem; letter-spacing:0.3px; color:rgba(63,57,54); cursor:pointer;" />
                 </li>
+                <% } %>
 
                 <% if (logueado) { %>
                 <li class="nav-items">
@@ -64,14 +69,14 @@
                     </button>
                 </li>
 
-                <% if (puedeReservar) { %>
+                    <% if (puedeReservar) { %>
                     <li class="nav-items">
                         <button type="button" id="btn-carrito">
                             <span class="material-symbols-outlined">shopping_cart</span>
                         </button>
                     </li>
+                    <% } %>
                 <% } %>
-            <% } %>
 
             </ul>
         </nav>
@@ -187,8 +192,8 @@
                 <span class="material-symbols-outlined">account_circle</span>
             </div>
             <div class="perfil-info">
-               <h2><%= usuActual.Nombre %> <%= usuActual.Apellido %></h2>
-               <p><%= usuActual.Email %></p>
+                <h2><%= usuActual.Nombre %> <%= usuActual.Apellido %></h2>
+                <p><%= usuActual.Email %></p>
             </div>
             <button type="button" id="btn-cerrar-perfil">
                 <span class="material-symbols-outlined">close</span>
@@ -197,90 +202,90 @@
 
         <div class="perfil-contenido">
 
-                <% if (puedeGestionarUsuarios) { %>
-                <a href="<%= ResolveUrl("~/UI/GestionUsuarios.aspx") %>" class="perfil-item">
-                    <span class="material-symbols-outlined">group</span>
-                    <div>
-                        <p><asp:Literal ID="litMenuGestionUsuarios" runat="server" Text="Gestión de Usuarios" /></p>
-                        <small><asp:Literal ID="litMenuGestionUsuariosSub" runat="server" Text="Administrá los usuarios" /></small>
-                    </div>
-                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-                </a>
-                <a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
-                    <span class="material-symbols-outlined">history</span>
-                    <div>
-                        <p><asp:Literal ID="litMenuBitacora" runat="server" Text="Bitácora" /></p>
-                        <small><asp:Literal ID="litMenuBitacoraSub" runat="server" Text="Registro de actividad" /></small>
-                    </div>
-                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-                </a>
-                <% } %>
+            <% if (puedeGestionarUsuarios) { %>
+            <a href="<%= ResolveUrl("~/UI/GestionUsuarios.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">group</span>
+                <div>
+                    <p><asp:Literal ID="litMenuGestionUsuarios" runat="server" Text="Gestión de Usuarios" /></p>
+                    <small><asp:Literal ID="litMenuGestionUsuariosSub" runat="server" Text="Administrá los usuarios" /></small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <a href="<%= ResolveUrl("~/UI/Bitacora.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">history</span>
+                <div>
+                    <p><asp:Literal ID="litMenuBitacora" runat="server" Text="Bitácora" /></p>
+                    <small><asp:Literal ID="litMenuBitacoraSub" runat="server" Text="Registro de actividad" /></small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <% } %>
 
-                <% if (puedeGestionarIdiomas) { %>
-                <a href="<%= ResolveUrl("~/UI/GestionIdioma.aspx") %>" class="perfil-item">
-                    <span class="material-symbols-outlined">language</span>
-                    <div>
-                        <p><asp:Literal ID="litMenuGestionIdiomas" runat="server" Text="Gestión de Idiomas" /></p>
-                        <small><asp:Literal ID="litMenuGestionIdiomasSub" runat="server" Text="Agregá y traducí idiomas" /></small>
-                    </div>
-                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-                </a>
-                <% } %>
+            <% if (puedeGestionarIdiomas) { %>
+            <a href="<%= ResolveUrl("~/UI/GestionIdioma.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">language</span>
+                <div>
+                    <p><asp:Literal ID="litMenuGestionIdiomas" runat="server" Text="Gestión de Idiomas" /></p>
+                    <small><asp:Literal ID="litMenuGestionIdiomasSub" runat="server" Text="Agregá y traducí idiomas" /></small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <% } %>
 
-                <% if (puedeRespaldar) { %>
-                <a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
-                    <span class="material-symbols-outlined">backup</span>
-                    <div>
-                        <p><asp:Literal ID="litMenuBackupRestore" runat="server" Text="Backup / Restore" /></p>
-                        <small><asp:Literal ID="litMenuBackupRestoreSub" runat="server" Text="Respaldo de datos" /></small>
-                    </div>
-                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-                </a>
-                <% } %>
+            <% if (puedeRespaldar) { %>
+            <a href="<%= ResolveUrl("~/UI/BackupRestore.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">backup</span>
+                <div>
+                    <p><asp:Literal ID="litMenuBackupRestore" runat="server" Text="Backup / Restore" /></p>
+                    <small><asp:Literal ID="litMenuBackupRestoreSub" runat="server" Text="Respaldo de datos" /></small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <% } %>
 
-                <% if (puedeVerDigitos) { %>
-                <a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
-                    <span class="material-symbols-outlined">verified</span>
-                    <div>
-                        <p><asp:Literal ID="litMenuDigitosVerificadores" runat="server" Text="Dígitos Verificadores" /></p>
-                        <small><asp:Literal ID="litMenuDigitosVerificadoresSub" runat="server" Text="Control de integridad" /></small>
-                    </div>
-                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-                </a>
-                <% } %>
+            <% if (puedeVerDigitos) { %>
+            <a href="<%= ResolveUrl("~/UI/DigitoVerificador.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">verified</span>
+                <div>
+                    <p><asp:Literal ID="litMenuDigitosVerificadores" runat="server" Text="Dígitos Verificadores" /></p>
+                    <small><asp:Literal ID="litMenuDigitosVerificadoresSub" runat="server" Text="Control de integridad" /></small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <% } %>
 
-                <% if (puedeGestionarPerfiles) { %>
-                <a href="<%= ResolveUrl("~/UI/GestionPerfiles.aspx") %>" class="perfil-item">
-                    <span class="material-symbols-outlined">manage_accounts</span>
-                    <div>
-                        <p><asp:Literal ID="litMenuGestionPerfiles" runat="server" Text="Gestión de Perfiles" /></p>
-                        <small><asp:Literal ID="litMenuGestionPerfilesSub" runat="server" Text="Administrá perfiles y permisos" /></small>
-                    </div>
-                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-                </a>
-                <% } %>
+            <% if (puedeGestionarPerfiles) { %>
+            <a href="<%= ResolveUrl("~/UI/GestionPerfiles.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">manage_accounts</span>
+                <div>
+                    <p><asp:Literal ID="litMenuGestionPerfiles" runat="server" Text="Gestión de Perfiles" /></p>
+                    <small><asp:Literal ID="litMenuGestionPerfilesSub" runat="server" Text="Administrá perfiles y permisos" /></small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <% } %>
 
-                <% if (puedeVerReservas) { %>
-                <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="perfil-item">
-                    <span class="material-symbols-outlined">luggage</span>
-                    <div>
-                        <p><asp:Literal ID="litMenuMisReservas" runat="server" Text="Mis Reservas" /></p>
-                        <small><asp:Literal ID="litMenuMisReservasSub" runat="server" Text="Revisá y gestioná tus reservas" /></small>
-                    </div>
-                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-                </a>
-                <% } %>
+            <% if (puedeVerReservas) { %>
+            <a href="<%= ResolveUrl("~/UI/MisReservas.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">luggage</span>
+                <div>
+                    <p><asp:Literal ID="litMenuMisReservas" runat="server" Text="Mis Reservas" /></p>
+                    <small><asp:Literal ID="litMenuMisReservasSub" runat="server" Text="Revisá y gestioná tus reservas" /></small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <% } %>
 
-                <% if (puedeReservar) { %>
-                <a href="<%= ResolveUrl("~/UI/Reservar.aspx") %>" class="perfil-item">
-                    <span class="material-symbols-outlined">hotel_class</span>
-                    <div>
-                        <p><asp:Literal ID="litMenuNuevaReserva" runat="server" Text="Nueva Reserva" /></p>
-                        <small><asp:Literal ID="litMenuNuevaReservaSub" runat="server" Text="Buscá tu próxima estadía" /></small>
-                    </div>
-                    <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
-                </a>
-                <% } %>
+            <% if (puedeReservar) { %>
+            <a href="<%= ResolveUrl("~/UI/Reservar.aspx") %>" class="perfil-item">
+                <span class="material-symbols-outlined">hotel_class</span>
+                <div>
+                    <p><asp:Literal ID="litMenuNuevaReserva" runat="server" Text="Nueva Reserva" /></p>
+                    <small><asp:Literal ID="litMenuNuevaReservaSub" runat="server" Text="Buscá tu próxima estadía" /></small>
+                </div>
+                <span class="material-symbols-outlined perfil-chevron">chevron_right</span>
+            </a>
+            <% } %>
 
         </div>
 

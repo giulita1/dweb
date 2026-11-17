@@ -103,9 +103,25 @@ namespace desarrolloweb.UI
             switch (e.CommandName)
             {
                 case "EliminarPerfil":
-                    bll.EliminarPerfil(id);
-                    MostrarMensaje("Perfil eliminado.", "ok");
-                    CargarPerfiles();
+                    try
+                    {
+                        bll.EliminarPerfil(id);
+                        MostrarMensaje("Perfil eliminado.", "ok");
+                        CargarPerfiles();
+                    }
+                    catch (Exception ex) { MostrarMensaje(ex.Message, "error"); }
+                    break;
+
+                case "QuitarFamilia":
+                    AbrirQuitar("PerfilFamilia", id,
+                        "Quitar familia del perfil " + ObtenerNombrePerfil(id),
+                        bll.ObtenerFamiliasDePerfil(id).Cast<IComponente>().ToList());
+                    break;
+
+                case "QuitarPatente":
+                    AbrirQuitar("PerfilPatente", id,
+                        "Quitar patente del perfil " + ObtenerNombrePerfil(id),
+                        bll.ObtenerPatentesDePerfil(id).Cast<IComponente>().ToList());
                     break;
 
                 case "AbrirAgregarFamilia":
@@ -188,9 +204,25 @@ namespace desarrolloweb.UI
             switch (e.CommandName)
             {
                 case "EliminarFamilia":
-                    bll.EliminarFamilia(id);
-                    MostrarMensaje("Familia eliminada.", "ok");
-                    CargarFamilias();
+                    try
+                    {
+                        bll.EliminarFamilia(id);
+                        MostrarMensaje("Familia eliminada.", "ok");
+                        CargarFamilias();
+                    }
+                    catch (Exception ex) { MostrarMensaje(ex.Message, "error"); }
+                    break;
+
+                case "QuitarSubfamilia":
+                    AbrirQuitar("FamiliaFamilia", id,
+                        "Quitar subfamilia de " + ObtenerNombreFamilia(id),
+                        bll.ObtenerSubfamilias(id).Cast<IComponente>().ToList());
+                    break;
+
+                case "QuitarPatenteDeFamilia":
+                    AbrirQuitar("FamiliaPatente", id,
+                        "Quitar patente de " + ObtenerNombreFamilia(id),
+                        bll.ObtenerPatentesDeFamilia(id).Cast<IComponente>().ToList());
                     break;
 
                 case "AbrirAgregarSubfamilia":
@@ -211,6 +243,57 @@ namespace desarrolloweb.UI
             }
         }
 
+        
+
+        private void AbrirQuitar(string modo, int idPadre, string titulo, List<IComponente> hijos)
+        {
+            if (hijos.Count == 0)
+            {
+                pnlQuitar.Visible = false;
+                MostrarMensaje("No hay elementos para quitar.", "error");
+                return;
+            }
+
+            hfQuitarModo.Value = modo;
+            hfQuitarPadreId.Value = idPadre.ToString();
+            lblTituloQuitar.Text = titulo;
+
+            ddlQuitar.DataSource = hijos;
+            ddlQuitar.DataTextField = "Nombre";
+            ddlQuitar.DataValueField = "Id";
+            ddlQuitar.DataBind();
+
+            pnlAgregarFamiliaAPerfil.Visible = false;
+            pnlAgregarPatenteAPerfil.Visible = false;
+            pnlAgregarSubfamilia.Visible = false;
+            pnlAgregarPatenteAFamilia.Visible = false;
+            pnlArbol.Visible = false;
+            pnlQuitar.Visible = true;
+        }
+
+        protected void btnConfirmarQuitar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(ddlQuitar.SelectedValue))
+                    throw new Exception("No hay ningún elemento seleccionado.");
+
+                int idPadre = Convert.ToInt32(hfQuitarPadreId.Value);
+                int idHijo = Convert.ToInt32(ddlQuitar.SelectedValue);
+
+                switch (hfQuitarModo.Value)
+                {
+                    case "PerfilFamilia": bll.EliminarFamiliaDePerfil(idPadre, idHijo); break;
+                    case "PerfilPatente": bll.EliminarPatenteDePerfil(idPadre, idHijo); break;
+                    case "FamiliaFamilia": bll.EliminarFamiliaDeFamily(idPadre, idHijo); break;
+                    case "FamiliaPatente": bll.EliminarPatenteDeFamilia(idPadre, idHijo); break;
+                }
+
+                pnlQuitar.Visible = false;
+                MostrarMensaje("Elemento quitado correctamente.", "ok");
+            }
+            catch (Exception ex) { MostrarMensaje(ex.Message, "error"); }
+        }
         protected void btnConfirmarSubfamilia_Click(object sender, EventArgs e)
         {
             try
@@ -254,13 +337,18 @@ namespace desarrolloweb.UI
             catch (Exception ex) { MostrarMensaje(ex.Message, "error"); }
         }
 
+        
         protected void rptPatentes_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             if (e.CommandName == "EliminarPatente")
             {
-                bll.EliminarPatente(Convert.ToInt32(e.CommandArgument));
-                MostrarMensaje("Patente eliminada.", "ok");
-                CargarPatentes();
+                try
+                {
+                    bll.EliminarPatente(Convert.ToInt32(e.CommandArgument));
+                    MostrarMensaje("Patente eliminada.", "ok");
+                    CargarPatentes();
+                }
+                catch (Exception ex) { MostrarMensaje(ex.Message, "error"); }
             }
         }
 
@@ -271,6 +359,8 @@ namespace desarrolloweb.UI
             pnlAgregarSubfamilia.Visible = false;
             pnlAgregarPatenteAFamilia.Visible = false;
             pnlArbol.Visible = false;
+            pnlQuitar.Visible = false;
+
         }
 
         private string RenderizarArbol(IComponente componente, int nivel = 0)

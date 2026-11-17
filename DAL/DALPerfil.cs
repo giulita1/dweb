@@ -64,17 +64,6 @@ namespace DAL
             accesos.EscribirText(sql, p);
         }
 
-        public void EliminarFamilia(int idFamilia)
-        {
-            accesos.EscribirText("DELETE FROM FamiliaPatente  WHERE Id_Familia = @id",
-                new SqlParameter[] { new SqlParameter("@id", idFamilia) });
-            accesos.EscribirText("DELETE FROM FamiliaFamilia  WHERE Id_Familia_Padre = @id OR Id_Familia_Hijo = @id",
-                new SqlParameter[] { new SqlParameter("@id", idFamilia) });
-            accesos.EscribirText("DELETE FROM PerfilFamilia   WHERE Id_Familia = @id",
-                new SqlParameter[] { new SqlParameter("@id", idFamilia) });
-            accesos.EscribirText("DELETE FROM Familias        WHERE Id_Familia = @id",
-                new SqlParameter[] { new SqlParameter("@id", idFamilia) });
-        }
 
         // patentes
         public List<Patente> ObtenerPatentes()
@@ -96,15 +85,6 @@ namespace DAL
             accesos.EscribirText(sql, p);
         }
 
-        public void EliminarPatente(int idPatente)
-        {
-            accesos.EscribirText("DELETE FROM FamiliaPatente WHERE Id_Patente = @id",
-                new SqlParameter[] { new SqlParameter("@id", idPatente) });
-            accesos.EscribirText("DELETE FROM PerfilPatente  WHERE Id_Patente = @id",
-                new SqlParameter[] { new SqlParameter("@id", idPatente) });
-            accesos.EscribirText("DELETE FROM Patentes       WHERE Id_Patente = @id",
-                new SqlParameter[] { new SqlParameter("@id", idPatente) });
-        }
 
         // relaciones
         public void AgregarFamiliaAPerfil(int idPerfil, int idFamilia)
@@ -245,6 +225,99 @@ namespace DAL
                 familia.AgregarHijo(MapearPatente(dr));
 
             return familia;
+        }
+
+        public Familia CargarArbolFamilia(int idFamilia)
+        {
+            return CargarFamiliaConHijos(idFamilia);
+        }
+
+        // ── Hijos actuales (para llenar el desplegable de "Quitar") ──
+        public List<Familia> ObtenerFamiliasDePerfil(int idPerfil)
+        {
+            List<Familia> lista = new List<Familia>();
+            string sql = @"SELECT f.Id_Familia, f.Nombre
+                   FROM Familias f
+                   INNER JOIN PerfilFamilia pf ON f.Id_Familia = pf.Id_Familia
+                   WHERE pf.Id_Perfil = @id";
+            DataTable dt = accesos.LeerText(sql, new SqlParameter[] { new SqlParameter("@id", idPerfil) });
+            foreach (DataRow dr in dt.Rows) lista.Add(MapearFamilia(dr));
+            return lista;
+        }
+
+        public List<Patente> ObtenerPatentesDePerfil(int idPerfil)
+        {
+            List<Patente> lista = new List<Patente>();
+            string sql = @"SELECT p.Id_Patente, p.Nombre
+                   FROM Patentes p
+                   INNER JOIN PerfilPatente pp ON p.Id_Patente = pp.Id_Patente
+                   WHERE pp.Id_Perfil = @id";
+            DataTable dt = accesos.LeerText(sql, new SqlParameter[] { new SqlParameter("@id", idPerfil) });
+            foreach (DataRow dr in dt.Rows) lista.Add(MapearPatente(dr));
+            return lista;
+        }
+
+        public List<Familia> ObtenerSubfamilias(int idFamilia)
+        {
+            List<Familia> lista = new List<Familia>();
+            string sql = @"SELECT f.Id_Familia, f.Nombre
+                   FROM Familias f
+                   INNER JOIN FamiliaFamilia ff ON f.Id_Familia = ff.Id_Familia_Hijo
+                   WHERE ff.Id_Familia_Padre = @id";
+            DataTable dt = accesos.LeerText(sql, new SqlParameter[] { new SqlParameter("@id", idFamilia) });
+            foreach (DataRow dr in dt.Rows) lista.Add(MapearFamilia(dr));
+            return lista;
+        }
+
+        public List<Patente> ObtenerPatentesDeFamilia(int idFamilia)
+        {
+            List<Patente> lista = new List<Patente>();
+            string sql = @"SELECT p.Id_Patente, p.Nombre
+                   FROM Patentes p
+                   INNER JOIN FamiliaPatente fp ON p.Id_Patente = fp.Id_Patente
+                   WHERE fp.Id_Familia = @id";
+            DataTable dt = accesos.LeerText(sql, new SqlParameter[] { new SqlParameter("@id", idFamilia) });
+            foreach (DataRow dr in dt.Rows) lista.Add(MapearPatente(dr));
+            return lista;
+        }
+
+        // ── Validaciones: cuántas asignaciones tiene un elemento ──
+        private int Contar(string sql, int id)
+        {
+            DataTable dt = accesos.LeerText(sql, new SqlParameter[] { new SqlParameter("@id", id) });
+            return Convert.ToInt32(dt.Rows[0]["Cant"]);
+        }
+
+        public int ContarUsuariosDePerfil(int idPerfil) =>
+            Contar("SELECT COUNT(1) AS Cant FROM Usuarios WHERE IdRol = @id", idPerfil);
+
+        public int ContarPerfilesDeFamilia(int idFamilia) =>
+            Contar("SELECT COUNT(1) AS Cant FROM PerfilFamilia WHERE Id_Familia = @id", idFamilia);
+
+        public int ContarFamiliasPadreDeFamilia(int idFamilia) =>
+            Contar("SELECT COUNT(1) AS Cant FROM FamiliaFamilia WHERE Id_Familia_Hijo = @id", idFamilia);
+
+        public int ContarPerfilesDePatente(int idPatente) =>
+            Contar("SELECT COUNT(1) AS Cant FROM PerfilPatente WHERE Id_Patente = @id", idPatente);
+
+        public int ContarFamiliasDePatente(int idPatente) =>
+            Contar("SELECT COUNT(1) AS Cant FROM FamiliaPatente WHERE Id_Patente = @id", idPatente);
+
+        public void EliminarFamilia(int idFamilia)
+        {
+            // Solo sus propios hijos: ya se validó que no la usa nadie
+            accesos.EscribirText("DELETE FROM FamiliaPatente WHERE Id_Familia = @id",
+                new SqlParameter[] { new SqlParameter("@id", idFamilia) });
+            accesos.EscribirText("DELETE FROM FamiliaFamilia WHERE Id_Familia_Padre = @id",
+                new SqlParameter[] { new SqlParameter("@id", idFamilia) });
+            accesos.EscribirText("DELETE FROM Familias WHERE Id_Familia = @id",
+                new SqlParameter[] { new SqlParameter("@id", idFamilia) });
+        }
+
+        public void EliminarPatente(int idPatente)
+        {
+            accesos.EscribirText("DELETE FROM Patentes WHERE Id_Patente = @id",
+                new SqlParameter[] { new SqlParameter("@id", idPatente) });
         }
 
         // mapeos
