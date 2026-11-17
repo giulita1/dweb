@@ -26,7 +26,7 @@ namespace BLL
                 SEG.DigitoVerificador motorDV = new SEG.DigitoVerificador();
                 int sumaTotalDvv = motorDV.CalcularDVV(listaDvhs);
                 DalDvv.ActualizarSumaDVV(nombreTabla, sumaTotalDvv);
-                LimpiarAuditoria();
+                // ⚠️ QUITADO: LimpiarAuditoria() ya no se borra automáticamente aquí para no perder la traza.
             }
             catch (Exception ex)
             {
@@ -42,160 +42,110 @@ namespace BLL
             {
                 SEG.DigitoVerificador digitoVerificador = new SEG.DigitoVerificador();
 
-
                 // =====================================================
                 // USUARIOS
                 // =====================================================
                 try
                 {
                     BLLusuario bllUsuario = new BLLusuario();
-
-                    List<Usuario> usuarios =
-                        bllUsuario.ObtenerTodosParaDVV();
-
+                    List<Usuario> usuarios = bllUsuario.ObtenerTodosParaDVV();
 
                     int sumaDVH = 0;
                     bool huboError = false;
 
-
                     foreach (Usuario usu in usuarios)
                     {
-                        int dvhActual =
-                            digitoVerificador.CalcularDVH(usu);
-
+                        int dvhActual = digitoVerificador.CalcularDVH(usu);
 
                         if (dvhActual != usu.DVH)
                         {
                             huboError = true;
+                            listaErrores.Add(new BE.Infraccion
+                            {
+                                Tabla = "Usuarios",
+                                IdRegistro = usu.Id_Usuario.ToString(),
+                                Operacion = $"Alteración detectada en fila ID {usu.Id_Usuario} (DVH esperado: {usu.DVH}, calculado: {dvhActual})"
+                            });
                         }
-
 
                         sumaDVH += dvhActual;
                     }
 
-
-                    int dvvGuardado =
-                        DalDvv.ObtenerDvvGuardado("Usuarios");
-
+                    int dvvGuardado = DalDvv.ObtenerDvvGuardado("Usuarios");
 
                     if (sumaDVH != dvvGuardado)
                     {
                         huboError = true;
+                        listaErrores.Add(new BE.Infraccion
+                        {
+                            Tabla = "Usuarios",
+                            IdRegistro = "DVV",
+                            Operacion = $"Inconsistencia vertical DVV (Guardado: {dvvGuardado}, Calculado: {sumaDVH})"
+                        });
                     }
-
-
-                    if (huboError)
-                    {
-                        listaErrores.AddRange(
-                            DalDvv.ObtenerOperaciones("Usuarios")
-                        );
-                    }
-
                 }
                 catch (Exception ex)
                 {
-                    listaErrores.Add(new BE.Infraccion
-                    {
-                        Tabla = "Usuarios",
-                        IdRegistro = "ERROR",
-                        Operacion = ex.Message
-                    });
+                    listaErrores.Add(new BE.Infraccion { Tabla = "Usuarios", IdRegistro = "ERROR", Operacion = ex.Message });
                 }
-
-
-
 
                 // =====================================================
                 // BITACORA
                 // =====================================================
                 try
                 {
-                    BLLbitacora bllBitacora =
-                        new BLLbitacora();
-
-
-                    DataTable dt =
-                        bllBitacora.listartodabitacoraparadvv();
-
+                    BLLbitacora bllBitacora = new BLLbitacora();
+                    DataTable dt = bllBitacora.listartodabitacoraparadvv();
 
                     int sumaDVH = 0;
                     bool huboError = false;
 
-
-
                     foreach (DataRow row in dt.Rows)
                     {
-                       Bitacora bit = new Bitacora
+                        Bitacora bit = new Bitacora
                         {
-                            Id_Bitacora =
-                                Convert.ToInt32(row["Id_Bitacora"]),
-
-                            Id_Usuario =
-                                Convert.ToInt32(row["Id_Usuario"]),
-
-                            Actividad =
-                                row["Actividad"].ToString(),
-
-                            modulo =
-                                row["modulo"].ToString(),
-
-                            Criticidad =
-                                row["Criticidad"].ToString(),
-
-                            Fecha =
-                                row["Fecha"].ToString(),
-
-                            Hora =
-                                row["Hora"].ToString(),
-
-                            DVH =
-                                Convert.ToInt32(row["DVH"])
+                            Id_Bitacora = Convert.ToInt32(row["Id_Bitacora"]),
+                            Id_Usuario = Convert.ToInt32(row["Id_Usuario"]),
+                            Actividad = row["Actividad"].ToString(),
+                            modulo = row["modulo"].ToString(),
+                            Criticidad = row["Criticidad"].ToString(),
+                            Fecha = row["Fecha"].ToString(),
+                            Hora = row["Hora"].ToString(),
+                            DVH = row["DVH"] != DBNull.Value ? Convert.ToInt32(row["DVH"]) : 0
                         };
 
-
-                        int dvhActual =
-                            digitoVerificador.CalcularDVH(bit);
-
-
+                        int dvhActual = digitoVerificador.CalcularDVH(bit);
 
                         if (dvhActual != bit.DVH)
                         {
                             huboError = true;
+                            listaErrores.Add(new BE.Infraccion
+                            {
+                                Tabla = "Bitacora",
+                                IdRegistro = bit.Id_Bitacora.ToString(),
+                                Operacion = $"Alteración detectada en fila ID {bit.Id_Bitacora} (DVH esperado: {bit.DVH}, calculado: {dvhActual})"
+                            });
                         }
-
 
                         sumaDVH += dvhActual;
                     }
 
-
-
-                    int dvvGuardado =
-                        DalDvv.ObtenerDvvGuardado("Bitacora");
-
+                    int dvvGuardado = DalDvv.ObtenerDvvGuardado("Bitacora");
 
                     if (sumaDVH != dvvGuardado)
                     {
                         huboError = true;
+                        listaErrores.Add(new BE.Infraccion
+                        {
+                            Tabla = "Bitacora",
+                            IdRegistro = "DVV",
+                            Operacion = $"Inconsistencia vertical DVV (Guardado: {dvvGuardado}, Calculado: {sumaDVH})"
+                        });
                     }
-
-
-
-                    if (huboError)
-                    {
-                        listaErrores.AddRange(
-                            DalDvv.ObtenerOperaciones("Bitacora")
-                        );
-                    }
-
                 }
                 catch (Exception ex)
                 {
-                    listaErrores.Add(new BE.Infraccion
-                    {
-                        Tabla = "Bitacora",
-                        IdRegistro = "ERROR",
-                        Operacion = ex.Message
-                    });
+                    listaErrores.Add(new BE.Infraccion { Tabla = "Bitacora", IdRegistro = "ERROR", Operacion = ex.Message });
                 }
 
                 // =====================================================
@@ -203,148 +153,102 @@ namespace BLL
                 // =====================================================
                 try
                 {
-                    BLL.BLLReserva bllReserva =
-                        new BLL.BLLReserva();
-
-
-                    List<BE.Reserva> reservas =
-                        bllReserva.ObtenerTodasParaDVV();
-
+                    BLL.BLLReserva bllReserva = new BLL.BLLReserva();
+                    List<BE.Reserva> reservas = bllReserva.ObtenerTodasParaDVV();
 
                     int sumaDVH = 0;
                     bool huboError = false;
 
-
-
                     foreach (BE.Reserva res in reservas)
                     {
-                        int dvhActual =
-                            digitoVerificador.CalcularDVH(res);
-
-
+                        int dvhActual = digitoVerificador.CalcularDVH(res);
 
                         if (dvhActual != res.DVH)
                         {
                             huboError = true;
+                            listaErrores.Add(new BE.Infraccion
+                            {
+                                Tabla = "Reservas",
+                                IdRegistro = res.Id_Reserva.ToString(),
+                                Operacion = $"Alteración detectada en fila ID {res.Id_Reserva} (DVH esperado: {res.DVH}, calculado: {dvhActual})"
+                            });
                         }
-
 
                         sumaDVH += dvhActual;
                     }
 
-
-
-                    int dvvGuardado =
-                        DalDvv.ObtenerDvvGuardado("Reservas");
-
+                    int dvvGuardado = DalDvv.ObtenerDvvGuardado("Reservas");
 
                     if (sumaDVH != dvvGuardado)
                     {
                         huboError = true;
+                        listaErrores.Add(new BE.Infraccion
+                        {
+                            Tabla = "Reservas",
+                            IdRegistro = "DVV",
+                            Operacion = $"Inconsistencia vertical DVV (Guardado: {dvvGuardado}, Calculado: {sumaDVH})"
+                        });
                     }
-
-
-
-                    if (huboError)
-                    {
-                        listaErrores.AddRange(
-                            DalDvv.ObtenerOperaciones("Reservas")
-                        );
-                    }
-
                 }
                 catch (Exception ex)
                 {
-                    listaErrores.Add(new BE.Infraccion
-                    {
-                        Tabla = "Reservas",
-                        IdRegistro = "ERROR",
-                        Operacion = ex.Message
-                    });
+                    listaErrores.Add(new BE.Infraccion { Tabla = "Reservas", IdRegistro = "ERROR", Operacion = ex.Message });
                 }
 
-
-
-
-
                 // =====================================================
-                // HABITACIONES
+                // HABITACION
                 // =====================================================
                 try
                 {
-                    BLLHabitacion bllHabitacion =
-                        new BLLHabitacion();
-
-
-                    List<Habitacion> habitaciones =
-                        bllHabitacion.ObtenerTodasParaDVV();
-
-
+                    BLLHabitacion bllHabitacion = new BLLHabitacion();
+                    List<Habitacion> habitaciones = bllHabitacion.ObtenerTodasParaDVV();
 
                     int sumaDVH = 0;
                     bool huboError = false;
 
-
-
                     foreach (Habitacion hab in habitaciones)
                     {
-                        int dvhActual =
-                            digitoVerificador.CalcularDVH(hab);
-
-
+                        int dvhActual = digitoVerificador.CalcularDVH(hab);
 
                         if (dvhActual != hab.DVH)
                         {
                             huboError = true;
+                            listaErrores.Add(new BE.Infraccion
+                            {
+                                Tabla = "Habitacion",
+                                IdRegistro = hab.Id_Habitacion.ToString(),
+                                Operacion = $"Alteración detectada en fila ID {hab.Id_Habitacion} (DVH esperado: {hab.DVH}, calculado: {dvhActual})"
+                            });
                         }
-
 
                         sumaDVH += dvhActual;
                     }
 
-
-
-                    int dvvGuardado =
-                        DalDvv.ObtenerDvvGuardado("Habitacion");
-
-
+                    int dvvGuardado = DalDvv.ObtenerDvvGuardado("Habitacion");
 
                     if (sumaDVH != dvvGuardado)
                     {
                         huboError = true;
+                        listaErrores.Add(new BE.Infraccion
+                        {
+                            Tabla = "Habitacion",
+                            IdRegistro = "DVV",
+                            Operacion = $"Inconsistencia vertical DVV (Guardado: {dvvGuardado}, Calculado: {sumaDVH})"
+                        });
                     }
-
-
-
-                    if (huboError)
-                    {
-                        listaErrores.AddRange(
-                            DalDvv.ObtenerOperaciones("Habitacion")
-                        );
-                    }
-
                 }
                 catch (Exception ex)
                 {
-                    listaErrores.Add(new BE.Infraccion
-                    {
-                        Tabla = "Habitacion",
-                        IdRegistro = "ERROR",
-                        Operacion = ex.Message
-                    });
+                    listaErrores.Add(new BE.Infraccion { Tabla = "Habitacion", IdRegistro = "ERROR", Operacion = ex.Message });
                 }
 
-
-
-                // Si no hubo errores, no mostrar nada
+                // Si no hubo errores en todo el sistema, limpiamos la auditoría de forma segura
                 if (listaErrores.Count == 0)
                 {
                     DalDvv.LimpiarAuditoria();
                 }
 
-
                 return listaErrores;
-
             }
             catch (Exception ex)
             {
@@ -372,6 +276,7 @@ namespace BLL
                 desarrolloweb.DAL.DALusuario dALusuario = new desarrolloweb.DAL.DALusuario();
                 desarrolloweb.DAL.DALbitacora dALbitacora = new desarrolloweb.DAL.DALbitacora();
                 DAL.DALreserva.DalReserva dALreserva = new DAL.DALreserva.DalReserva();
+                DAL.DALHabitacion dALhabitacion = new DAL.DALHabitacion(); // Instancia de la DAL de Habitacion
 
                 // RECALCULAR DVH DE USUARIOS
                 desarrolloweb.BLL.BLLusuario bllUsu = new desarrolloweb.BLL.BLLusuario();
@@ -414,7 +319,17 @@ namespace BLL
                     dALreserva.ActualizarDVH(res.Id_Reserva, nuevoDvh);
                 }
 
-                // RECALCULAR VERTICALES (DVV) DE TODAS LAS TABLAS DEL SISTEMA
+                // RECALCULAR DVH DE HABITACIONES (NUEVO)
+                BLLHabitacion bllHabitacion = new BLLHabitacion();
+                List<Habitacion> listaHabitaciones = bllHabitacion.ObtenerTodasParaDVV();
+
+                foreach (Habitacion hab in listaHabitaciones)
+                {
+                    int nuevoDvh = motorDV.CalcularDVH(hab);
+                    dALhabitacion.ActualizarDVH(hab.Id_Habitacion, nuevoDvh);
+                }
+
+                // RECALCULAR VERTICALES (DVV)
                 this.RecalcularDVV("Usuarios");
                 this.RecalcularDVV("Bitacora");
                 this.RecalcularDVV("Reservas");

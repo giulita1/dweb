@@ -1,11 +1,10 @@
 ﻿using DAL;
+using SEG;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 namespace desarrolloweb.DAL
 {
     public class DALbitacora : DALconexion
@@ -15,23 +14,23 @@ namespace desarrolloweb.DAL
             try
             {
                 string query = @"INSERT INTO Bitacora (Id_Usuario, Actividad, Modulo, Criticidad, Fecha, Hora) 
-                             VALUES (@Id_Usuario, @Actividad, @modulo, @Criticidad, @Fecha, @Hora);
-                            SELECT SCOPE_IDENTITY();";
+                                 VALUES (@Id_Usuario, @Actividad, @modulo, @Criticidad, @Fecha, @Hora);
+                                 SELECT SCOPE_IDENTITY();";
                 SqlParameter[] sqlParameter = new SqlParameter[6];
                 sqlParameter[0] = new SqlParameter("@Id_Usuario", BT.Id_Usuario);
                 sqlParameter[1] = new SqlParameter("@Actividad", BT.Actividad);
                 sqlParameter[2] = new SqlParameter("@Modulo", BT.modulo);
                 sqlParameter[3] = new SqlParameter("@Criticidad", BT.Criticidad);
-                sqlParameter[4] = new SqlParameter("@Fecha",BT.Fecha);
-                sqlParameter[5] = new SqlParameter("@Hora",BT.Hora);
+                sqlParameter[4] = new SqlParameter("@Fecha", BT.Fecha);
+                sqlParameter[5] = new SqlParameter("@Hora", BT.Hora);
                 return EscribirYDevolverId_62_RS(query, sqlParameter);
             }
-
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception("Error en DAL al insertar Bitacora: " + ex.Message);
             }
         }
+
         public DataTable ListarBitacora()
         {
             try
@@ -42,7 +41,9 @@ namespace desarrolloweb.DAL
                                  WHERE CONVERT(date, b.Fecha, 103) >= CAST(GETDATE() - 3 AS DATE)
                                  ORDER BY CONVERT(date, b.Fecha, 103) DESC, b.Hora DESC";
 
-                return LeerText(query);
+                DataTable dt = LeerText(query);
+                DesencriptarColumnaNombre(dt);
+                return dt;
             }
             catch (SqlException ex)
             {
@@ -71,7 +72,7 @@ namespace desarrolloweb.DAL
                 if (login != "Todos" && !string.IsNullOrEmpty(login))
                 {
                     query += " AND u.usuario = @Login";
-                    parametros.Add(new SqlParameter("@Login", login));
+                    parametros.Add(new SqlParameter("@Login", encriptar.EncriptarAES(login)));
                 }
                 if (modulo != "Todos" && !string.IsNullOrEmpty(modulo))
                 {
@@ -89,22 +90,38 @@ namespace desarrolloweb.DAL
                     parametros.Add(new SqlParameter("@Criticidad", criticidad));
                 }
 
-                return LeerText(query, parametros.ToArray());
+                DataTable dt = LeerText(query, parametros.ToArray());
+                DesencriptarColumnaNombre(dt);
+                return dt;
             }
             catch (SqlException ex)
             {
                 throw new Exception("Error técnico en la base de datos al filtrar la bitácora. Detalle: " + ex.Message);
             }
-       }
+        }
+
+        private void DesencriptarColumnaNombre(DataTable dt)
+        {
+            if (dt == null || !dt.Columns.Contains("Nombre")) return;
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["Nombre"] != DBNull.Value && !string.IsNullOrEmpty(dr["Nombre"].ToString()))
+                {
+                    dr["Nombre"] = encriptar.DesencriptarAES(dr["Nombre"].ToString());
+                }
+            }
+        }
+
         public void ActualizarDVH(int idBitacora, int dvh)
         {
             try
             {
                 string sql = "UPDATE Bitacora SET DVH = @dvh WHERE Id_Bitacora = @id";
                 SqlParameter[] p = {
-            new SqlParameter("@dvh", dvh),
-            new SqlParameter("@id", idBitacora)
-        };
+                    new SqlParameter("@dvh", dvh),
+                    new SqlParameter("@id", idBitacora)
+                };
                 EscribirText(sql, p);
             }
             catch (Exception ex)
@@ -125,6 +142,5 @@ namespace desarrolloweb.DAL
                 throw new Exception("Error al leer bitácora completa para DVV: " + ex.Message);
             }
         }
-
     }
 }

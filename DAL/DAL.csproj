@@ -57,6 +57,10 @@
       <Project>{e5c9266b-f702-4f51-9809-1cd21175140b}</Project>
       <Name>BE</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SEG\SEG.csproj">
+      <Project>{d3bcc255-afc6-4281-8256-a55fc23fe0a2}</Project>
+      <Name>SEG</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

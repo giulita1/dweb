@@ -1,6 +1,7 @@
 ﻿using BE;
 using DAL;
 using desarrolloweb.BE;
+using SEG;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +9,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace desarrolloweb.DAL
 {
@@ -22,18 +22,11 @@ namespace desarrolloweb.DAL
                 SELECT Id_Usuario, nombre, apellido, email, usuario, 
                        bloqueado, intentos, IdRol
                 FROM Usuarios
-                WHERE (@Busqueda = '' OR 
-                       nombre LIKE '%' + @Busqueda + '%' OR 
-                       apellido LIKE '%' + @Busqueda + '%' OR 
-                       email LIKE '%' + @Busqueda + '%' OR
-                       usuario LIKE '%' + @Busqueda + '%')
-                  AND (@SoloBloqueados = 0 OR bloqueado = 1)
-                ORDER BY apellido, nombre";
+                WHERE (@SoloBloqueados = 0 OR bloqueado = 1)";
 
             SqlParameter[] p = {
-        new SqlParameter("@Busqueda",       busqueda ?? ""),
-        new SqlParameter("@SoloBloqueados", soloBlockeados ? 1 : 0)
-    };
+                new SqlParameter("@SoloBloqueados", soloBlockeados ? 1 : 0)
+            };
 
             DataTable dt = LeerText(query, p);
 
@@ -42,10 +35,10 @@ namespace desarrolloweb.DAL
                 lista.Add(new BE.Usuario
                 {
                     Id_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
-                    Nombre = dr["nombre"].ToString(),
-                    Apellido = dr["apellido"].ToString(),
-                    Email = dr["email"].ToString(),
-                    User = dr["usuario"].ToString(),
+                    Nombre = encriptar.DesencriptarAES(dr["nombre"].ToString()),
+                    Apellido = encriptar.DesencriptarAES(dr["apellido"].ToString()),
+                    Email = encriptar.DesencriptarAES(dr["email"].ToString()),
+                    User = encriptar.DesencriptarAES(dr["usuario"].ToString()),
                     Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
                     Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
                     Perfil = new Perfil
@@ -55,25 +48,37 @@ namespace desarrolloweb.DAL
                 });
             }
 
-            return lista;
+            if (!string.IsNullOrWhiteSpace(busqueda))
+            {
+                string term = busqueda.Trim().ToLower();
+                lista = lista.Where(u =>
+                    (u.Nombre != null && u.Nombre.ToLower().Contains(term)) ||
+                    (u.Apellido != null && u.Apellido.ToLower().Contains(term)) ||
+                    (u.Email != null && u.Email.ToLower().Contains(term)) ||
+                    (u.User != null && u.User.ToLower().Contains(term))
+                ).ToList();
+            }
+
+            return lista.OrderBy(u => u.Apellido).ThenBy(u => u.Nombre).ToList();
         }
 
         public void DesbloquearUsuario(int idUsuario)
         {
             string query = @"UPDATE Usuarios 
-                     SET bloqueado = 0, intentos = 0 
-                     WHERE Id_Usuario = @Id";
+                             SET bloqueado = 0, intentos = 0 
+                             WHERE Id_Usuario = @Id";
 
             SqlParameter[] p = { new SqlParameter("@Id", idUsuario) };
             EscribirText(query, p);
         }
+
         public bool VerificarExistencia(Usuario usuario)
         {
             string query = "SELECT COUNT(*) FROM USUARIOS WHERE email = @email OR usuario = @user";
             SqlCommand cmd = new SqlCommand(query, con);
 
-            cmd.Parameters.AddWithValue("@email", usuario.Email);
-            cmd.Parameters.AddWithValue("@user", usuario.User);
+            cmd.Parameters.AddWithValue("@email", encriptar.EncriptarAES(usuario.Email));
+            cmd.Parameters.AddWithValue("@user", encriptar.EncriptarAES(usuario.User));
             try
             {
                 Conectar();
@@ -82,29 +87,26 @@ namespace desarrolloweb.DAL
             }
             catch (Exception ex)
             {
-               throw new Exception(ex.Message);
+                throw new Exception(ex.Message);
             }
             finally
             {
-            Desconectar();
+                Desconectar();
             }
-
-        
         }
 
         public int RegistrarUsuario(Usuario usuario)
         {
             string query = "INSERT INTO USUARIOS (nombre, apellido, usuario, email, contrasena) " +
-
                            "VALUES (@nombre, @apellido, @user, @email, @contrasena); SELECT SCOPE_IDENTITY();";
 
             SqlParameter[] p = {
-        new SqlParameter("@nombre", usuario.Nombre),
-        new SqlParameter("@apellido", usuario.Apellido),
-        new SqlParameter("@user", usuario.User),
-        new SqlParameter("@email", usuario.Email),
-        new SqlParameter("@contrasena", usuario.Contrasena)
-    };
+                new SqlParameter("@nombre", encriptar.EncriptarAES(usuario.Nombre)),
+                new SqlParameter("@apellido", encriptar.EncriptarAES(usuario.Apellido)),
+                new SqlParameter("@user", encriptar.EncriptarAES(usuario.User)),
+                new SqlParameter("@email", encriptar.EncriptarAES(usuario.Email)),
+                new SqlParameter("@contrasena", usuario.Contrasena)
+            };
 
             try
             {
@@ -120,7 +122,6 @@ namespace desarrolloweb.DAL
         {
             using (SHA256 sha256Hash = SHA256.Create())
             {
-
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(contrasena));
 
                 StringBuilder builder = new StringBuilder();
@@ -138,12 +139,11 @@ namespace desarrolloweb.DAL
 
             Conectar();
             SqlCommand cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@u", nombreUsuario);
+            cmd.Parameters.AddWithValue("@u", encriptar.EncriptarAES(nombreUsuario));
             int resultado = (int)cmd.ExecuteScalar();
             Desconectar();
             return resultado > 0;
         }
-
 
         public BE.Usuario ValidarAcceso(string usuario, string contrasena)
         {
@@ -151,44 +151,23 @@ namespace desarrolloweb.DAL
             {
                 string query = "SELECT * FROM Usuarios WHERE usuario = @u AND contrasena = @p";
                 SqlParameter[] p = {
-            new SqlParameter("@u", usuario),
-            new SqlParameter("@p", contrasena)
-        };
+                    new SqlParameter("@u", encriptar.EncriptarAES(usuario)),
+                    new SqlParameter("@p", contrasena)
+                };
 
                 DataTable dt = LeerText(query, p);
-
-                if (dt != null && dt.Rows.Count > 0)
-                {
-                    DataRow dr = dt.Rows[0];
-                    return new BE.Usuario
-                    {
-                        Id_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
-                        Nombre = dr["nombre"].ToString(),
-                        Apellido = dr["apellido"].ToString(),
-                        Email = dr["email"].ToString(),
-                        User = dr["usuario"].ToString(),
-                        Contrasena = dr["contrasena"].ToString(),
-                        Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
-                        Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
-                        Perfil = new Perfil
-                        {
-                            Id = dr["IdRol"] != DBNull.Value ? Convert.ToInt32(dr["IdRol"]) : 0
-                        },
-                        IdIdioma = dr["IdIdioma"] != DBNull.Value ? Convert.ToInt32(dr["IdIdioma"]) : 0,
-                        DVH = dr["DVH"] != DBNull.Value ? Convert.ToInt32(dr["DVH"]) : 0
-                    };
-                }
-                return null;
+                return MapearObjetoUsuario(dt);
             }
             catch (Exception ex) { throw new Exception("Error en DAL: " + ex.Message); }
         }
+
         public void BloquearUsuario_62_RS(string usuario)
         {
             string sql = "UPDATE Usuarios SET bloqueado = @est WHERE usuario = @u";
             SqlParameter[] p = {
-        new SqlParameter("@est", true),
-        new SqlParameter("@u", usuario)
-        };
+                new SqlParameter("@est", true),
+                new SqlParameter("@u", encriptar.EncriptarAES(usuario))
+            };
             EscribirText(sql, p);
         }
 
@@ -196,15 +175,17 @@ namespace desarrolloweb.DAL
         {
             try
             {
-                string queryUpdate = @"UPDATE Usuarios 
-                               SET intentos = ISNULL(intentos, 0) + 1 
-                               WHERE usuario = @u";
+                string usuarioCifrado = encriptar.EncriptarAES(usuario);
 
-                SqlParameter[] p1 = { new SqlParameter("@u", usuario) };
+                string queryUpdate = @"UPDATE Usuarios 
+                                       SET intentos = ISNULL(intentos, 0) + 1 
+                                       WHERE usuario = @u";
+
+                SqlParameter[] p1 = { new SqlParameter("@u", usuarioCifrado) };
                 EscribirText(queryUpdate, p1);
 
                 string querySelect = "SELECT intentos FROM Usuarios WHERE usuario = @u";
-                SqlParameter[] p2 = { new SqlParameter("@u", usuario) }; // ← nuevo array
+                SqlParameter[] p2 = { new SqlParameter("@u", usuarioCifrado) };
                 DataTable dt = LeerText(querySelect, p2);
 
                 if (dt != null && dt.Rows.Count > 0)
@@ -225,8 +206,8 @@ namespace desarrolloweb.DAL
                 string sql = "UPDATE Usuarios SET intentos = 0 WHERE usuario = @u";
 
                 SqlParameter[] p = {
-            new SqlParameter("@u", usuario)
-        };
+                    new SqlParameter("@u", encriptar.EncriptarAES(usuario))
+                };
                 EscribirText(sql, p);
             }
             catch (Exception ex)
@@ -234,6 +215,7 @@ namespace desarrolloweb.DAL
                 throw new Exception("Error en DAL al resetear los intentos: " + ex.Message);
             }
         }
+
         public bool ExisteEmail(string email)
         {
             string query = "SELECT COUNT(1) FROM Usuarios WHERE email = @email";
@@ -242,7 +224,7 @@ namespace desarrolloweb.DAL
             {
                 Conectar();
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@email", encriptar.EncriptarAES(email));
                 int resultado = (int)cmd.ExecuteScalar();
                 return resultado > 0;
             }
@@ -260,9 +242,9 @@ namespace desarrolloweb.DAL
         {
             string sql = "UPDATE Usuarios SET contrasena = @pass WHERE email = @email";
             SqlParameter[] p = {
-        new SqlParameter("@pass", nuevaContrasenaHasheada),
-        new SqlParameter("@email", email)
-    };
+                new SqlParameter("@pass", nuevaContrasenaHasheada),
+                new SqlParameter("@email", encriptar.EncriptarAES(email))
+            };
 
             try
             {
@@ -278,12 +260,11 @@ namespace desarrolloweb.DAL
         {
             string sql = "UPDATE Usuarios SET DVH = @DVH WHERE Id_Usuario = @id";
             SqlParameter[] p = {
-        new SqlParameter("@DVH", dvh),
-        new SqlParameter("@id", idUsuario)
-    };
+                new SqlParameter("@DVH", dvh),
+                new SqlParameter("@id", idUsuario)
+            };
             EscribirText(sql, p);
         }
-
 
         private BE.Usuario MapearObjetoUsuario(DataTable dt)
         {
@@ -293,10 +274,10 @@ namespace desarrolloweb.DAL
                 return new BE.Usuario
                 {
                     Id_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
-                    Nombre = dr["nombre"].ToString(),
-                    Apellido = dr["apellido"].ToString(),
-                    Email = dr["email"].ToString(),
-                    User = dr["usuario"].ToString(),
+                    Nombre = encriptar.DesencriptarAES(dr["nombre"].ToString()),
+                    Apellido = encriptar.DesencriptarAES(dr["apellido"].ToString()),
+                    Email = encriptar.DesencriptarAES(dr["email"].ToString()),
+                    User = encriptar.DesencriptarAES(dr["usuario"].ToString()),
                     Contrasena = dr["contrasena"].ToString(),
                     Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
                     Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
@@ -317,17 +298,18 @@ namespace desarrolloweb.DAL
             SqlParameter[] p = { new SqlParameter("@id", idUsuario) };
             return MapearObjetoUsuario(LeerText(query, p));
         }
+
         public BE.Usuario ObtenerUsuarioPorNombre(string usuario)
         {
             string query = "SELECT * FROM Usuarios WHERE usuario = @u";
-            SqlParameter[] p = { new SqlParameter("@u", usuario) };
+            SqlParameter[] p = { new SqlParameter("@u", encriptar.EncriptarAES(usuario)) };
             return MapearObjetoUsuario(LeerText(query, p));
         }
 
         public BE.Usuario ObtenerUsuarioPorEmail(string email)
         {
             string query = "SELECT * FROM Usuarios WHERE email = @email";
-            SqlParameter[] p = { new SqlParameter("@email", email) };
+            SqlParameter[] p = { new SqlParameter("@email", encriptar.EncriptarAES(email)) };
             return MapearObjetoUsuario(LeerText(query, p));
         }
 
@@ -343,10 +325,10 @@ namespace desarrolloweb.DAL
                 lista.Add(new BE.Usuario
                 {
                     Id_Usuario = Convert.ToInt32(dr["Id_Usuario"]),
-                    Nombre = dr["nombre"].ToString(),
-                    Apellido = dr["apellido"].ToString(),
-                    Email = dr["email"].ToString(),
-                    User = dr["usuario"].ToString(),
+                    Nombre = encriptar.DesencriptarAES(dr["nombre"].ToString()),
+                    Apellido = encriptar.DesencriptarAES(dr["apellido"].ToString()),
+                    Email = encriptar.DesencriptarAES(dr["email"].ToString()),
+                    User = encriptar.DesencriptarAES(dr["usuario"].ToString()),
                     Contrasena = dr["contrasena"].ToString(),
                     Bloqueado = dr["bloqueado"] != DBNull.Value && Convert.ToBoolean(dr["bloqueado"]),
                     Intentos = dr["intentos"] != DBNull.Value ? Convert.ToInt16(dr["intentos"]) : (short)0,
